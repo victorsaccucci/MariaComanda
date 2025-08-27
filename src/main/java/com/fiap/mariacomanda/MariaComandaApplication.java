@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MariacomandaApplication {
+public class MariaComandaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MariacomandaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MariaComandaApplication.class, args);
+    }
 
 }
