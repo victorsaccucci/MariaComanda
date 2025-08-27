@@ -1,0 +1,102 @@
+{
+  "info": {
+    "name": "Restaurants API",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "description": "Coleção para testar o RestaurantController",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Criar Restaurante",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Restaurante Exemplo\",\n  \"address\": \"Rua X, 123\",\n  \"cuisineType\": \"Italiana\",\n  \"openingHours\": \"10:00-22:00\",\n  \"ownerUserId\": \"123e4567-e89b-12d3-a456-426614174000\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/restaurants",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "restaurants"]
+        }
+      }
+    },
+    {
+      "name": "Buscar Restaurante por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/restaurants/{{restaurantId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "restaurants", "{{restaurantId}}"]
+        }
+      }
+    },
+    {
+      "name": "Listar Restaurantes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/restaurants?page=0&size=20",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "restaurants"],
+          "query": [
+            { "key": "page", "value": "0" },
+            { "key": "size", "value": "20" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Atualizar Restaurante",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Novo Nome\",\n  \"address\": \"Nova Rua, 456\",\n  \"cuisineType\": \"Japonesa\",\n  \"openingHours\": \"11:00-23:00\",\n  \"ownerUserId\": \"UUID_DO_DONO\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/restaurants/{{restaurantId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "restaurants", "{{restaurantId}}"]
+        }
+      }
+    },
+    {
+      "name": "Deletar Restaurante",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/restaurants/{{restaurantId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "restaurants", "{{restaurantId}}"]
+        }
+      }
+    }
+  ]
+}
