@@ -10,11 +10,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class RestaurantMapper {
     public Restaurant mapCreate(CreateRestaurantInputDTO dto) {
-        return new Restaurant(dto.getId(), dto.getName(), dto.getAddress(), dto.getCuisineType(), dto.getOpeningHours(), dto.getOwnerUserId());
+        return new Restaurant(
+            dto.getId(), 
+            dto.getName(), 
+            dto.getAddress(), 
+            dto.getCuisineType(), 
+            dto.getOpeningHours(), 
+            dto.getOwnerUserId());
     }
 
     public Restaurant mapUpdate(UpdateRestaurantInputDTO dto) {
-        return new Restaurant(dto.getId(), dto.getName(), dto.getAddress(), dto.getCuisineType(), dto.getOpeningHours(), dto.getOwnerUserId());
+        return new Restaurant(
+            dto.getId(), 
+            dto.getName(), 
+            dto.getAddress(), 
+            dto.getCuisineType(), 
+            dto.getOpeningHours(), 
+            dto.getOwnerUserId());
     }
 
     public CreateRestaurantOutputDTO mapCreate(Restaurant restaurant) {
