@@ -4,9 +4,7 @@ import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.port.RestaurantRepositoryPort;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.stereotype.Service;
 
-@Service
 public class GetRestaurantUseCaseImpl implements GetRestaurantUseCase {
     private final RestaurantRepositoryPort repository;
 

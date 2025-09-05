@@ -4,11 +4,9 @@ import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.port.RestaurantRepositoryPort;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 @Slf4j
 @AllArgsConstructor
-@Service
 public class CreateRestaurantUseCaseImpl implements CreateRestaurantUseCase {
     private final RestaurantRepositoryPort repository;
 

@@ -2,9 +2,7 @@ package com.fiap.mariacomanda.core.usecases.restaurant;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.port.RestaurantRepositoryPort;
-import org.springframework.stereotype.Service;
 
-@Service
 public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
     private final RestaurantRepositoryPort repository;
 
