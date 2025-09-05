@@ -1,7 +1,6 @@
 package com.fiap.mariacomanda.infrastructure.database.jpa.adapter;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
-import com.fiap.mariacomanda.core.domain.port.RestaurantRepositoryPort;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.RestaurantEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.RestaurantJpaRepository;
 import org.springframework.data.domain.PageRequest;

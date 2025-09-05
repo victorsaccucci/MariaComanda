@@ -1,6 +1,5 @@
 package com.fiap.mariacomanda.core.usecases.restaurant;
 
-import com.fiap.mariacomanda.core.domain.port.RestaurantRepositoryPort;
 import java.util.UUID;
 
 public class DeleteRestaurantUseCaseImpl implements DeleteRestaurantUseCase {

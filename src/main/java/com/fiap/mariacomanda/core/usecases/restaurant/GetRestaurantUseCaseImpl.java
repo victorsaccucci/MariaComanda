@@ -1,7 +1,7 @@
 package com.fiap.mariacomanda.core.usecases.restaurant;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
-import com.fiap.mariacomanda.core.domain.port.RestaurantRepositoryPort;
+
 import java.util.Optional;
 import java.util.UUID;
 
