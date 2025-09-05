@@ -1,5 +1,8 @@
 package com.fiap.mariacomanda.core.dto;
 
+import lombok.Getter;
+
+@Getter
 public class ListRestaurantsInputDTO {
     private int page;
     private int size;
@@ -9,11 +12,4 @@ public class ListRestaurantsInputDTO {
         this.size = size;
     }
 
-    public int getPage() {
-        return page;
-    }
-
-    public int getSize() {
-        return size;
-    }
 }

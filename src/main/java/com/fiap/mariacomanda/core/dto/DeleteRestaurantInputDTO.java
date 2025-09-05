@@ -1,7 +1,10 @@
 package com.fiap.mariacomanda.core.dto;
 
+import lombok.Getter;
+
 import java.util.UUID;
 
+@Getter
 public class DeleteRestaurantInputDTO {
     private UUID id;
 
@@ -9,7 +12,4 @@ public class DeleteRestaurantInputDTO {
         this.id = id;
     }
 
-    public UUID getId() {
-        return id;
-    }
 }

@@ -1,7 +1,10 @@
 package com.fiap.mariacomanda.core.dto;
 
+import lombok.Getter;
+
 import java.util.UUID;
 
+@Getter
 public class GetRestaurantOutputDTO {
     private UUID id;
     private String name;
@@ -19,10 +22,4 @@ public class GetRestaurantOutputDTO {
         this.ownerUserId = ownerUserId;
     }
 
-    public UUID getId() { return id; }
-    public String getName() { return name; }
-    public String getAddress() { return address; }
-    public String getCuisineType() { return cuisineType; }
-    public String getOpeningHours() { return openingHours; }
-    public UUID getOwnerUserId() { return ownerUserId; }
 }
