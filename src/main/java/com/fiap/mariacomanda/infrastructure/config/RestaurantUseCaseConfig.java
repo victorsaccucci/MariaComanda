@@ -1,5 +1,6 @@
 package com.fiap.mariacomanda.infrastructure.config;
 
+import com.fiap.mariacomanda.core.gateway.RestaurantGateway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,27 +19,27 @@ import com.fiap.mariacomanda.core.usecases.restaurant.UpdateRestaurantUseCaseImp
 public class RestaurantUseCaseConfig {
 
     @Bean
-    public  CreateRestaurantUseCase createRestaurantUsecase(RestaurantRepositoryPort repositoryPort) {
+    public  CreateRestaurantUseCase createRestaurantUsecase(RestaurantGateway repositoryPort) {
         return new CreateRestaurantUseCaseImpl(repositoryPort);
    }
 
    @Bean
-    public  DeleteRestaurantUseCase deleteRestaurantUsecase(RestaurantRepositoryPort repositoryPort) {
+    public  DeleteRestaurantUseCase deleteRestaurantUsecase(RestaurantGateway repositoryPort) {
         return new DeleteRestaurantUseCaseImpl(repositoryPort);
    }
 
    @Bean
-    public  GetRestaurantUseCase getRestaurantUsecase(RestaurantRepositoryPort repositoryPort) {
+    public  GetRestaurantUseCase getRestaurantUsecase(RestaurantGateway repositoryPort) {
         return new GetRestaurantUseCaseImpl(repositoryPort);
    }
 
    @Bean
-    public  ListRestaurantsUseCase listRestaurantUsecase(RestaurantRepositoryPort repositoryPort) {
+    public  ListRestaurantsUseCase listRestaurantUsecase(RestaurantGateway repositoryPort) {
         return new ListRestaurantsUseCaseImpl(repositoryPort);
    }
 
    @Bean
-    public  UpdateRestaurantUseCase updateRestaurantUsecase(RestaurantRepositoryPort repositoryPort) {
+    public  UpdateRestaurantUseCase updateRestaurantUsecase(RestaurantGateway repositoryPort) {
         return new UpdateRestaurantUseCaseImpl(repositoryPort);
    }
 }

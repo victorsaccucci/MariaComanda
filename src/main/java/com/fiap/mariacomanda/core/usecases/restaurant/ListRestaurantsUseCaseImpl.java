@@ -1,13 +1,14 @@
 package com.fiap.mariacomanda.core.usecases.restaurant;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
+import com.fiap.mariacomanda.core.gateway.RestaurantGateway;
 
 import java.util.List;
 
 public class ListRestaurantsUseCaseImpl implements ListRestaurantsUseCase {
-    private final RestaurantRepositoryPort repository;
+    private final RestaurantGateway repository;
 
-    public ListRestaurantsUseCaseImpl(RestaurantRepositoryPort repository) {
+    public ListRestaurantsUseCaseImpl(RestaurantGateway repository) {
         this.repository = repository;
     }
 
