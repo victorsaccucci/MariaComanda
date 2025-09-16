@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class RestaurantMapper {
+public class RestaurantDtoMapper {
     public Restaurant mapCreate(CreateRestaurantInputDTO dto) {
         return new Restaurant(
             dto.getId(), 
