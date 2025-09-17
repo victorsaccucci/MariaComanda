@@ -5,14 +5,14 @@ import com.fiap.mariacomanda.core.gateway.MenuItemGateway;
 
 public class DeleteMenuItemUseCaseImpl implements DeleteMenuItemUseCase {
 
-    private final MenuItemGateway gateway;
+    private final MenuItemGateway repository;
 
-    public DeleteMenuItemUseCaseImpl(MenuItemGateway gateway){
-        this.gateway = gateway;
+    public DeleteMenuItemUseCaseImpl(MenuItemGateway repository){
+        this.repository = repository;
     }
 
     @Override
     public void execute(UUID id) {
-        gateway.deleteById(id);
+        repository.deleteById(id);
     }
 }

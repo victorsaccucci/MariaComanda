@@ -5,14 +5,14 @@ import com.fiap.mariacomanda.core.gateway.MenuItemGateway;
 
 public class CreateMenuItemUseCaseImpl implements CreateMenuItemUseCase {
 
-    private final MenuItemGateway gateway;
+    private final MenuItemGateway repository;
 
-    public CreateMenuItemUseCaseImpl(MenuItemGateway gateway) {
-        this.gateway = gateway;
+    public CreateMenuItemUseCaseImpl(MenuItemGateway repository) {
+        this.repository = repository;
     }
 
     @Override 
     public MenuItem execute(MenuItem newMenuItem) {
-        return gateway.save(newMenuItem);
+        return repository.save(newMenuItem);
     }
 }
