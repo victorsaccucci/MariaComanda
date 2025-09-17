@@ -1,20 +1,18 @@
 package com.fiap.mariacomanda.core.usecases.user;
 
 import com.fiap.mariacomanda.core.gateway.UserGateway;
-
 import java.util.UUID;
 
-@
 public class DeleteUserUseCaseImpl implements DeleteUserUseCase{
 
-    private final UserGateway gateway;
+    private final UserGateway repository;
 
-    public DeleteUserUseCaseImpl(UserGateway gateway) {
-        this.gateway = gateway;
+    public DeleteUserUseCaseImpl(UserGateway repository) {
+        this.repository = repository;
     }
 
     @Override
     public void execute(UUID id) {
-         gateway.deleteById(id);
+        repository.deleteById(id);
     }
 }

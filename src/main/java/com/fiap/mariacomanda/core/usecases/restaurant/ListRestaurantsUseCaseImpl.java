@@ -6,14 +6,14 @@ import com.fiap.mariacomanda.core.gateway.RestaurantGateway;
 import java.util.List;
 
 public class ListRestaurantsUseCaseImpl implements ListRestaurantsUseCase {
-    private final RestaurantGateway gateway;
+    private final RestaurantGateway repository;
 
-    public ListRestaurantsUseCaseImpl(RestaurantGateway gateway) {
-        this.gateway = gateway;
+    public ListRestaurantsUseCaseImpl(RestaurantGateway repository) {
+        this.repository = repository;
     }
 
     @Override
     public List<Restaurant> execute(int page, int size) {
-        return gateway.findAll(page, size);
+        return repository.findAll(page, size);
     }
 }

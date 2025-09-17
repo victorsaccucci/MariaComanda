@@ -7,14 +7,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class GetRestaurantUseCaseImpl implements GetRestaurantUseCase {
-    private final RestaurantGateway gateway;
+    private final RestaurantGateway repository;
 
-    public GetRestaurantUseCaseImpl(RestaurantGateway gateway) {
-        this.gateway = gateway;
+    public GetRestaurantUseCaseImpl(RestaurantGateway repository) {
+        this.repository = repository;
     }
 
     @Override
     public Optional<Restaurant> execute(UUID id) {
-        return gateway.findById(id);
+        return repository.findById(id);
     }
 }

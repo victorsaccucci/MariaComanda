@@ -7,14 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 
 
 public class CreateRestaurantUseCaseImpl implements CreateRestaurantUseCase {
-    private final RestaurantGateway gateway;
+    private final RestaurantGateway repository;
 
-    public CreateRestaurantUseCaseImpl(RestaurantGateway gateway) {
-        this.gateway = gateway;
+    public CreateRestaurantUseCaseImpl(RestaurantGateway repository) {
+        this.repository = repository;
     }
 
     @Override
     public Restaurant execute(Restaurant newRestaurant) {
-        return gateway.save(newRestaurant);
+        return repository.save(newRestaurant);
     }
 }
