@@ -2,7 +2,6 @@ package com.fiap.mariacomanda.core.controller;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.dto.restaurant.*;
-import com.fiap.mariacomanda.core.dto.restaurant.DeleteRestaurantInputDTO;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapper;
 import com.fiap.mariacomanda.core.usecases.restaurant.*;
 import java.util.List;
