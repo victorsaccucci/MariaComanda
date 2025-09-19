@@ -1,10 +1,10 @@
 package com.fiap.mariacomanda.infrastructure.database.mapper;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
-import com.fiap.mariacomanda.core.dto.CreateRestaurantInputDTO;
-import com.fiap.mariacomanda.core.dto.CreateRestaurantOutputDTO;
-import com.fiap.mariacomanda.core.dto.GetRestaurantOutputDTO;
-import com.fiap.mariacomanda.core.dto.UpdateRestaurantInputDTO;
+import com.fiap.mariacomanda.core.dto.restaurant.CreateRestaurantInputDTO;
+import com.fiap.mariacomanda.core.dto.restaurant.CreateRestaurantOutputDTO;
+import com.fiap.mariacomanda.core.dto.restaurant.GetRestaurantOutputDTO;
+import com.fiap.mariacomanda.core.dto.restaurant.UpdateRestaurantInputDTO;
 import com.fiap.mariacomanda.infrastructure.web.json.RestaurantJson;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class RestaurantMapper {
+public class RestaurantDtoMapper {
     public Restaurant mapCreate(CreateRestaurantInputDTO dto) {
         return new Restaurant(
             dto.getId(), 

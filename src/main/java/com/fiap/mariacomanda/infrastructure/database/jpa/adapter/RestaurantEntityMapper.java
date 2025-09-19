@@ -5,7 +5,7 @@ import com.fiap.mariacomanda.infrastructure.database.jpa.entity.RestaurantEntity
 import org.springframework.stereotype.Component;
 
 @Component("restaurantEntityMapper")
-public class RestaurantMapper {
+public class RestaurantEntityMapper {
     public RestaurantEntity toEntity(Restaurant d) {
         var e = new RestaurantEntity();
         e.setId(d.id());

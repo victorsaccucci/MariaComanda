@@ -1,7 +1,8 @@
 package com.fiap.mariacomanda.infrastructure.web.controller;
 
 import com.fiap.mariacomanda.core.controller.RestaurantController;
-import com.fiap.mariacomanda.core.dto.*;
+import com.fiap.mariacomanda.core.dto.restaurant.*;
+import com.fiap.mariacomanda.core.dto.restaurant.DeleteRestaurantInputDTO;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapper;
 import com.fiap.mariacomanda.infrastructure.web.json.RestaurantJson;
 import jakarta.validation.Valid;

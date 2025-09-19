@@ -1,13 +1,13 @@
-package com.fiap.mariacomanda.core.dto;
+package com.fiap.mariacomanda.core.dto.restaurant;
+
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.UUID;
-
 @Getter
 @AllArgsConstructor
-public class GetRestaurantInputDTO {
+public class CreateRestaurantOutputDTO {
     private UUID id;
     private String name;
     private String address;

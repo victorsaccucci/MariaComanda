@@ -13,9 +13,9 @@ import java.util.*;
 public class RestaurantRepositoryAdapter implements RestaurantGateway {
 
     private final RestaurantJpaRepository repo;
-    private final RestaurantMapper mapper;
+    private final RestaurantEntityMapper mapper;
 
-    public RestaurantRepositoryAdapter(RestaurantJpaRepository repo, RestaurantMapper mapper) {
+    public RestaurantRepositoryAdapter(RestaurantJpaRepository repo, RestaurantEntityMapper mapper) {
         this.repo = repo; this.mapper = mapper;
     }
 

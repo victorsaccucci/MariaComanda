@@ -5,10 +5,13 @@ import com.fiap.mariacomanda.core.gateway.RestaurantGateway;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
-@AllArgsConstructor
+
 public class CreateRestaurantUseCaseImpl implements CreateRestaurantUseCase {
     private final RestaurantGateway repository;
+
+    public CreateRestaurantUseCaseImpl(RestaurantGateway repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Restaurant execute(Restaurant newRestaurant) {

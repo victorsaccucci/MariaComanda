@@ -4,42 +4,33 @@ import com.fiap.mariacomanda.core.gateway.RestaurantGateway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.fiap.mariacomanda.core.usecases.restaurant.CreateRestaurantUseCase;
-import com.fiap.mariacomanda.core.usecases.restaurant.CreateRestaurantUseCaseImpl;
-import com.fiap.mariacomanda.core.usecases.restaurant.DeleteRestaurantUseCase;
-import com.fiap.mariacomanda.core.usecases.restaurant.DeleteRestaurantUseCaseImpl;
-import com.fiap.mariacomanda.core.usecases.restaurant.GetRestaurantUseCase;
-import com.fiap.mariacomanda.core.usecases.restaurant.GetRestaurantUseCaseImpl;
-import com.fiap.mariacomanda.core.usecases.restaurant.ListRestaurantsUseCase;
-import com.fiap.mariacomanda.core.usecases.restaurant.ListRestaurantsUseCaseImpl;
-import com.fiap.mariacomanda.core.usecases.restaurant.UpdateRestaurantUseCase;
-import com.fiap.mariacomanda.core.usecases.restaurant.UpdateRestaurantUseCaseImpl;
+import com.fiap.mariacomanda.core.usecases.restaurant.*;
 
 @Configuration
 public class RestaurantUseCaseConfig {
 
     @Bean
-    public  CreateRestaurantUseCase createRestaurantUsecase(RestaurantGateway repositoryPort) {
-        return new CreateRestaurantUseCaseImpl(repositoryPort);
+    public  CreateRestaurantUseCase createRestaurantUsecase(RestaurantGateway restaurantGateway) {
+        return new CreateRestaurantUseCaseImpl(restaurantGateway);
    }
 
    @Bean
-    public  DeleteRestaurantUseCase deleteRestaurantUsecase(RestaurantGateway repositoryPort) {
-        return new DeleteRestaurantUseCaseImpl(repositoryPort);
+    public  DeleteRestaurantUseCase deleteRestaurantUsecase(RestaurantGateway restaurantGateway) {
+        return new DeleteRestaurantUseCaseImpl(restaurantGateway);
    }
 
    @Bean
-    public  GetRestaurantUseCase getRestaurantUsecase(RestaurantGateway repositoryPort) {
-        return new GetRestaurantUseCaseImpl(repositoryPort);
+    public  GetRestaurantUseCase getRestaurantUsecase(RestaurantGateway restaurantGateway) {
+        return new GetRestaurantUseCaseImpl(restaurantGateway);
    }
 
    @Bean
-    public  ListRestaurantsUseCase listRestaurantUsecase(RestaurantGateway repositoryPort) {
-        return new ListRestaurantsUseCaseImpl(repositoryPort);
+    public  ListRestaurantsUseCase listRestaurantUsecase(RestaurantGateway restaurantGateway) {
+        return new ListRestaurantsUseCaseImpl(restaurantGateway);
    }
 
    @Bean
-    public  UpdateRestaurantUseCase updateRestaurantUsecase(RestaurantGateway repositoryPort) {
-        return new UpdateRestaurantUseCaseImpl(repositoryPort);
+    public  UpdateRestaurantUseCase updateRestaurantUsecase(RestaurantGateway restaurantGateway) {
+        return new UpdateRestaurantUseCaseImpl(restaurantGateway);
    }
 }

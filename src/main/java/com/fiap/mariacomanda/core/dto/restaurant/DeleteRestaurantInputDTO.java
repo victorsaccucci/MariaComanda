@@ -1,4 +1,4 @@
-package com.fiap.mariacomanda.core.dto;
+package com.fiap.mariacomanda.core.dto.restaurant;
 
 import lombok.Getter;
 
