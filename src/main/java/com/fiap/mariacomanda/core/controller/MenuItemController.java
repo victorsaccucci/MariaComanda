@@ -1,9 +1,9 @@
 package com.fiap.mariacomanda.core.controller;
 
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
+import com.fiap.mariacomanda.core.domain.usecases.menuItem.*;
 import com.fiap.mariacomanda.core.dto.menuItem.*;
 import com.fiap.mariacomanda.core.mapper.MenuItemMapper;
-import com.fiap.mariacomanda.core.usecases.menuItem.*;
 
 import java.util.List;
 

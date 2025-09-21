@@ -1,9 +1,9 @@
 package com.fiap.mariacomanda.core.controller;
 
 import com.fiap.mariacomanda.core.domain.entity.User;
+import com.fiap.mariacomanda.core.domain.usecases.user.*;
 import com.fiap.mariacomanda.core.dto.user.*;
 import com.fiap.mariacomanda.core.mapper.UserMapper;
-import com.fiap.mariacomanda.core.usecases.user.*;
 
 import java.util.List;
 
