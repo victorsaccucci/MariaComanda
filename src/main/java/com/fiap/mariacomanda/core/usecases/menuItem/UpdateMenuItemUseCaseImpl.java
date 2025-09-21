@@ -7,13 +7,13 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
 
     private final MenuItemGateway repository;
 
-    public UpdateMenuItemUseCaseImpl(MenuItemGateway repository){
+    public UpdateMenuItemUseCaseImpl(MenuItemGateway repository) {
         this.repository = repository;
     }
 
     @Override
     public MenuItem execute(MenuItem menuItem) {
-        if (menuItem.id() == null) throw new IllegalArgumentException("id is required"); 
+        if (menuItem.id() == null) throw new IllegalArgumentException("id is required");
         return repository.save(menuItem);
     }
 

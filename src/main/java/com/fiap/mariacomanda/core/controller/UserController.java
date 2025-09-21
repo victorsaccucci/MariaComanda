@@ -30,7 +30,7 @@ public class UserController {
         return userMapper.mapCreateDomainToOutput(created);
     }
 
-    public void delete(DeleteUserInputDTO inputDTO){
+    public void delete(DeleteUserInputDTO inputDTO) {
         delete.execute(inputDTO.getId());
     }
 
