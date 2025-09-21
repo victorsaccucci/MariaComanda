@@ -6,10 +6,12 @@ import com.fiap.mariacomanda.core.dto.restaurant.CreateRestaurantOutputDTO;
 import com.fiap.mariacomanda.core.dto.restaurant.GetRestaurantOutputDTO;
 import com.fiap.mariacomanda.core.dto.restaurant.UpdateRestaurantInputDTO;
 import com.fiap.mariacomanda.infrastructure.web.json.RestaurantJson;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class RestaurantMapperImpl implements RestaurantMapper {
 
     @Override
