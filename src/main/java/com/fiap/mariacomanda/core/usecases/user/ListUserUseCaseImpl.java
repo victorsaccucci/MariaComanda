@@ -5,7 +5,7 @@ import com.fiap.mariacomanda.core.gateway.UserGateway;
 
 import java.util.List;
 
-public class ListUserUseCaseImpl implements ListUserUseCase{
+public class ListUserUseCaseImpl implements ListUserUseCase {
 
     private final UserGateway repository;
 

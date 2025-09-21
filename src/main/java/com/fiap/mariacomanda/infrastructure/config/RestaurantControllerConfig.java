@@ -12,7 +12,7 @@ public class RestaurantControllerConfig {
 
     @Bean
     public RestaurantMapper restaurantMapper() {
-        return new RestaurantMapperImpl(); 
+        return new RestaurantMapperImpl();
     }
 
     @Bean

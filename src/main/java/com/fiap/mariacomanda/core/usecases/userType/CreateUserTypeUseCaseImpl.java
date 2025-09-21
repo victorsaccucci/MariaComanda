@@ -1,17 +1,15 @@
 package com.fiap.mariacomanda.core.usecases.userType;
 
-import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
-import com.fiap.mariacomanda.core.gateway.RestaurantGateway;
 import com.fiap.mariacomanda.core.gateway.UserTypeGateway;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CreateUserTypeUseCaseImpl implements CreateUserTypeUserCase{
+public class CreateUserTypeUseCaseImpl implements CreateUserTypeUserCase {
 
     private final UserTypeGateway gateway;
 
-    public CreateUserTypeUseCaseImpl(UserTypeGateway gateway){
+    public CreateUserTypeUseCaseImpl(UserTypeGateway gateway) {
         this.gateway = gateway;
     }
 

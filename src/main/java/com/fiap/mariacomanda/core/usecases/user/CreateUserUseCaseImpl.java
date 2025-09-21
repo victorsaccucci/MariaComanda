@@ -3,7 +3,7 @@ package com.fiap.mariacomanda.core.usecases.user;
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.gateway.UserGateway;
 
-public class CreateUserUseCaseImpl implements CreateUserUseCase{
+public class CreateUserUseCaseImpl implements CreateUserUseCase {
     private final UserGateway repository;
 
     public CreateUserUseCaseImpl(UserGateway repository) {

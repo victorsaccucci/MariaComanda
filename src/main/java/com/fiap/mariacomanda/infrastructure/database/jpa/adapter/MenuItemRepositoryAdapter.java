@@ -1,17 +1,16 @@
 package com.fiap.mariacomanda.infrastructure.database.jpa.adapter;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
-
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.core.gateway.MenuItemGateway;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.MenuItemEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.MenuItemJpaRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class MenuItemRepositoryAdapter implements MenuItemGateway {
@@ -45,7 +44,7 @@ public class MenuItemRepositoryAdapter implements MenuItemGateway {
     }
 
     @Override
-    public void deleteById(UUID id){
+    public void deleteById(UUID id) {
         repository.deleteById(id);
     }
 }

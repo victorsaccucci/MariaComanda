@@ -4,6 +4,7 @@ import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.dto.restaurant.*;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapper;
 import com.fiap.mariacomanda.core.usecases.restaurant.*;
+
 import java.util.List;
 
 public class RestaurantController {
@@ -32,7 +33,7 @@ public class RestaurantController {
 
     public GetRestaurantOutputDTO get(GetRestaurantInputDTO inputDTO) {
         Restaurant restaurant = get.execute(inputDTO.getId())
-            .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
         return restaurantMapper.mapToGetOutputDTO(restaurant);
     }
 

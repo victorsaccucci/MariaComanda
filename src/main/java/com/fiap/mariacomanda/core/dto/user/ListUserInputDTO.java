@@ -1,7 +1,5 @@
 package com.fiap.mariacomanda.core.dto.user;
 
-import com.fiap.mariacomanda.core.domain.entity.UserType;
-
 import java.util.UUID;
 
 public class ListUserInputDTO {

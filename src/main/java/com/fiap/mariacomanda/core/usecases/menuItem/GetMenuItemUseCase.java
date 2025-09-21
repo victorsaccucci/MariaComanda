@@ -1,9 +1,9 @@
 package com.fiap.mariacomanda.core.usecases.menuItem;
 
+import com.fiap.mariacomanda.core.domain.entity.MenuItem;
+
 import java.util.Optional;
 import java.util.UUID;
-
-import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 
 public interface GetMenuItemUseCase {
 

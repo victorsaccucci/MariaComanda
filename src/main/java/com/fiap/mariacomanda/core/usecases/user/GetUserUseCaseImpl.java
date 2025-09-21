@@ -6,7 +6,7 @@ import com.fiap.mariacomanda.core.gateway.UserGateway;
 import java.util.Optional;
 import java.util.UUID;
 
-public class GetUserUseCaseImpl implements GetUserUseCase{
+public class GetUserUseCaseImpl implements GetUserUseCase {
 
     private final UserGateway repository;
 

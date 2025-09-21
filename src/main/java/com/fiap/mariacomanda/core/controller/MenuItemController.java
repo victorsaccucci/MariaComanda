@@ -1,11 +1,11 @@
 package com.fiap.mariacomanda.core.controller;
 
-import java.util.List;
-
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.core.dto.menuItem.*;
 import com.fiap.mariacomanda.core.mapper.MenuItemMapper;
 import com.fiap.mariacomanda.core.usecases.menuItem.*;
+
+import java.util.List;
 
 public class MenuItemController {
 
@@ -17,7 +17,7 @@ public class MenuItemController {
     private final MenuItemMapper menuItemMapper;
 
     public MenuItemController(CreateMenuItemUseCase create, DeleteMenuItemUseCase delete, GetMenuItemUseCase get,
-            ListMenuItemUseCase list, UpdateMenuItemUseCase update, MenuItemMapper menuItemMapper) {
+                              ListMenuItemUseCase list, UpdateMenuItemUseCase update, MenuItemMapper menuItemMapper) {
         this.create = create;
         this.delete = delete;
         this.get = get;
@@ -32,13 +32,13 @@ public class MenuItemController {
         return menuItemMapper.mapCreateDomainToOutput(created);
     }
 
-    public void delete(DeleteMenuItemInputDTO inputDTO){
+    public void delete(DeleteMenuItemInputDTO inputDTO) {
         delete.execute(inputDTO.getId());
     }
 
     public GetMenuItemOutputDTO get(GetMenuItemInputDTO inputDTO) {
         MenuItem menuItem = get.execute(inputDTO.getId())
-        .orElseThrow(() -> new RuntimeException("Menu item not found"));
+                .orElseThrow(() -> new RuntimeException("Menu item not found"));
         return menuItemMapper.mapGetDomainToOutput(menuItem);
 
     }

@@ -1,13 +1,11 @@
 package com.fiap.mariacomanda.core.dto.user;
 
 import com.fiap.mariacomanda.core.domain.entity.UserType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.UUID;
 
 @Getter
-
 public class CreateUserOutputDTO {
     private UUID id;
     private String name;
