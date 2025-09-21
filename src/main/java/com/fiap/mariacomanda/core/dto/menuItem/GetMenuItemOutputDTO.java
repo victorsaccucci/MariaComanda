@@ -46,6 +46,4 @@ public class GetMenuItemOutputDTO {
         this.photoPath = photoPath;
     }
 
-    
-
 }

@@ -7,7 +7,9 @@ import com.fiap.mariacomanda.infrastructure.database.jpa.repository.RestaurantJp
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class RestaurantRepositoryAdapter implements RestaurantGateway {
@@ -16,7 +18,8 @@ public class RestaurantRepositoryAdapter implements RestaurantGateway {
     private final RestaurantEntityMapper mapper;
 
     public RestaurantRepositoryAdapter(RestaurantJpaRepository repo, RestaurantEntityMapper mapper) {
-        this.repo = repo; this.mapper = mapper;
+        this.repo = repo;
+        this.mapper = mapper;
     }
 
     @Override
@@ -38,5 +41,7 @@ public class RestaurantRepositoryAdapter implements RestaurantGateway {
     }
 
     @Override
-    public void deleteById(UUID id) { repo.deleteById(id); }
+    public void deleteById(UUID id) {
+        repo.deleteById(id);
+    }
 }

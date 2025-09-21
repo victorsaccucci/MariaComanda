@@ -10,7 +10,7 @@ public class UpdateMenuItemInputDTO {
     private String name;
     private String description;
     private BigDecimal price;
-    private boolean dineInOnly; 
+    private boolean dineInOnly;
     private String photoPath;
 
     public UUID getId() {
@@ -45,8 +45,4 @@ public class UpdateMenuItemInputDTO {
         this.dineInOnly = dineInOnly;
         this.photoPath = photoPath;
     }
-
-    
-
-    
 }

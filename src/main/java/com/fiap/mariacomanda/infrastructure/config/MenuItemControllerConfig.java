@@ -1,12 +1,11 @@
 package com.fiap.mariacomanda.infrastructure.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.fiap.mariacomanda.core.controller.MenuItemController;
 import com.fiap.mariacomanda.core.mapper.MenuItemMapper;
 import com.fiap.mariacomanda.core.mapper.MenuItemMapperImpl;
 import com.fiap.mariacomanda.core.usecases.menuItem.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MenuItemControllerConfig {

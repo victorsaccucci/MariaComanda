@@ -1,13 +1,14 @@
 package com.fiap.mariacomanda.core.usecases.menuItem;
 
-import java.util.UUID;
 import com.fiap.mariacomanda.core.gateway.MenuItemGateway;
+
+import java.util.UUID;
 
 public class DeleteMenuItemUseCaseImpl implements DeleteMenuItemUseCase {
 
     private final MenuItemGateway repository;
 
-    public DeleteMenuItemUseCaseImpl(MenuItemGateway repository){
+    public DeleteMenuItemUseCaseImpl(MenuItemGateway repository) {
         this.repository = repository;
     }
 
