@@ -1,4 +1,4 @@
-package com.fiap.mariacomanda.core.domain.usecases.userType;
+package com.fiap.mariacomanda.core.domain.usecases.usertype;
 
 import com.fiap.mariacomanda.core.domain.entity.UserType;
 

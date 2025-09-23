@@ -1,4 +1,4 @@
-package com.fiap.mariacomanda.core.controller;
+package com.fiap.mariacomanda.core.adapters.controller;
 
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.usecases.user.*;

@@ -1,6 +1,6 @@
 package com.fiap.mariacomanda.infrastructure.web.controller;
 
-import com.fiap.mariacomanda.core.controller.MenuItemController;
+import com.fiap.mariacomanda.core.adapters.controller.MenuItemController;
 import com.fiap.mariacomanda.core.dto.menuItem.*;
 import com.fiap.mariacomanda.infrastructure.config.swagger.openapi.controller.MenuItemApi;
 import com.fiap.mariacomanda.infrastructure.database.mapper.MenuItemJsonMapper;

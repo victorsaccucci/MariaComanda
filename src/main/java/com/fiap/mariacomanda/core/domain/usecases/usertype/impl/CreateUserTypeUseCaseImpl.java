@@ -1,7 +1,8 @@
-package com.fiap.mariacomanda.core.domain.usecases.userType;
+package com.fiap.mariacomanda.core.domain.usecases.usertype.impl;
 
 import com.fiap.mariacomanda.core.domain.entity.UserType;
-import com.fiap.mariacomanda.core.gateway.UserTypeGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.CreateUserTypeUserCase;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

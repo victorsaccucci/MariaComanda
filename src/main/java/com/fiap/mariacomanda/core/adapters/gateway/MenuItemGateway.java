@@ -1,4 +1,4 @@
-package com.fiap.mariacomanda.core.gateway;
+package com.fiap.mariacomanda.core.adapters.gateway;
 
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import java.util.*;

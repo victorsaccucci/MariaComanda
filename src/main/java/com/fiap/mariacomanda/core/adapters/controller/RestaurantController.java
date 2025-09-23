@@ -1,4 +1,4 @@
-package com.fiap.mariacomanda.core.controller;
+package com.fiap.mariacomanda.core.adapters.controller;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.*;

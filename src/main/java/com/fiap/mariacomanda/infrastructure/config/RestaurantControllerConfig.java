@@ -1,6 +1,6 @@
 package com.fiap.mariacomanda.infrastructure.config;
 
-import com.fiap.mariacomanda.core.controller.RestaurantController;
+import com.fiap.mariacomanda.core.adapters.controller.RestaurantController;
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.*;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapper;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapperImpl;

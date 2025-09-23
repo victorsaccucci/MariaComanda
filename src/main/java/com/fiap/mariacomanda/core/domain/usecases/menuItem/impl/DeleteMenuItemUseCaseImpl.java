@@ -1,6 +1,7 @@
-package com.fiap.mariacomanda.core.domain.usecases.menuItem;
+package com.fiap.mariacomanda.core.domain.usecases.menuItem.impl;
 
-import com.fiap.mariacomanda.core.gateway.MenuItemGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
+import com.fiap.mariacomanda.core.domain.usecases.menuItem.DeleteMenuItemUseCase;
 
 import java.util.UUID;
 

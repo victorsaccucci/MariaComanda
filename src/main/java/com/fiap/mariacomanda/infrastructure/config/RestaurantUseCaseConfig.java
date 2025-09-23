@@ -1,7 +1,8 @@
 package com.fiap.mariacomanda.infrastructure.config;
 
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.*;
-import com.fiap.mariacomanda.core.gateway.RestaurantGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
+import com.fiap.mariacomanda.core.domain.usecases.restaurant.impl.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

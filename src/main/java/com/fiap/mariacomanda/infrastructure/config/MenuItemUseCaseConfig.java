@@ -1,7 +1,8 @@
 package com.fiap.mariacomanda.infrastructure.config;
 
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.*;
-import com.fiap.mariacomanda.core.gateway.MenuItemGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
+import com.fiap.mariacomanda.core.domain.usecases.menuItem.impl.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

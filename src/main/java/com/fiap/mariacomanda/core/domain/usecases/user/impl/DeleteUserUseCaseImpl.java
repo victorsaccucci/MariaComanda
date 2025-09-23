@@ -1,6 +1,7 @@
-package com.fiap.mariacomanda.core.domain.usecases.user;
+package com.fiap.mariacomanda.core.domain.usecases.user.impl;
 
-import com.fiap.mariacomanda.core.gateway.UserGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
+import com.fiap.mariacomanda.core.domain.usecases.user.DeleteUserUseCase;
 
 import java.util.UUID;
 

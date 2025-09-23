@@ -1,7 +1,7 @@
 package com.fiap.mariacomanda.infrastructure.database.jpa.adapter;
 
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
-import com.fiap.mariacomanda.core.gateway.MenuItemGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.MenuItemEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.MenuItemJpaRepository;
 import org.springframework.data.domain.PageRequest;

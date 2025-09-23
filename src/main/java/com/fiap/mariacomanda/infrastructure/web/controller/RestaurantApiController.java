@@ -1,6 +1,6 @@
 package com.fiap.mariacomanda.infrastructure.web.controller;
 
-import com.fiap.mariacomanda.core.controller.RestaurantController;
+import com.fiap.mariacomanda.core.adapters.controller.RestaurantController;
 import com.fiap.mariacomanda.core.dto.restaurant.*;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapperImpl;
 import com.fiap.mariacomanda.infrastructure.web.json.RestaurantJson;
