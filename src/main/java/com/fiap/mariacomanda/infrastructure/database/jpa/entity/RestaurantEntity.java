@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -29,4 +31,7 @@ public class RestaurantEntity {
 
     @Column(name = "owner_user_id", nullable = false)
     private UUID ownerUserId;
+
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    private Set<MenuItemEntity> menuItems = new HashSet<>();
 }

@@ -11,22 +11,31 @@ import org.springframework.stereotype.Component;
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.core.gateway.MenuItemGateway;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.MenuItemEntity;
+import com.fiap.mariacomanda.infrastructure.database.jpa.entity.RestaurantEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.MenuItemJpaRepository;
+import com.fiap.mariacomanda.infrastructure.database.jpa.repository.RestaurantJpaRepository;
 
 @Component
 public class MenuItemRepositoryAdapter implements MenuItemGateway {
 
     private final MenuItemJpaRepository repository;
+    private final RestaurantJpaRepository restaurantRepository;
     private final MenuItemEntityMapper mapper;
 
-    public MenuItemRepositoryAdapter(MenuItemJpaRepository repository, MenuItemEntityMapper mapper) {
+    public MenuItemRepositoryAdapter(MenuItemJpaRepository repository, RestaurantJpaRepository restaurantRepository,
+            MenuItemEntityMapper mapper) {
         this.repository = repository;
+        this.restaurantRepository = restaurantRepository;
         this.mapper = mapper;
     }
 
     @Override
     public MenuItem save(MenuItem m) {
-        MenuItemEntity saved = repository.save(mapper.toEntity(m));
+        MenuItemEntity entity = mapper.toEntity(m);
+        RestaurantEntity restaurant = restaurantRepository.findById(m.restaurantId())
+                .orElseThrow(() -> new RuntimeException("Restaurant not found for id: " + m.restaurantId()));
+        entity.setRestaurant(restaurant);
+        MenuItemEntity saved = repository.save(entity);
         return mapper.toDomain(saved);
     }
 
@@ -38,14 +47,14 @@ public class MenuItemRepositoryAdapter implements MenuItemGateway {
     @Override
     public List<MenuItem> findByRestaurant(UUID restaurantId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return repository.findByRestaurantId(restaurantId, pageable)
+        return repository.findByRestaurant_Id(restaurantId, pageable)
                 .stream()
                 .map(mapper::toDomain)
                 .toList();
     }
 
     @Override
-    public void deleteById(UUID id){
+    public void deleteById(UUID id) {
         repository.deleteById(id);
     }
 }

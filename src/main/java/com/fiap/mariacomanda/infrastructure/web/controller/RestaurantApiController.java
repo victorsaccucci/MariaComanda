@@ -3,7 +3,7 @@ package com.fiap.mariacomanda.infrastructure.web.controller;
 import com.fiap.mariacomanda.core.controller.RestaurantController;
 import com.fiap.mariacomanda.core.dto.restaurant.*;
 import com.fiap.mariacomanda.core.dto.restaurant.DeleteRestaurantInputDTO;
-import com.fiap.mariacomanda.core.mapper.RestaurantMapperImpl;
+import com.fiap.mariacomanda.core.mapper.RestaurantMapper;
 import com.fiap.mariacomanda.infrastructure.web.json.RestaurantJson;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class RestaurantApiController {
 
     private final RestaurantController restaurantController;
 
-    private final RestaurantMapperImpl restaurantMapper;
+    private final RestaurantMapper restaurantMapper;
 
     @PostMapping
     public CreateRestaurantOutputDTO create(@Valid @RequestBody RestaurantJson restaurantJson) {

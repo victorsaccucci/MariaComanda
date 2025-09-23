@@ -3,25 +3,13 @@ package com.fiap.mariacomanda.infrastructure.web.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fiap.mariacomanda.core.controller.MenuItemController;
-import com.fiap.mariacomanda.core.dto.menuItem.CreateMenuItemOutputDTO;
-import com.fiap.mariacomanda.core.dto.menuItem.DeleteMenuItemInputDTO;
-import com.fiap.mariacomanda.core.dto.menuItem.GetMenuItemInputDTO;
-import com.fiap.mariacomanda.core.dto.menuItem.GetMenuItemOutputDTO;
-import com.fiap.mariacomanda.core.dto.menuItem.ListMenuItemInputDTO;
-import com.fiap.mariacomanda.core.dto.menuItem.UpdateMenuItemInputDTO;
+import com.fiap.mariacomanda.core.dto.menuItem.*;
 import com.fiap.mariacomanda.infrastructure.database.mapper.MenuItemJsonMapper;
 import com.fiap.mariacomanda.infrastructure.web.json.CreateMenuItemJson;
+import com.fiap.mariacomanda.infrastructure.web.json.UpdateMenuItemJson;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -64,8 +52,10 @@ public class MenuItemApiController {
     }
 
     @PutMapping("/{id}")
-    public GetMenuItemOutputDTO update(@PathVariable UUID id, @RequestBody UpdateMenuItemInputDTO dto){
-        var inputDTO = new UpdateMenuItemInputDTO(id, dto.getRestaurantId(), dto.getName(), dto.getDescription(), dto.getPrice(), dto.getDineInOnly(), dto.getPhotoPath());
+    public GetMenuItemOutputDTO update(@PathVariable UUID id, @RequestBody UpdateMenuItemJson updateMenuItemJson){
+        GetMenuItemOutputDTO existingDto = menuItemController.get(new GetMenuItemInputDTO(id, id, null, null, null, false, null));
+        UUID restaurantId = existingDto.getRestaurantId();
+        var inputDTO = new UpdateMenuItemInputDTO(id, restaurantId, updateMenuItemJson.getName(), updateMenuItemJson.getDescription(), updateMenuItemJson.getPrice(), updateMenuItemJson.isDineInOnly(), updateMenuItemJson.getPhotoPath());
         return menuItemController.update(inputDTO);
     }
 

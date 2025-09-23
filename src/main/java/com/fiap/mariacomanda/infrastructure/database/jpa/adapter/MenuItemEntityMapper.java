@@ -23,7 +23,7 @@ public class MenuItemEntityMapper {
     public MenuItem toDomain(MenuItemEntity entity) {
         return new MenuItem(
                 entity.getId(),
-                entity.getRestaurantId(),
+                entity.getRestaurant() != null ? entity.getRestaurant().getId() : entity.getRestaurantId(),
                 entity.getName(),
                 entity.getDescription(),
                 entity.getPrice(),
