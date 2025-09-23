@@ -1,19 +1,19 @@
 package com.fiap.mariacomanda.infrastructure.database.jpa.adapter;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import com.fiap.mariacomanda.core.domain.entity.MenuItem;
+import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
+import com.fiap.mariacomanda.infrastructure.database.jpa.entity.MenuItemEntity;
+import com.fiap.mariacomanda.infrastructure.database.jpa.entity.RestaurantEntity;
+import com.fiap.mariacomanda.infrastructure.database.jpa.repository.MenuItemJpaRepository;
+import com.fiap.mariacomanda.infrastructure.database.jpa.repository.RestaurantJpaRepository;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.fiap.mariacomanda.core.domain.entity.MenuItem;
-import com.fiap.mariacomanda.core.gateway.MenuItemGateway;
-import com.fiap.mariacomanda.infrastructure.database.jpa.entity.MenuItemEntity;
-import com.fiap.mariacomanda.infrastructure.database.jpa.entity.RestaurantEntity;
-import com.fiap.mariacomanda.infrastructure.database.jpa.repository.MenuItemJpaRepository;
-import com.fiap.mariacomanda.infrastructure.database.jpa.repository.RestaurantJpaRepository;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class MenuItemRepositoryAdapter implements MenuItemGateway {

@@ -1,0 +1,23 @@
+# Ignora VCS
+.git
+.gitignore
+
+# Ignora dependências pesadas
+node_modules
+target
+
+# Ignora arquivos de sistema e IDEs
+.DS_Store
+*.iml
+.idea/
+.vscode/
+
+# Ignora arquivos sensíveis
+.env
+*.pem
+*.key
+
+# Outros arquivos a ignorar
+*.jar
+*.log
+.dockerignore

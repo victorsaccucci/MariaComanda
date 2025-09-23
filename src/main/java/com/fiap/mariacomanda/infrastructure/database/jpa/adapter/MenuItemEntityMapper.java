@@ -1,9 +1,8 @@
 package com.fiap.mariacomanda.infrastructure.database.jpa.adapter;
 
-import org.springframework.stereotype.Component;
-
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.MenuItemEntity;
+import org.springframework.stereotype.Component;
 
 @Component("menuItemEntityMapper")
 public class MenuItemEntityMapper {

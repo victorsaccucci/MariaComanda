@@ -1,9 +1,9 @@
 package com.fiap.mariacomanda.infrastructure.config;
 
-import com.fiap.mariacomanda.core.controller.RestaurantController;
+import com.fiap.mariacomanda.core.adapters.controller.RestaurantController;
+import com.fiap.mariacomanda.core.domain.usecases.restaurant.*;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapper;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapperImpl;
-import com.fiap.mariacomanda.core.usecases.restaurant.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,7 +12,7 @@ public class RestaurantControllerConfig {
 
     @Bean
     public RestaurantMapper restaurantMapper() {
-        return new RestaurantMapperImpl(); 
+        return new RestaurantMapperImpl();
     }
 
     @Bean

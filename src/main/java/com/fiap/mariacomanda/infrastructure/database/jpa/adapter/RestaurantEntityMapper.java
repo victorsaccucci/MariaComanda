@@ -16,6 +16,7 @@ public class RestaurantEntityMapper {
         e.setOwnerUserId(d.ownerUserId());
         return e;
     }
+
     public Restaurant toDomain(RestaurantEntity e) {
         return new Restaurant(e.getId(), e.getName(), e.getAddress(),
                 e.getCuisineType(), e.getOpeningHours(), e.getOwnerUserId());

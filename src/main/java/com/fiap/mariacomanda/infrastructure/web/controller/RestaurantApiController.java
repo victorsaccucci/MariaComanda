@@ -1,6 +1,6 @@
 package com.fiap.mariacomanda.infrastructure.web.controller;
 
-import com.fiap.mariacomanda.core.controller.RestaurantController;
+import com.fiap.mariacomanda.core.adapters.controller.RestaurantController;
 import com.fiap.mariacomanda.core.dto.restaurant.*;
 import com.fiap.mariacomanda.core.dto.restaurant.DeleteRestaurantInputDTO;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapper;
@@ -35,7 +35,7 @@ public class RestaurantApiController {
 
     @GetMapping
     public List<GetRestaurantOutputDTO> list(@RequestParam(defaultValue = "0") int page,
-                                            @RequestParam(defaultValue = "20") int size) {
+                                             @RequestParam(defaultValue = "20") int size) {
         var inputDTO = new ListRestaurantsInputDTO(page, size);
         return restaurantController.list(inputDTO);
     }
