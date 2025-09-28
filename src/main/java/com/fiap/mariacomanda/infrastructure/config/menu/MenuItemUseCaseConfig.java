@@ -1,4 +1,4 @@
-package com.fiap.mariacomanda.infrastructure.config;
+package com.fiap.mariacomanda.infrastructure.config.menu;
 
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.*;
 import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;

@@ -1,4 +1,4 @@
-package com.fiap.mariacomanda.infrastructure.config;
+package com.fiap.mariacomanda.infrastructure.config.restaurant;
 
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.*;
 import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
