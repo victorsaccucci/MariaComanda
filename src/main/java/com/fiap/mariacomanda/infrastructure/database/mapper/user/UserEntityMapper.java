@@ -14,6 +14,7 @@ public class UserEntityMapper {
     public UserEntityMapper(UserTypeJpaRepository userTypeJpaRepository) {
         this.userTypeJpaRepository = userTypeJpaRepository;
     }
+
     public UserEntity toEntity(User d) {
         UserEntity e = new UserEntity();
         e.setId(d.getId());
@@ -28,11 +29,11 @@ public class UserEntityMapper {
 
     public User toDomain(UserEntity e) {
         return new User(
-            e.getId(),
-            e.getName(),
-            e.getEmail(),
-            e.getPasswordHash(),
-            e.getUserTypeId() != null ? e.getUserTypeId().getId() : null
+                e.getId(),
+                e.getName(),
+                e.getEmail(),
+                e.getPasswordHash(),
+                e.getUserTypeId() != null ? e.getUserTypeId().getId() : null
         );
     }
 }

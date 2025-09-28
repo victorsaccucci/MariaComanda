@@ -1,6 +1,5 @@
 package com.fiap.mariacomanda.infrastructure.config.swagger.openapi.controller;
 
-import com.fiap.mariacomanda.core.dto.restaurant.output.GetRestaurantOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.input.UpdateUserInputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
@@ -38,7 +37,7 @@ public interface UserApi {
     })
     @GetMapping
     List<GetUserOutputDTO> list(@RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "20") int size);
+                                @RequestParam(defaultValue = "20") int size);
 
     @Operation(summary = "Atualiza os dados de um usuário pelo ID")
     @ApiResponses(value = {

@@ -1,8 +1,6 @@
 package com.fiap.mariacomanda.infrastructure.web.controller;
 
 import com.fiap.mariacomanda.core.adapters.controller.UserController;
-import com.fiap.mariacomanda.core.dto.restaurant.input.GetRestaurantInputDTO;
-import com.fiap.mariacomanda.core.dto.restaurant.output.GetRestaurantOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.input.*;
 import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;

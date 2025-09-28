@@ -8,7 +8,10 @@ import java.util.UUID;
 
 public interface UserGateway {
     User save(User u);
+
     Optional<User> findById(UUID id);
+
     List<User> findAll(int page, int size);
+
     void deleteById(UUID id);
 }

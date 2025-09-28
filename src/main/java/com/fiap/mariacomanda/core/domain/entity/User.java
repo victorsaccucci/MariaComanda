@@ -16,7 +16,7 @@ public class User {
     private String name;
     private String email;
     private String passwordHash;
-    private UUID userTypeId; // >>> Corrigido: agora é UUID, não UserTypeEntity!
+    private UUID userTypeId;
 
     public User(UUID id, String name, String email, String passwordHash, UUID userTypeId) {
         this.id = id;
