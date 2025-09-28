@@ -14,6 +14,7 @@ public class CreateRestaurantUseCaseImpl implements CreateRestaurantUseCase {
 
     @Override
     public Restaurant execute(Restaurant newRestaurant) {
+
         return repository.save(newRestaurant);
     }
 }

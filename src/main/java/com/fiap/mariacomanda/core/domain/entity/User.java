@@ -20,14 +20,14 @@ public class User {
     private String name;
     private String email;
     private String passwordHash;
-    private UserType userType;
+    private UUID userTypeId;
 
-    public User(UUID id, String name, String email, String passwordHash, UserType userType) {
+    public User(UUID id, String name, String email, String passwordHash, UUID userTypeId) {
         this.id = id;
         this.name = validateName(name);
         this.email = validateEmail(email);
         this.passwordHash = validatePasswordHash(passwordHash);
-        this.userType = userType;
+        this.userTypeId = validateUserTypeId(userTypeId);
     }
 
     // Validações de negócio
@@ -64,6 +64,13 @@ public class User {
         return passwordHash;
     }
 
+    private UUID validateUserTypeId(UUID userTypeId) {
+        if (userTypeId == null) {
+            throw new IllegalArgumentException("UserType ID cannot be null");
+        }
+        return userTypeId;
+    }
+
     // Sobrescrevendo setters do Lombok apenas para campos que precisam de validação
     public void setName(String name) {
         this.name = validateName(name);
@@ -75,5 +82,9 @@ public class User {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = validatePasswordHash(passwordHash);
+    }
+
+    public void setUserTypeId(UUID userTypeId) {
+        this.userTypeId = validateUserTypeId(userTypeId);
     }
 }
