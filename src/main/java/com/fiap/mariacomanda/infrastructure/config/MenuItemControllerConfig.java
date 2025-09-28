@@ -3,7 +3,7 @@ package com.fiap.mariacomanda.infrastructure.config;
 import com.fiap.mariacomanda.core.adapters.controller.MenuItemController;
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.*;
 import com.fiap.mariacomanda.core.mapper.MenuItemMapper;
-import com.fiap.mariacomanda.core.mapper.MenuItemMapperImpl;
+import com.fiap.mariacomanda.core.mapper.impl.MenuItemMapperImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

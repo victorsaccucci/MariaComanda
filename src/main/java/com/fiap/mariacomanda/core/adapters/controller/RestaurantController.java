@@ -2,53 +2,56 @@ package com.fiap.mariacomanda.core.adapters.controller;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.*;
-import com.fiap.mariacomanda.core.dto.restaurant.*;
+import com.fiap.mariacomanda.core.dto.restaurant.input.*;
+import com.fiap.mariacomanda.core.dto.restaurant.output.CreateRestaurantOutputDTO;
+import com.fiap.mariacomanda.core.dto.restaurant.output.GetRestaurantOutputDTO;
 import com.fiap.mariacomanda.core.mapper.RestaurantMapper;
 
 import java.util.List;
+import java.util.UUID;
 
 public class RestaurantController {
-    private final CreateRestaurantUseCase create;
-    private final GetRestaurantUseCase get;
-    private final ListRestaurantsUseCase list;
-    private final UpdateRestaurantUseCase update;
-    private final DeleteRestaurantUseCase delete;
+    private final CreateRestaurantUseCase createUseCase;
+    private final GetRestaurantUseCase getUseCase;
+    private final ListRestaurantsUseCase listUseCase;
+    private final UpdateRestaurantUseCase updateUseCase;
+    private final DeleteRestaurantUseCase deleteUseCase;
     private final RestaurantMapper restaurantMapper;
 
-    public RestaurantController(CreateRestaurantUseCase create, GetRestaurantUseCase get, ListRestaurantsUseCase list,
-                                UpdateRestaurantUseCase update, DeleteRestaurantUseCase delete, RestaurantMapper restaurantMapper) {
-        this.create = create;
-        this.get = get;
-        this.list = list;
-        this.update = update;
-        this.delete = delete;
+    public RestaurantController(CreateRestaurantUseCase createUseCase, GetRestaurantUseCase getUseCase, ListRestaurantsUseCase listUseCase,
+                                UpdateRestaurantUseCase updateUseCase, DeleteRestaurantUseCase deleteUseCase, RestaurantMapper restaurantMapper) {
+        this.createUseCase = createUseCase;
+        this.getUseCase = getUseCase;
+        this.listUseCase = listUseCase;
+        this.updateUseCase = updateUseCase;
+        this.deleteUseCase = deleteUseCase;
         this.restaurantMapper = restaurantMapper;
     }
 
     public CreateRestaurantOutputDTO create(CreateRestaurantInputDTO inputDTO) {
         Restaurant restaurant = restaurantMapper.mapCreate(inputDTO);
-        Restaurant created = create.execute(restaurant);
+        Restaurant created = createUseCase.execute(restaurant);
         return restaurantMapper.mapCreate(created);
     }
 
     public GetRestaurantOutputDTO get(GetRestaurantInputDTO inputDTO) {
-        Restaurant restaurant = get.execute(inputDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+        Restaurant restaurant = getUseCase.execute(UUID.fromString(inputDTO.name())).orElseThrow();
         return restaurantMapper.mapToGetOutputDTO(restaurant);
     }
 
     public List<GetRestaurantOutputDTO> list(ListRestaurantsInputDTO inputDTO) {
-        List<Restaurant> restaurants = list.execute(inputDTO.getPage(), inputDTO.getSize());
+        List<Restaurant> restaurants = listUseCase.execute(inputDTO.page(), inputDTO.size());
         return restaurantMapper.mapToGetOutputDTOList(restaurants);
     }
 
     public GetRestaurantOutputDTO update(UpdateRestaurantInputDTO inputDTO) {
         Restaurant restaurant = restaurantMapper.mapUpdate(inputDTO);
-        Restaurant updated = update.execute(restaurant);
+        Restaurant updated = updateUseCase.execute(restaurant);
         return restaurantMapper.mapToGetOutputDTO(updated);
     }
 
     public void delete(DeleteRestaurantInputDTO inputDTO) {
-        delete.execute(inputDTO.getId());
+        UUID id = inputDTO.id();
+        deleteUseCase.execute(id);
     }
 }

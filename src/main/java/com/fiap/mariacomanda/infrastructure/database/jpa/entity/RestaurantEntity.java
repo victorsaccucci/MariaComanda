@@ -32,6 +32,4 @@ public class RestaurantEntity {
     @Column(name = "owner_user_id", nullable = false)
     private UUID ownerUserId;
 
-    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
-    private Set<MenuItemEntity> menuItems = new HashSet<>();
 }

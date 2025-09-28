@@ -2,52 +2,56 @@ package com.fiap.mariacomanda.core.adapters.controller;
 
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.usecases.user.*;
-import com.fiap.mariacomanda.core.dto.user.*;
-import com.fiap.mariacomanda.core.mapper.UserMapper;
+import com.fiap.mariacomanda.core.dto.user.input.*;
+import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
+import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
+import com.fiap.mariacomanda.core.mapper.impl.UserMapperImpl;
 
 import java.util.List;
+import java.util.UUID;
 
 public class UserController {
-    private final CreateUserUseCase create;
-    private final GetUserUseCase get;
-    private final ListUserUseCase list;
-    private final UpdateUserUseCase update;
-    private final DeleteUserUseCase delete;
-    private final UserMapper userMapper;
+    private final CreateUserUseCase createUseCase;
+    private final GetUserUseCase getUseCase;
+    private final ListUserUseCase listUseCase;
+    private final UpdateUserUseCase updateUseCase;
+    private final DeleteUserUseCase deleteUseCase;
+    private final UserMapperImpl userMapper;
 
-    public UserController(CreateUserUseCase create, GetUserUseCase get, ListUserUseCase list, UpdateUserUseCase update, DeleteUserUseCase delete, UserMapper userMapper) {
-        this.create = create;
-        this.get = get;
-        this.list = list;
-        this.update = update;
-        this.delete = delete;
+    public UserController(CreateUserUseCase createUseCase, GetUserUseCase getUseCase, ListUserUseCase listUseCase,
+                         UpdateUserUseCase updateUseCase, DeleteUserUseCase deleteUseCase, UserMapperImpl userMapper) {
+        this.createUseCase = createUseCase;
+        this.getUseCase = getUseCase;
+        this.listUseCase = listUseCase;
+        this.updateUseCase = updateUseCase;
+        this.deleteUseCase = deleteUseCase;
         this.userMapper = userMapper;
     }
 
     public CreateUserOutputDTO create(CreateUserInputDTO inputDTO) {
         User user = userMapper.mapCreateInputToDomain(inputDTO);
-        User created = create.execute(user);
+        User created = createUseCase.execute(user);
         return userMapper.mapCreateDomainToOutput(created);
     }
 
     public void delete(DeleteUserInputDTO inputDTO) {
-        delete.execute(inputDTO.getId());
+        UUID id = inputDTO.id();
+        deleteUseCase.execute(id);
     }
 
     public GetUserOutputDTO get(GetUserInputDTO inputDTO) {
-        User user = get.execute(inputDTO.getId())
-                .orElseThrow(() -> new RuntimeException("User item not found"));
+        User user = getUseCase.execute(inputDTO.id()).orElseThrow();
         return userMapper.mapGetDomainToOutput(user);
     }
 
     public List<GetUserOutputDTO> list(ListUserInputDTO inputDTO) {
-        List<User> users = list.execute(inputDTO.getPage(), inputDTO.getSize());
-        return userMapper.mapGetMenuItemOutputDtoToList(users);
+        List<User> users = listUseCase.execute(inputDTO.page(), inputDTO.size());
+        return userMapper.mapGetUserOutputDtoToList(users);
     }
 
     public GetUserOutputDTO update(UpdateUsersInputDTO inputDTO) {
         User user = userMapper.mapUpdateInputToDomain(inputDTO);
-        User updated = update.execute(user);
+        User updated = updateUseCase.execute(user);
         return userMapper.mapGetDomainToOutput(updated);
     }
 }

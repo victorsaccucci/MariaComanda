@@ -13,7 +13,7 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
 
     @Override
     public Restaurant execute(Restaurant restaurant) {
-        if (restaurant.id() == null) throw new IllegalArgumentException("id is required");
+        if (restaurant.getId() == null) throw new IllegalArgumentException("id is required");
         return repository.save(restaurant);
     }
 }

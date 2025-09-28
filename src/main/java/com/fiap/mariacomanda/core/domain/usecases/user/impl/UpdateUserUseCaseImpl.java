@@ -14,7 +14,7 @@ public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
 
     @Override
     public User execute(User user) {
-        if (user.id() == null) throw new IllegalArgumentException("id is required");
+        if (user.getId() == null) throw new IllegalArgumentException("id is required");
         return repository.save(user);
     }
 }

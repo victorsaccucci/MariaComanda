@@ -1,7 +1,7 @@
 package com.fiap.mariacomanda.infrastructure.config.swagger.openapi.controller;
 
-import com.fiap.mariacomanda.core.dto.menuItem.CreateMenuItemOutputDTO;
-import com.fiap.mariacomanda.core.dto.menuItem.GetMenuItemOutputDTO;
+import com.fiap.mariacomanda.core.dto.menuitem.output.CreateMenuItemOutputDTO;
+import com.fiap.mariacomanda.core.dto.menuitem.output.GetMenuItemOutputDTO;
 import com.fiap.mariacomanda.infrastructure.web.json.CreateMenuItemJson;
 import com.fiap.mariacomanda.infrastructure.web.json.UpdateMenuItemJson;
 
