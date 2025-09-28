@@ -2,16 +2,20 @@ package com.fiap.mariacomanda.core.mapper.impl;
 
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.dto.user.input.CreateUserInputDTO;
+import com.fiap.mariacomanda.core.dto.user.input.UpdateUserInputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
-import com.fiap.mariacomanda.core.dto.user.input.UpdateUsersInputDTO;
+import com.fiap.mariacomanda.core.mapper.UserMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserMapperImpl {
+@Component
+public class UserMapperImpl implements UserMapper {
 
-    public User mapCreateInputToDomain(CreateUserInputDTO dto) {
+    @Override
+    public User mapCreate(CreateUserInputDTO dto) {
         return new User(
                 dto.id(),
                 dto.name(),
@@ -21,35 +25,39 @@ public class UserMapperImpl {
         );
     }
 
-    public CreateUserOutputDTO mapCreateDomainToOutput(User user) {
+    @Override
+    public User mapUpdate(UpdateUserInputDTO dto) {
+        return new User(
+                dto.id(),
+                dto.name(),
+                dto.email(),
+                dto.password(),
+                null
+        );
+    }
+
+    @Override
+    public CreateUserOutputDTO mapCreate(User user) {
         return new CreateUserOutputDTO(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getUserType() != null ? user.getUserType().getId() : null
+                user.getUserTypeId() != null ? user.getUserTypeId() : null
         );
     }
 
-    public GetUserOutputDTO mapGetDomainToOutput(User user) {
+    @Override
+    public GetUserOutputDTO mapToGetOutputDTO(User user) {
         return new GetUserOutputDTO(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getUserType() != null ? user.getUserType().getId() : null
+                user.getUserTypeId() != null ? user.getUserTypeId() : null
         );
     }
 
-    public List<GetUserOutputDTO> mapGetUserOutputDtoToList(List<User> users) {
-        return users.stream().map(this::mapGetDomainToOutput).collect(Collectors.toList());
-    }
-
-    public User mapUpdateInputToDomain(UpdateUsersInputDTO dto) {
-        return new User(
-                dto.id(),
-                dto.name(),
-                dto.email(),
-                dto.password(),
-                null
-        );
+    @Override
+    public List<GetUserOutputDTO> mapToGetOutputDTOList(List<User> users) {
+        return users.stream().map(this::mapToGetOutputDTO).collect(Collectors.toList());
     }
 }
