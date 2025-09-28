@@ -17,14 +17,13 @@ public class RestaurantControllerConfig {
 
     @Bean
     public RestaurantController restaurantController(
-            CreateRestaurantUseCase create,
-            GetRestaurantUseCase get,
-            ListRestaurantsUseCase list,
-            UpdateRestaurantUseCase update,
-            DeleteRestaurantUseCase delete,
+            CreateRestaurantUseCase createUseCase,
+            GetRestaurantUseCase getUseCase,
+            ListRestaurantsUseCase listUseCase,
+            UpdateRestaurantUseCase updateUseCase,
+            DeleteRestaurantUseCase deleteUseCase,
             RestaurantMapper restaurantMapper
     ) {
-        return new RestaurantController(create, get, list, update, delete, restaurantMapper);
+        return new RestaurantController(createUseCase, getUseCase, listUseCase, updateUseCase, deleteUseCase, restaurantMapper);
     }
 }
-

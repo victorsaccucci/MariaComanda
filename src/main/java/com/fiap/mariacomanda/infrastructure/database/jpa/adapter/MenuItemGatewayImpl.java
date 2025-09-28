@@ -1,12 +1,11 @@
 package com.fiap.mariacomanda.infrastructure.database.jpa.adapter;
 
-import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
+import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.MenuItemEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.RestaurantEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.MenuItemJpaRepository;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.RestaurantJpaRepository;
-
 import com.fiap.mariacomanda.infrastructure.database.mapper.menuitem.MenuItemEntityMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,28 +20,28 @@ public class MenuItemGatewayImpl implements MenuItemGateway {
 
     private final MenuItemJpaRepository repository;
     private final RestaurantJpaRepository restaurantRepository;
-    private final MenuItemEntityMapper mapper;
+    private final MenuItemEntityMapper menuItemEntityMapper;
 
     public MenuItemGatewayImpl(MenuItemJpaRepository repository, RestaurantJpaRepository restaurantRepository,
-                               MenuItemEntityMapper mapper) {
+                               MenuItemEntityMapper menuItemEntityMapper) {
         this.repository = repository;
         this.restaurantRepository = restaurantRepository;
-        this.mapper = mapper;
+        this.menuItemEntityMapper = menuItemEntityMapper;
     }
 
     @Override
     public MenuItem save(MenuItem m) {
-        MenuItemEntity entity = mapper.toEntity(m);
+        MenuItemEntity entity = menuItemEntityMapper.toEntity(m);
         RestaurantEntity restaurant = restaurantRepository.findById(m.getRestaurantId())
                 .orElseThrow(() -> new RuntimeException("Restaurant not found for id: " + m.getRestaurantId()));
         entity.setRestaurant(restaurant);
         MenuItemEntity saved = repository.save(entity);
-        return mapper.toDomain(saved);
+        return menuItemEntityMapper.toDomain(saved);
     }
 
     @Override
     public Optional<MenuItem> findById(UUID id) {
-        return repository.findById(id).map(mapper::toDomain);
+        return repository.findById(id).map(menuItemEntityMapper::toDomain);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class MenuItemGatewayImpl implements MenuItemGateway {
         Pageable pageable = PageRequest.of(page, size);
         return repository.findByRestaurant_Id(restaurantId, pageable)
                 .stream()
-                .map(mapper::toDomain)
+                .map(menuItemEntityMapper::toDomain)
                 .toList();
     }
 

@@ -26,7 +26,7 @@ public class RestaurantApiController implements RestaurantApi {
     private final RestaurantJsonMapper restaurantJsonMapper;
 
     public CreateRestaurantOutputDTO create(@Valid @RequestBody RestaurantJson restaurantJson) {
-        CreateRestaurantInputDTO inputDTO = restaurantJsonMapper.map(restaurantJson);
+        CreateRestaurantInputDTO inputDTO = restaurantJsonMapper.toCreateInput(restaurantJson);
         return restaurantController.create(inputDTO);
     }
 

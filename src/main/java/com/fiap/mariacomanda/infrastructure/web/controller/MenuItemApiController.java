@@ -21,10 +21,10 @@ public class MenuItemApiController implements MenuItemApi {
 
     private final MenuItemController menuItemController;
 
-    private final MenuItemJsonMapper MapperJson;
+    private final MenuItemJsonMapper menuItemJsonMapper;
 
     public CreateMenuItemOutputDTO create(@Valid @RequestBody CreateMenuItemJson createMenuItemJson) {
-        CreateMenuItemInputDTO inputDTO = MapperJson.mapJsonToInputDTO(createMenuItemJson);
+        CreateMenuItemInputDTO inputDTO = menuItemJsonMapper.toCreateInput(createMenuItemJson);
         return menuItemController.create(inputDTO);
     }
 
