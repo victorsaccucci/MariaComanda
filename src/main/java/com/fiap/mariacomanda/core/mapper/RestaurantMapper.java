@@ -10,14 +10,14 @@ import java.util.List;
 
 public interface RestaurantMapper {
 
-    Restaurant mapCreate(CreateRestaurantInputDTO dto);
+    // Create
+    Restaurant toDomain(CreateRestaurantInputDTO dto);
+    CreateRestaurantOutputDTO toCreateOutput(Restaurant restaurant);
 
-    Restaurant mapUpdate(UpdateRestaurantInputDTO dto);
+    // Get
+    GetRestaurantOutputDTO toGetOutput(Restaurant restaurant);
+    List<GetRestaurantOutputDTO> toGetOutputList(List<Restaurant> restaurants);
 
-    CreateRestaurantOutputDTO mapCreate(Restaurant restaurant);
-
-    GetRestaurantOutputDTO mapToGetOutputDTO(Restaurant restaurant);
-
-    List<GetRestaurantOutputDTO> mapToGetOutputDTOList(List<Restaurant> restaurants);
-
+    // Update
+    Restaurant toDomain(UpdateRestaurantInputDTO dto);
 }

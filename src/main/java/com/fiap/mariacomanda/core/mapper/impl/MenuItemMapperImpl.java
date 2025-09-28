@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class MenuItemMapperImpl implements MenuItemMapper {
 
     @Override
-    public MenuItem mapCreateInputToDomain(CreateMenuItemInputDTO dto) {
+    public MenuItem toDomain(CreateMenuItemInputDTO dto) {
         return new MenuItem(
                 dto.id(),
                 dto.restaurantId(),
@@ -26,7 +26,7 @@ public class MenuItemMapperImpl implements MenuItemMapper {
     }
 
     @Override
-    public CreateMenuItemOutputDTO mapCreateDomainToOutput(MenuItem menuItem) {
+    public CreateMenuItemOutputDTO toCreateOutput(MenuItem menuItem) {
         return new CreateMenuItemOutputDTO(
                 menuItem.getId(),
                 menuItem.getName(),
@@ -39,7 +39,7 @@ public class MenuItemMapperImpl implements MenuItemMapper {
     }
 
     @Override
-    public GetMenuItemOutputDTO mapGetDomainToOutput(MenuItem menuItem) {
+    public GetMenuItemOutputDTO toGetOutput(MenuItem menuItem) {
         return new GetMenuItemOutputDTO(
                 menuItem.getId(),
                 menuItem.getName(),
@@ -52,12 +52,12 @@ public class MenuItemMapperImpl implements MenuItemMapper {
     }
 
     @Override
-    public List<GetMenuItemOutputDTO> mapGetMenuItemOutputDtoToList(List<MenuItem> menuItens) {
-        return menuItens.stream().map(this::mapGetDomainToOutput).collect(Collectors.toList());
+    public List<GetMenuItemOutputDTO> toGetOutputList(List<MenuItem> menuItens) {
+        return menuItens.stream().map(this::toGetOutput).collect(Collectors.toList());
     }
 
     @Override
-    public MenuItem mapUpdateInputToDomain(UpdateMenuItemInputDTO dto) {
+    public MenuItem toDomain(UpdateMenuItemInputDTO dto) {
         return new MenuItem(
                 dto.id(),
                 dto.restaurantId(),

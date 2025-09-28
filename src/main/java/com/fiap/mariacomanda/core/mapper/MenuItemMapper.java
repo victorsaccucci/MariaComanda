@@ -10,13 +10,14 @@ import java.util.List;
 
 public interface MenuItemMapper {
 
-    MenuItem mapCreateInputToDomain(CreateMenuItemInputDTO dto);
+    // Create
+    MenuItem toDomain(CreateMenuItemInputDTO dto);
+    CreateMenuItemOutputDTO toCreateOutput(MenuItem menuItem);
 
-    CreateMenuItemOutputDTO mapCreateDomainToOutput(MenuItem menuItem);
+    // Get
+    GetMenuItemOutputDTO toGetOutput(MenuItem menuItem);
+    List<GetMenuItemOutputDTO> toGetOutputList(List<MenuItem> menuItems);
 
-    GetMenuItemOutputDTO mapGetDomainToOutput(MenuItem menuItem);
-
-    List<GetMenuItemOutputDTO> mapGetMenuItemOutputDtoToList(List<MenuItem> menuItens);
-
-    MenuItem mapUpdateInputToDomain(UpdateMenuItemInputDTO dto);
+    // Update
+    MenuItem toDomain(UpdateMenuItemInputDTO dto);
 }
