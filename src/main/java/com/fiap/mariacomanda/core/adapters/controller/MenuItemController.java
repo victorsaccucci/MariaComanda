@@ -30,9 +30,9 @@ public class MenuItemController {
     }
 
     public CreateMenuItemOutputDTO create(CreateMenuItemInputDTO inputDTO) {
-        MenuItem menuItem = menuItemMapper.mapCreateInputToDomain(inputDTO);
+        MenuItem menuItem = menuItemMapper.toDomain(inputDTO);
         MenuItem created = createUseCase.execute(menuItem);
-        return menuItemMapper.mapCreateDomainToOutput(created);
+        return menuItemMapper.toCreateOutput(created);
     }
 
     public void delete(DeleteMenuItemInputDTO inputDTO) {
@@ -42,17 +42,17 @@ public class MenuItemController {
 
     public GetMenuItemOutputDTO get(GetMenuItemInputDTO inputDTO) {
         MenuItem menuItem = getUseCase.execute(inputDTO.id()).orElseThrow();
-        return menuItemMapper.mapGetDomainToOutput(menuItem);
+        return menuItemMapper.toGetOutput(menuItem);
     }
 
     public List<GetMenuItemOutputDTO> list(ListMenuItemInputDTO inputDTO) {
         List<MenuItem> menuItems = listUseCase.execute(inputDTO.restaurantId(), inputDTO.page(), inputDTO.size());
-        return menuItemMapper.mapGetMenuItemOutputDtoToList(menuItems);
+        return menuItemMapper.toGetOutputList(menuItems);
     }
 
     public GetMenuItemOutputDTO update(UpdateMenuItemInputDTO inputDTO) {
-        MenuItem menuItem = menuItemMapper.mapUpdateInputToDomain(inputDTO);
+        MenuItem menuItem = menuItemMapper.toDomain(inputDTO);
         MenuItem updated = updateUseCase.execute(menuItem);
-        return menuItemMapper.mapGetDomainToOutput(updated);
+        return menuItemMapper.toGetOutput(updated);
     }
 }

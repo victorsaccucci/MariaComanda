@@ -29,25 +29,25 @@ public class RestaurantController {
     }
 
     public CreateRestaurantOutputDTO create(CreateRestaurantInputDTO inputDTO) {
-        Restaurant restaurant = restaurantMapper.mapCreate(inputDTO);
+        Restaurant restaurant = restaurantMapper.toDomain(inputDTO);
         Restaurant created = createUseCase.execute(restaurant);
-        return restaurantMapper.mapCreate(created);
+        return restaurantMapper.toCreateOutput(created);
     }
 
     public GetRestaurantOutputDTO get(GetRestaurantInputDTO inputDTO) {
         Restaurant restaurant = getUseCase.execute(UUID.fromString(inputDTO.name())).orElseThrow();
-        return restaurantMapper.mapToGetOutputDTO(restaurant);
+        return restaurantMapper.toGetOutput(restaurant);
     }
 
     public List<GetRestaurantOutputDTO> list(ListRestaurantsInputDTO inputDTO) {
         List<Restaurant> restaurants = listUseCase.execute(inputDTO.page(), inputDTO.size());
-        return restaurantMapper.mapToGetOutputDTOList(restaurants);
+        return restaurantMapper.toGetOutputList(restaurants);
     }
 
     public GetRestaurantOutputDTO update(UpdateRestaurantInputDTO inputDTO) {
-        Restaurant restaurant = restaurantMapper.mapUpdate(inputDTO);
+        Restaurant restaurant = restaurantMapper.toDomain(inputDTO);
         Restaurant updated = updateUseCase.execute(restaurant);
-        return restaurantMapper.mapToGetOutputDTO(updated);
+        return restaurantMapper.toGetOutput(updated);
     }
 
     public void delete(DeleteRestaurantInputDTO inputDTO) {
