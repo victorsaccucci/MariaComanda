@@ -13,27 +13,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Tag(name = "Restaurants", description = "API para gerenciamento de restaurantes")
+@Tag(name = "Restaurants", description = "Operações relacionada ao restaurante")
 @RequestMapping("/api/restaurants")
 public interface RestaurantApi {
 
     @Operation(summary = "Cria um novo restaurante")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Restaurante criado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos")
+            @ApiResponse(responseCode = "201", description = "Restaurante criado com sucesso")
     })
     @PostMapping
     CreateRestaurantOutputDTO create(@RequestBody RestaurantJson restaurantJson);
 
     @Operation(summary = "Busca um restaurante pelo nome")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Restaurante encontrado"),
-            @ApiResponse(responseCode = "404", description = "Restaurante não encontrado")
+            @ApiResponse(responseCode = "200", description = "Restaurante encontrado")
     })
     @GetMapping("/{name}")
     GetRestaurantOutputDTO get(@PathVariable String name);
 
-    @Operation(summary = "Lista restaurantes com paginação")
+    @Operation(summary = "Lista os restaurantes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de restaurantes retornada com sucesso")
     })
@@ -41,18 +39,16 @@ public interface RestaurantApi {
     List<GetRestaurantOutputDTO> list(@RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "20") int size);
 
-    @Operation(summary = "Atualiza os dados de um restaurante")
+    @Operation(summary = "Atualiza os dados de um restaurante pelo ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Restaurante atualizado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Restaurante não encontrado")
+            @ApiResponse(responseCode = "200", description = "Restaurante atualizado com sucesso")
     })
     @PutMapping("/{id}")
     GetRestaurantOutputDTO update(@PathVariable UUID id, @RequestBody UpdateRestaurantInputDTO dto);
 
     @Operation(summary = "Exclui um restaurante pelo ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Restaurante excluído com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Restaurante não encontrado")
+            @ApiResponse(responseCode = "204", description = "Restaurante excluído com sucesso")
     })
     @DeleteMapping("/{id}")
     void delete(@PathVariable UUID id);
