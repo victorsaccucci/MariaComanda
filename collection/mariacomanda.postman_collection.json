@@ -1,0 +1,286 @@
+{
+	"info": {
+		"_postman_id": "d245406c-ea0d-46cb-b8fd-d6450422aebd",
+		"name": "mariacomanda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15464134"
+	},
+	"item": [
+		{
+			"name": "restaurant",
+			"item": [
+				{
+					"name": "Criar Restaurante",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Restaurante Exemplo\",\n  \"address\": \"Rua X, 123\",\n  \"cuisineType\": \"Italiana\",\n  \"openingHours\": \"10:00-22:00\",\n  \"ownerUserId\": \"123e4567-e89b-12d3-a456-426614174000\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Restaurante por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/restaurants/{{restaurantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurants",
+								"{{restaurantId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Restaurantes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/restaurants?page=0&size=20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Restaurante",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Novo Nome\",\n  \"address\": \"Nova Rua, 456\",\n  \"cuisineType\": \"Japonesa\",\n  \"openingHours\": \"11:00-23:00\",\n  \"ownerUserId\": \"UUID_DO_DONO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/restaurants/{{restaurantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurants",
+								"{{restaurantId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Restaurante",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/restaurants/{{restaurantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"restaurants",
+								"{{restaurantId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "menuItens",
+			"item": [
+				{
+					"name": "Criar um novo item de menu",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"restaurantId\": \"7d793cc8-8f0d-4a3b-8690-0c66b62eb0ec\",\n  \"name\": \"Pizza Margherita\",\n  \"description\": \"Pizza tradicional com molho de tomate, mussarela e manjericão.\",\n  \"price\": 39.90,\n  \"dineInOnly\": false,\n  \"photoPath\": \"/images/pizza-margherita.jpg\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/menu-item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"menu-item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar um item do Menu por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/menu-item/{{menuItemId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"menu-item",
+								"{{menuItemId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Itens do Menu por ID do restaurante",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/menu-item?restaurantId={{restaurantId}}&page=0&size=20",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"menu-item"
+							],
+							"query": [
+								{
+									"key": "restaurantId",
+									"value": "{{restaurantId}}"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar um item do menu por ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Pizza Margherita\",\n  \"description\": \"A melhor pizza tradicional com molho de tomate, mussarela e manjericão.\",\n  \"price\": 39.90,\n  \"restaurantId\": \"7d793cc8-8f0d-4a3b-8690-0c66b62eb0ec\",\n  \"dineInOnly\": false,\n  \"photoPath\": \"/images/pizza-margherita.jpg\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/menu-item/{{menuItemId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"menu-item",
+								"{{menuItemId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Item por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/menu-item/{{menuItemId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"menu-item",
+								"{{menuItemId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
