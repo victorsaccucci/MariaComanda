@@ -16,28 +16,29 @@ import java.util.UUID;
 public class RestaurantGatewayImpl implements RestaurantGateway {
 
     private final RestaurantJpaRepository repo;
-    private final RestaurantEntityMapper mapper;
+    private final RestaurantEntityMapper restaurantEntityMapper;
 
-    public RestaurantGatewayImpl(RestaurantJpaRepository repo, RestaurantEntityMapper mapper) {
+    public RestaurantGatewayImpl(RestaurantJpaRepository repo, RestaurantEntityMapper restaurantEntityMapper) {
         this.repo = repo;
-        this.mapper = mapper;
+        this.restaurantEntityMapper = restaurantEntityMapper;
     }
 
     @Override
-    public Restaurant save(Restaurant r) {
-        RestaurantEntity saved = repo.save(mapper.toEntity(r));
-        return mapper.toDomain(saved);
+    public Restaurant save(Restaurant restaurant) {
+        RestaurantEntity restaurantEntity = restaurantEntityMapper.toEntity(restaurant);
+        RestaurantEntity saved = repo.save(restaurantEntity);
+        return restaurantEntityMapper.toDomain(saved);
     }
 
     @Override
     public Optional<Restaurant> findById(UUID id) {
-        return repo.findById(id).map(mapper::toDomain);
+        return repo.findById(id).map(restaurantEntityMapper::toDomain);
     }
 
     @Override
     public List<Restaurant> findAll(int page, int size) {
         return repo.findAll(PageRequest.of(page, size))
-                .map(mapper::toDomain)
+                .map(restaurantEntityMapper::toDomain)
                 .getContent();
     }
 
