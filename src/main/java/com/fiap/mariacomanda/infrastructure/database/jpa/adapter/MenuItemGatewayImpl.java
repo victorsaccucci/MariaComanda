@@ -7,7 +7,7 @@ import com.fiap.mariacomanda.infrastructure.database.jpa.entity.RestaurantEntity
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.MenuItemJpaRepository;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.RestaurantJpaRepository;
 
-import com.fiap.mariacomanda.infrastructure.database.mapper.menuitem.MenuItemEntityMapper;
+import com.fiap.mariacomanda.infrastructure.database.mapper.menuitem.MenuItemEntityMapperImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -21,10 +21,10 @@ public class MenuItemGatewayImpl implements MenuItemGateway {
 
     private final MenuItemJpaRepository repository;
     private final RestaurantJpaRepository restaurantRepository;
-    private final MenuItemEntityMapper mapper;
+    private final MenuItemEntityMapperImpl mapper;
 
     public MenuItemGatewayImpl(MenuItemJpaRepository repository, RestaurantJpaRepository restaurantRepository,
-                               MenuItemEntityMapper mapper) {
+                               MenuItemEntityMapperImpl mapper) {
         this.repository = repository;
         this.restaurantRepository = restaurantRepository;
         this.mapper = mapper;
