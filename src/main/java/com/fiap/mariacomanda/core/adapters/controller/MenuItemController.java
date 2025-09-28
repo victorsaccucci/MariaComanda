@@ -46,7 +46,7 @@ public class MenuItemController {
     }
 
     public List<GetMenuItemOutputDTO> list(ListMenuItemInputDTO inputDTO) {
-        List<MenuItem> menuItems = listUseCase.execute(null, inputDTO.page(), inputDTO.size());
+        List<MenuItem> menuItems = listUseCase.execute(inputDTO.restaurantId(), inputDTO.page(), inputDTO.size());
         return menuItemMapper.mapGetMenuItemOutputDtoToList(menuItems);
     }
 

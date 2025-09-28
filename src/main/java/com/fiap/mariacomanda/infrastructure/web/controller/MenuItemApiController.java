@@ -1,29 +1,19 @@
 package com.fiap.mariacomanda.infrastructure.web.controller;
 
 import com.fiap.mariacomanda.core.adapters.controller.MenuItemController;
-import com.fiap.mariacomanda.core.dto.menuitem.input.CreateMenuItemInputDTO;
-import com.fiap.mariacomanda.core.dto.menuitem.input.DeleteMenuItemInputDTO;
-import com.fiap.mariacomanda.core.dto.menuitem.input.GetMenuItemInputDTO;
-import com.fiap.mariacomanda.core.dto.menuitem.input.ListMenuItemInputDTO;
-import com.fiap.mariacomanda.core.dto.menuitem.input.UpdateMenuItemInputDTO;
+import com.fiap.mariacomanda.core.dto.menuitem.input.*;
 import com.fiap.mariacomanda.core.dto.menuitem.output.CreateMenuItemOutputDTO;
 import com.fiap.mariacomanda.core.dto.menuitem.output.GetMenuItemOutputDTO;
 import com.fiap.mariacomanda.infrastructure.config.swagger.openapi.controller.MenuItemApi;
 import com.fiap.mariacomanda.infrastructure.database.mapper.menuitem.MenuItemJsonMapper;
 import com.fiap.mariacomanda.infrastructure.web.json.CreateMenuItemJson;
 import com.fiap.mariacomanda.infrastructure.web.json.UpdateMenuItemJson;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,12 +44,12 @@ public class MenuItemApiController implements MenuItemApi {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
 
-        ListMenuItemInputDTO inputDTO = new ListMenuItemInputDTO(page, size);
+        ListMenuItemInputDTO inputDTO = new ListMenuItemInputDTO(restaurantId, page, size);
         return menuItemController.list(inputDTO);
     }
 
     @PutMapping("/{id}")
-    public GetMenuItemOutputDTO update(@PathVariable UUID id, @RequestBody UpdateMenuItemJson updateMenuItemJson){
+    public GetMenuItemOutputDTO update(@PathVariable UUID id, @RequestBody UpdateMenuItemJson updateMenuItemJson) {
         GetMenuItemOutputDTO existingDto = menuItemController.get(new GetMenuItemInputDTO(id, null, null, null, null, false, null));
         UUID restaurantId = existingDto.restaurantId();
         UpdateMenuItemInputDTO inputDTO = new UpdateMenuItemInputDTO(id, updateMenuItemJson.getName(), updateMenuItemJson.getDescription(), updateMenuItemJson.getPrice(), restaurantId, updateMenuItemJson.isDineInOnly(), updateMenuItemJson.getPhotoPath());
