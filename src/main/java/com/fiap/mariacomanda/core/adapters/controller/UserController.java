@@ -5,7 +5,7 @@ import com.fiap.mariacomanda.core.domain.usecases.user.*;
 import com.fiap.mariacomanda.core.dto.user.input.*;
 import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
-import com.fiap.mariacomanda.core.mapper.impl.UserMapperImpl;
+import com.fiap.mariacomanda.core.mapper.UserMapper;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,10 +16,10 @@ public class UserController {
     private final ListUserUseCase listUseCase;
     private final UpdateUserUseCase updateUseCase;
     private final DeleteUserUseCase deleteUseCase;
-    private final UserMapperImpl userMapper;
+    private final UserMapper userMapper;
 
     public UserController(CreateUserUseCase createUseCase, GetUserUseCase getUseCase, ListUserUseCase listUseCase,
-                         UpdateUserUseCase updateUseCase, DeleteUserUseCase deleteUseCase, UserMapperImpl userMapper) {
+                          UpdateUserUseCase updateUseCase, DeleteUserUseCase deleteUseCase, UserMapper userMapper) {
         this.createUseCase = createUseCase;
         this.getUseCase = getUseCase;
         this.listUseCase = listUseCase;

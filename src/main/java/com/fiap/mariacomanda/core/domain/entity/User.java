@@ -1,10 +1,6 @@
 package com.fiap.mariacomanda.core.domain.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.UUID;
@@ -20,7 +16,7 @@ public class User {
     private String name;
     private String email;
     private String passwordHash;
-    private UUID userTypeId;
+    private UUID userTypeId; // >>> Corrigido: agora é UUID, não UserTypeEntity!
 
     public User(UUID id, String name, String email, String passwordHash, UUID userTypeId) {
         this.id = id;
@@ -71,7 +67,7 @@ public class User {
         return userTypeId;
     }
 
-    // Sobrescrevendo setters do Lombok apenas para campos que precisam de validação
+    // Sobrescrevendo setters do Lombok para validações
     public void setName(String name) {
         this.name = validateName(name);
     }
