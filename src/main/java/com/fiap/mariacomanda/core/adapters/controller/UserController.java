@@ -29,29 +29,29 @@ public class UserController {
     }
 
     public CreateUserOutputDTO create(CreateUserInputDTO inputDTO) {
-        User user = userMapper.mapCreateInputToDomain(inputDTO);
+        User user = userMapper.mapCreate(inputDTO);
         User created = createUseCase.execute(user);
-        return userMapper.mapCreateDomainToOutput(created);
+        return userMapper.mapCreate(created);
+    }
+
+    public GetUserOutputDTO get(GetUserInputDTO inputDTO) {
+        User user = getUseCase.execute(inputDTO.id()).orElseThrow();
+        return userMapper.mapToGetOutputDTO(user);
+    }
+
+    public List<GetUserOutputDTO> list(ListUserInputDTO inputDTO) {
+        List<User> users = listUseCase.execute(inputDTO.page(), inputDTO.size());
+        return userMapper.mapToGetOutputDTOList(users);
+    }
+
+    public GetUserOutputDTO update(UpdateUserInputDTO inputDTO) {
+        User user = userMapper.mapUpdate(inputDTO);
+        User updated = updateUseCase.execute(user);
+        return userMapper.mapToGetOutputDTO(updated);
     }
 
     public void delete(DeleteUserInputDTO inputDTO) {
         UUID id = inputDTO.id();
         deleteUseCase.execute(id);
-    }
-
-    public GetUserOutputDTO get(GetUserInputDTO inputDTO) {
-        User user = getUseCase.execute(inputDTO.id()).orElseThrow();
-        return userMapper.mapGetDomainToOutput(user);
-    }
-
-    public List<GetUserOutputDTO> list(ListUserInputDTO inputDTO) {
-        List<User> users = listUseCase.execute(inputDTO.page(), inputDTO.size());
-        return userMapper.mapGetUserOutputDtoToList(users);
-    }
-
-    public GetUserOutputDTO update(UpdateUsersInputDTO inputDTO) {
-        User user = userMapper.mapUpdateInputToDomain(inputDTO);
-        User updated = updateUseCase.execute(user);
-        return userMapper.mapGetDomainToOutput(updated);
     }
 }
