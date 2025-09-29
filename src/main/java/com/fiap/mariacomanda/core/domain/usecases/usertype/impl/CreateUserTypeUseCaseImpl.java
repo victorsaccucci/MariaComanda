@@ -2,11 +2,11 @@ package com.fiap.mariacomanda.core.domain.usecases.usertype.impl;
 
 import com.fiap.mariacomanda.core.domain.entity.UserType;
 import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
-import com.fiap.mariacomanda.core.domain.usecases.usertype.CreateUserTypeUserCase;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.CreateUserTypeUseCase;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CreateUserTypeUseCaseImpl implements CreateUserTypeUserCase {
+public class CreateUserTypeUseCaseImpl implements CreateUserTypeUseCase {
 
     private final UserTypeGateway gateway;
 

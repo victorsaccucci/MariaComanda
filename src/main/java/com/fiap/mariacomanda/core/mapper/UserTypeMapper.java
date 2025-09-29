@@ -1,18 +1,23 @@
 package com.fiap.mariacomanda.core.mapper;
 
 import com.fiap.mariacomanda.core.domain.entity.UserType;
-import com.fiap.mariacomanda.core.dto.usertype.UserTypeInputDTO;
-import com.fiap.mariacomanda.core.dto.usertype.TypeUserOutputDTO;
+import com.fiap.mariacomanda.core.dto.usertype.input.CreateUserTypeInputDTO;
+import com.fiap.mariacomanda.core.dto.usertype.input.UpdateUserTypeInputDTO;
+import com.fiap.mariacomanda.core.dto.usertype.output.CreateUserTypeOutputDTO;
+import com.fiap.mariacomanda.core.dto.usertype.output.GetUserTypeOutputDTO;
 
 import java.util.List;
 
 public interface UserTypeMapper {
 
-    // Create
-    UserType toDomain(UserTypeInputDTO dto);
-    TypeUserOutputDTO toCreateOutput(UserType userType);
+    UserType mapCreate(CreateUserTypeInputDTO dto);
 
-    // Get
-    TypeUserOutputDTO toGetOutput(UserType userType);
-    List<TypeUserOutputDTO> toGetOutputList(List<UserType> userTypes);
+    UserType mapUpdate(UpdateUserTypeInputDTO dto);
+
+    CreateUserTypeOutputDTO mapCreate(UserType user);
+
+    GetUserTypeOutputDTO mapToGetOutputDTO(UserType user);
+
+    List<GetUserTypeOutputDTO> mapToGetOutputDTOList(List<UserType> users);
+
 }
