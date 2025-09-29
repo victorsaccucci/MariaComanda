@@ -16,37 +16,38 @@ public class UserTypeController {
     private final ListUserTypeUseCase listUseCase;
     private final UpdateUserTypeUseCase updateUseCase;
     private final DeleteUserTypeUseCase deleteUseCase;
-    private final UserTypeMapper userMapper;
+    private final UserTypeMapper userTypeMapper;
 
-    public UserTypeController(CreateUserTypeUseCase createUseCase, GetUserTypeUseCase getUseCase, ListUserTypeUseCase listUseCase, UpdateUserTypeUseCase updateUseCase, DeleteUserTypeUseCase deleteUseCase, UserTypeMapper userMapper) {
+    public UserTypeController(CreateUserTypeUseCase createUseCase, GetUserTypeUseCase getUseCase, ListUserTypeUseCase listUseCase,
+                              UpdateUserTypeUseCase updateUseCase, DeleteUserTypeUseCase deleteUseCase, UserTypeMapper userTypeMapper) {
         this.createUseCase = createUseCase;
         this.getUseCase = getUseCase;
         this.listUseCase = listUseCase;
         this.updateUseCase = updateUseCase;
         this.deleteUseCase = deleteUseCase;
-        this.userMapper = userMapper;
+        this.userTypeMapper = userTypeMapper;
     }
 
     public CreateUserTypeOutputDTO create(CreateUserTypeInputDTO inputDTO) {
-        UserType user = userMapper.mapCreate(inputDTO);
+        UserType user = userTypeMapper.toDomain(inputDTO);
         UserType created = createUseCase.execute(user);
-        return userMapper.mapCreate(created);
+        return userTypeMapper.toCreateOutput(created);
     }
 
     public GetUserTypeOutputDTO get(GetUserTypeInputDTO inputDTO) {
         UserType user = getUseCase.execute(inputDTO.id()).orElseThrow();
-        return userMapper.mapToGetOutputDTO(user);
+        return userTypeMapper.toGetOutput(user);
     }
 
     public List<GetUserTypeOutputDTO> list(ListUserTypeInputDTO inputDTO) {
         List<UserType> users = listUseCase.execute(inputDTO.page(), inputDTO.size());
-        return userMapper.mapToGetOutputDTOList(users);
+        return userTypeMapper.toGetOutputList(users);
     }
 
     public GetUserTypeOutputDTO update(UpdateUserTypeInputDTO inputDTO) {
-        UserType user = userMapper.mapUpdate(inputDTO);
+        UserType user = userTypeMapper.toDomain(inputDTO);
         UserType updated = updateUseCase.execute(user);
-        return userMapper.mapToGetOutputDTO(updated);
+        return userTypeMapper.toGetOutput(updated);
     }
 
     public void delete(DeleteUserTypeInputDTO inputDTO) {

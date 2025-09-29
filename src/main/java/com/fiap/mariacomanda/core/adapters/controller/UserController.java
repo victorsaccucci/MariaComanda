@@ -29,25 +29,25 @@ public class UserController {
     }
 
     public CreateUserOutputDTO create(CreateUserInputDTO inputDTO) {
-        User user = userMapper.mapCreate(inputDTO);
+        User user = userMapper.toDomain(inputDTO);
         User created = createUseCase.execute(user);
-        return userMapper.mapCreate(created);
+        return userMapper.toCreateOutput(created);
     }
 
     public GetUserOutputDTO get(GetUserInputDTO inputDTO) {
         User user = getUseCase.execute(inputDTO.id()).orElseThrow();
-        return userMapper.mapToGetOutputDTO(user);
+        return userMapper.toGetOutput(user);
     }
 
     public List<GetUserOutputDTO> list(ListUserInputDTO inputDTO) {
         List<User> users = listUseCase.execute(inputDTO.page(), inputDTO.size());
-        return userMapper.mapToGetOutputDTOList(users);
+        return userMapper.toGetOutputList(users);
     }
 
     public GetUserOutputDTO update(UpdateUserInputDTO inputDTO) {
-        User user = userMapper.mapUpdate(inputDTO);
+        User user = userMapper.toDomain(inputDTO);
         User updated = updateUseCase.execute(user);
-        return userMapper.mapToGetOutputDTO(updated);
+        return userMapper.toGetOutput(updated);
     }
 
     public void delete(DeleteUserInputDTO inputDTO) {

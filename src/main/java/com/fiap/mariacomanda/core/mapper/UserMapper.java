@@ -10,14 +10,14 @@ import java.util.List;
 
 public interface UserMapper {
 
-    User mapCreate(CreateUserInputDTO dto);
+    User toDomain(CreateUserInputDTO dto);
 
-    User mapUpdate(UpdateUserInputDTO dto);
+    User toDomain(UpdateUserInputDTO dto);
 
-    CreateUserOutputDTO mapCreate(User user);
+    CreateUserOutputDTO toCreateOutput(User user);
 
-    GetUserOutputDTO mapToGetOutputDTO(User user);
+    GetUserOutputDTO toGetOutput(User user);
 
-    List<GetUserOutputDTO> mapToGetOutputDTOList(List<User> users);
+    List<GetUserOutputDTO> toGetOutputList(List<User> users);
 
 }

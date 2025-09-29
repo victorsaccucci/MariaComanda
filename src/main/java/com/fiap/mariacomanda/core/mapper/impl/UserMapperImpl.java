@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class UserMapperImpl implements UserMapper {
 
     @Override
-    public User mapCreate(CreateUserInputDTO dto) {
+    public User toDomain(CreateUserInputDTO dto) {
         return new User(
                 dto.id(),
                 dto.name(),
@@ -24,7 +24,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public User mapUpdate(UpdateUserInputDTO dto) {
+    public User toDomain(UpdateUserInputDTO dto) {
         return new User(
                 dto.id(),
                 dto.name(),
@@ -35,7 +35,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public CreateUserOutputDTO mapCreate(User user) {
+    public CreateUserOutputDTO toCreateOutput(User user) {
         return new CreateUserOutputDTO(
                 user.getId(),
                 user.getName(),
@@ -45,7 +45,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public GetUserOutputDTO mapToGetOutputDTO(User user) {
+    public GetUserOutputDTO toGetOutput(User user) {
         return new GetUserOutputDTO(
                 user.getId(),
                 user.getName(),
@@ -55,7 +55,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public List<GetUserOutputDTO> mapToGetOutputDTOList(List<User> users) {
-        return users.stream().map(this::mapToGetOutputDTO).collect(Collectors.toList());
+    public List<GetUserOutputDTO> toGetOutputList(List<User> users) {
+        return users.stream().map(this::toGetOutput).collect(Collectors.toList());
     }
 }

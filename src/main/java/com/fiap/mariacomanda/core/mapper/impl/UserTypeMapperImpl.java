@@ -15,27 +15,27 @@ import java.util.stream.Collectors;
 public class UserTypeMapperImpl implements UserTypeMapper {
 
     @Override
-    public UserType mapCreate(CreateUserTypeInputDTO dto) {
+    public UserType toDomain(CreateUserTypeInputDTO dto) {
         return new UserType(dto.id(), dto.typeName());
     }
 
     @Override
-    public UserType mapUpdate(UpdateUserTypeInputDTO dto) {
+    public UserType toDomain(UpdateUserTypeInputDTO dto) {
         return new UserType(dto.id(), dto.typeName());
     }
 
     @Override
-    public CreateUserTypeOutputDTO mapCreate(UserType user) {
+    public CreateUserTypeOutputDTO toCreateOutput(UserType user) {
         return new CreateUserTypeOutputDTO(user.getId(), user.getTypeName());
     }
 
     @Override
-    public GetUserTypeOutputDTO mapToGetOutputDTO(UserType user) {
+    public GetUserTypeOutputDTO toGetOutput(UserType user) {
         return new GetUserTypeOutputDTO(user.getId(), user.getTypeName());
     }
 
     @Override
-    public List<GetUserTypeOutputDTO> mapToGetOutputDTOList(List<UserType> users) {
-        return users.stream().map(this::mapToGetOutputDTO).collect(Collectors.toList());
+    public List<GetUserTypeOutputDTO> toGetOutputList(List<UserType> users) {
+        return users.stream().map(this::toGetOutput).collect(Collectors.toList());
     }
 }
