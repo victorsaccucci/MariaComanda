@@ -6,7 +6,6 @@ import org.apache.commons.validator.routines.EmailValidator;
 import java.util.UUID;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @ToString(exclude = "passwordHash") // Excluir senha do toString por segurança
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -26,7 +25,16 @@ public class User {
         this.userTypeId = validateUserTypeId(userTypeId);
     }
 
-    // Validações de negócio
+    // Getter restrito para passwordHash
+    private String getPasswordHash() {
+        return passwordHash;
+    }
+
+    // Metodo específico para alteração de senha
+    public void changePassword(String newPasswordHash) {
+        this.passwordHash = validatePasswordHash(newPasswordHash);
+    }
+
     private String validateName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("User name cannot be null or empty");
@@ -67,7 +75,7 @@ public class User {
         return userTypeId;
     }
 
-    // Sobrescrevendo setters do Lombok para validações
+    // Setters apenas para campos permitidos
     public void setName(String name) {
         this.name = validateName(name);
     }
@@ -76,9 +84,6 @@ public class User {
         this.email = validateEmail(email);
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = validatePasswordHash(passwordHash);
-    }
 
     public void setUserTypeId(UUID userTypeId) {
         this.userTypeId = validateUserTypeId(userTypeId);
