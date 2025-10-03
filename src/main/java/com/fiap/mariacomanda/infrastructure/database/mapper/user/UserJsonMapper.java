@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserJsonMapper {
 
-    public CreateUserInputDTO map(CreateUserJson json) {
+    public CreateUserInputDTO toCreateInput(CreateUserJson json) {
         return new CreateUserInputDTO(
                 json.getId(),
                 json.getName(),

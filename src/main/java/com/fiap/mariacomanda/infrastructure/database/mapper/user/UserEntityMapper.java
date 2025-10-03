@@ -1,6 +1,7 @@
 package com.fiap.mariacomanda.infrastructure.database.mapper.user;
 
 import com.fiap.mariacomanda.core.domain.entity.User;
+import com.fiap.mariacomanda.core.domain.entity.UserType;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.UserEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.UserTypeEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.UserTypeJpaRepository;
@@ -28,12 +29,19 @@ public class UserEntityMapper {
     }
 
     public User toDomain(UserEntity e) {
+    UserTypeEntity userTypeEntity = e.getUserTypeId();
+    UserType userType = userTypeEntity != null
+        ? new UserType(
+            userTypeEntity.getId(),
+            userTypeEntity.getName(),
+            userTypeEntity.getSubType())
+        : null;
         return new User(
                 e.getId(),
                 e.getName(),
                 e.getEmail(),
                 e.getPasswordHash(),
-                e.getUserTypeId() != null ? e.getUserTypeId().getId() : null
+                userType
         );
     }
 }

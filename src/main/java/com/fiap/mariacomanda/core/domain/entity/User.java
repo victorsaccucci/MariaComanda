@@ -15,14 +15,14 @@ public class User {
     private String name;
     private String email;
     private String passwordHash;
-    private UUID userTypeId;
+    private UserType userType;
 
-    public User(UUID id, String name, String email, String passwordHash, UUID userTypeId) {
+    public User(UUID id, String name, String email, String passwordHash, UserType userType) {
         this.id = id;
         this.name = validateName(name);
         this.email = validateEmail(email);
         this.passwordHash = validatePasswordHash(passwordHash);
-        this.userTypeId = validateUserTypeId(userTypeId);
+        this.userType = validateUserType(userType);
     }
 
     // Getter restrito para passwordHash
@@ -33,6 +33,10 @@ public class User {
     // Metodo específico para alteração de senha
     public void changePassword(String newPasswordHash) {
         this.passwordHash = validatePasswordHash(newPasswordHash);
+    }
+
+    public UUID getUserTypeId() {
+        return userType != null ? userType.getId() : null;
     }
 
     private String validateName(String name) {
@@ -68,11 +72,14 @@ public class User {
         return passwordHash;
     }
 
-    private UUID validateUserTypeId(UUID userTypeId) {
-        if (userTypeId == null) {
+    private UserType validateUserType(UserType userType) {
+        if (userType == null) {
+            throw new IllegalArgumentException("UserType cannot be null");
+        }
+        if (userType.getId() == null) {
             throw new IllegalArgumentException("UserType ID cannot be null");
         }
-        return userTypeId;
+        return userType;
     }
 
     // Setters apenas para campos permitidos
@@ -84,8 +91,7 @@ public class User {
         this.email = validateEmail(email);
     }
 
-
-    public void setUserTypeId(UUID userTypeId) {
-        this.userTypeId = validateUserTypeId(userTypeId);
+    public void setUserType(UserType userType) {
+        this.userType = validateUserType(userType);
     }
 }

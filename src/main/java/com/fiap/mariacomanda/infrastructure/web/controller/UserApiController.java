@@ -26,7 +26,7 @@ public class UserApiController implements UserApi {
     private final UserJsonMapper userJsonMapper;
 
     public CreateUserOutputDTO createUser(@Valid @RequestBody CreateUserJson createUserJson) {
-        CreateUserInputDTO inputDTO = userJsonMapper.map(createUserJson);
+        CreateUserInputDTO inputDTO = userJsonMapper.toCreateInput(createUserJson);
         return userController.create(inputDTO);
     }
 

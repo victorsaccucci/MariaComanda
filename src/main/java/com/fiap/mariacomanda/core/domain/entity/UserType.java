@@ -29,6 +29,23 @@ public class UserType {
         this.subType = validateSubType(subType);
     }
 
+    public static UserType createCustomer(UUID id, String name) {
+        return new UserType(id, name, CUSTOMER);
+    }
+
+    public static UserType createOwner(UUID id, String name) {
+        return new UserType(id, name, OWNER);
+    }
+
+    public static UserType reference(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("UserType ID cannot be null");
+        }
+        UserType userType = new UserType();
+        userType.setId(id);
+        return userType;
+    }
+
     private String validateName(String value) {
         if (value == null || value.trim().isEmpty()) {
             throw new IllegalArgumentException("UserType name cannot be null or empty");
@@ -49,14 +66,6 @@ public class UserType {
         } catch (IllegalArgumentException ex) {
             throw new IllegalArgumentException("Invalid user subType: " + value + ". Allowed: CUSTOMER, OWNER", ex);
         }
-    }
-
-    public static UserType createCustomer(UUID id, String name) {
-        return new UserType(id, name, CUSTOMER);
-    }
-
-    public static UserType createOwner(UUID id, String name) {
-        return new UserType(id, name, OWNER);
     }
 
     public boolean isCustomer() {

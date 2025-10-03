@@ -20,7 +20,7 @@ public class UserTypeApiController implements UserTypeApi {
     private final UserTypeJsonMapper userTypeJsonMapper;
 
     public CreateUserTypeOutputDTO createUser(@Valid @RequestBody CreateUserTypeJson createUserTypeJson) {
-        CreateUserTypeInputDTO inputDTO = userTypeJsonMapper.map(createUserTypeJson);
+        CreateUserTypeInputDTO inputDTO = userTypeJsonMapper.toCreateInput(createUserTypeJson);
         return userTypeController.create(inputDTO);
     }
 
