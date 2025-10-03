@@ -10,7 +10,8 @@ public class UserTypeJsonMapper {
     public CreateUserTypeInputDTO map(CreateUserTypeJson json) {
         return new CreateUserTypeInputDTO(
                 json.getId(),
-                json.getTypeName()
+                json.getName(),
+                json.getSubType()
         );
     }
 }

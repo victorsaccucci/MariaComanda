@@ -9,14 +9,14 @@ import java.util.UUID;
 
 public class GetUserUseCaseImpl implements GetUserUseCase {
 
-    private final UserGateway repository;
+    private final UserGateway gateway;
 
-    public GetUserUseCaseImpl(UserGateway repository) {
-        this.repository = repository;
+    public GetUserUseCaseImpl(UserGateway gateway) {
+        this.gateway = gateway;
     }
 
     @Override
     public Optional<User> execute(UUID id) {
-        return repository.findById(id);
+        return gateway.findById(id);
     }
 }

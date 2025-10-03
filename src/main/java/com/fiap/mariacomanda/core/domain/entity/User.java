@@ -26,7 +26,7 @@ public class User {
     }
 
     // Getter restrito para passwordHash
-    private String getPasswordHash() {
+    public String getPasswordHash() {
         return passwordHash;
     }
 

@@ -6,15 +6,15 @@ import com.fiap.mariacomanda.core.domain.usecases.restaurant.CreateRestaurantUse
 
 
 public class CreateRestaurantUseCaseImpl implements CreateRestaurantUseCase {
-    private final RestaurantGateway repository;
+    private final RestaurantGateway gateway;
 
-    public CreateRestaurantUseCaseImpl(RestaurantGateway repository) {
-        this.repository = repository;
+    public CreateRestaurantUseCaseImpl(RestaurantGateway gateway) {
+        this.gateway = gateway;
     }
 
     @Override
     public Restaurant execute(Restaurant newRestaurant) {
 
-        return repository.save(newRestaurant);
+        return gateway.save(newRestaurant);
     }
 }

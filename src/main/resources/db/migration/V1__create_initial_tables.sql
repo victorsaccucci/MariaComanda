@@ -1,7 +1,8 @@
 -- Tabela de tipos de usuário
 CREATE TABLE user_type (
     id UUID PRIMARY KEY,
-    name VARCHAR(60) NOT NULL UNIQUE
+    name VARCHAR(120) NOT NULL,
+    sub_type VARCHAR(30) NOT NULL
 );
 
 -- Tabela de usuários
@@ -37,10 +38,10 @@ CREATE TABLE menu_item (
     FOREIGN KEY (restaurant_id) REFERENCES restaurant(id)
 );
 
--- Inserção dos tipos de usuário
-INSERT INTO user_type (id, name) VALUES
-    ('c37d661d-7e61-49ea-96a5-68c34e83db3a', 'OWNER'),
-    ('a68a8d55-92c7-4c4d-a41a-1f43b47f7f5c', 'CUSTOMER');
+-- Inserção dos tipos de usuário (name descritivo + sub_type técnico)
+INSERT INTO user_type (id, name, sub_type) VALUES
+    ('c37d661d-7e61-49ea-96a5-68c34e83db3a', 'Owner', 'OWNER'),
+    ('a68a8d55-92c7-4c4d-a41a-1f43b47f7f5c', 'Customer', 'CUSTOMER');
 
 -- Inserção de usuários (um owner e um customer)
 INSERT INTO app_user (id, name, email, password_hash, user_type_id) VALUES

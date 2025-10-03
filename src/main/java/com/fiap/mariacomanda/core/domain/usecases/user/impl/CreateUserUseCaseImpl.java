@@ -5,14 +5,14 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.usecases.user.CreateUserUseCase;
 
 public class CreateUserUseCaseImpl implements CreateUserUseCase {
-    private final UserGateway repository;
+    private final UserGateway gateway;
 
-    public CreateUserUseCaseImpl(UserGateway repository) {
-        this.repository = repository;
+    public CreateUserUseCaseImpl(UserGateway gateway) {
+        this.gateway = gateway;
     }
 
     @Override
     public User execute(User user) {
-        return repository.save(user);
+        return gateway.save(user);
     }
 }

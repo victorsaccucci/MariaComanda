@@ -6,14 +6,14 @@ import com.fiap.mariacomanda.core.domain.usecases.restaurant.DeleteRestaurantUse
 import java.util.UUID;
 
 public class DeleteRestaurantUseCaseImpl implements DeleteRestaurantUseCase {
-    private final RestaurantGateway repository;
+    private final RestaurantGateway gateway;
 
-    public DeleteRestaurantUseCaseImpl(RestaurantGateway repository) {
-        this.repository = repository;
+    public DeleteRestaurantUseCaseImpl(RestaurantGateway gateway) {
+        this.gateway = gateway;
     }
 
     @Override
     public void execute(UUID id) {
-        repository.deleteById(id);
+        gateway.deleteById(id);
     }
 }

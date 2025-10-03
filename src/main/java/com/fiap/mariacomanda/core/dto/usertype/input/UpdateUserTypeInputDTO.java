@@ -4,5 +4,6 @@ import java.util.UUID;
 
 public record UpdateUserTypeInputDTO(
     UUID id,
-    String typeName
+    String name,
+    String subType
 ) {}

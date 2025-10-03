@@ -9,14 +9,14 @@ import java.util.UUID;
 
 public class GetMenuItemUseCaseImpl implements GetMenuItemUseCase {
 
-    private final MenuItemGateway repository;
+    private final MenuItemGateway gateway;
 
-    public GetMenuItemUseCaseImpl(MenuItemGateway repository) {
-        this.repository = repository;
+    public GetMenuItemUseCaseImpl(MenuItemGateway gateway) {
+        this.gateway = gateway;
     }
 
     @Override
     public Optional<MenuItem> execute(UUID id) {
-        return repository.findById(id);
+        return gateway.findById(id);
     }
 }

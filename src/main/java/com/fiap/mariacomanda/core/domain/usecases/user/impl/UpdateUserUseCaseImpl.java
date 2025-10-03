@@ -6,15 +6,15 @@ import com.fiap.mariacomanda.core.domain.usecases.user.UpdateUserUseCase;
 
 public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
 
-    private final UserGateway repository;
+    private final UserGateway gateway;
 
-    public UpdateUserUseCaseImpl(UserGateway repository) {
-        this.repository = repository;
+    public UpdateUserUseCaseImpl(UserGateway gateway) {
+        this.gateway = gateway;
     }
 
     @Override
     public User execute(User user) {
         if (user.getId() == null) throw new IllegalArgumentException("id is required");
-        return repository.save(user);
+        return gateway.save(user);
     }
 }

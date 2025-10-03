@@ -16,26 +16,26 @@ public class UserTypeMapperImpl implements UserTypeMapper {
 
     @Override
     public UserType toDomain(CreateUserTypeInputDTO dto) {
-        return new UserType(dto.id(), dto.typeName());
+        return new UserType(dto.id(), dto.name(), dto.subType());
     }
 
     @Override
     public UserType toDomain(UpdateUserTypeInputDTO dto) {
-        return new UserType(dto.id(), dto.typeName());
+        return new UserType(dto.id(), dto.name(), dto.subType());
     }
 
     @Override
-    public CreateUserTypeOutputDTO toCreateOutput(UserType user) {
-        return new CreateUserTypeOutputDTO(user.getId(), user.getTypeName());
+    public CreateUserTypeOutputDTO toCreateOutput(UserType userType) {
+        return new CreateUserTypeOutputDTO(userType.getId(), userType.getName(), userType.getSubType());
     }
 
     @Override
-    public GetUserTypeOutputDTO toGetOutput(UserType user) {
-        return new GetUserTypeOutputDTO(user.getId(), user.getTypeName());
+    public GetUserTypeOutputDTO toGetOutput(UserType userType) {
+        return new GetUserTypeOutputDTO(userType.getId(), userType.getName(), userType.getSubType());
     }
 
     @Override
-    public List<GetUserTypeOutputDTO> toGetOutputList(List<UserType> users) {
-        return users.stream().map(this::toGetOutput).collect(Collectors.toList());
+    public List<GetUserTypeOutputDTO> toGetOutputList(List<UserType> userTypes) {
+        return userTypes.stream().map(this::toGetOutput).collect(Collectors.toList());
     }
 }

@@ -6,16 +6,16 @@ import com.fiap.mariacomanda.core.domain.usecases.menuItem.UpdateMenuItemUseCase
 
 public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
 
-    private final MenuItemGateway repository;
+    private final MenuItemGateway gateway;
 
-    public UpdateMenuItemUseCaseImpl(MenuItemGateway repository) {
-        this.repository = repository;
+    public UpdateMenuItemUseCaseImpl(MenuItemGateway gateway) {
+        this.gateway = gateway;
     }
 
     @Override
     public MenuItem execute(MenuItem menuItem) {
         if (menuItem.getId() == null) throw new IllegalArgumentException("id is required");
-        return repository.save(menuItem);
+        return gateway.save(menuItem);
     }
 
 }

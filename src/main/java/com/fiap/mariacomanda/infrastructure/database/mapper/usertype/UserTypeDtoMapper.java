@@ -16,19 +16,22 @@ public class UserTypeDtoMapper {
     public UserType mapCreate(CreateUserTypeInputDTO dto) {
         return new UserType(
                 dto.id(),
-                dto.typeName());
+                dto.name(),
+                dto.subType());
     }
 
     public UserType mapUpdate(UpdateUserTypeInputDTO dto) {
         return new UserType(
                 dto.id(),
-                dto.typeName());
+                dto.name(),
+                dto.subType());
     }
 
-    public CreateUserTypeOutputDTO mapCreate(UserType user) {
+    public CreateUserTypeOutputDTO mapCreate(UserType userType) {
         return new CreateUserTypeOutputDTO(
-                user.getId(),
-                user.getTypeName()
+                userType.getId(),
+                userType.getName(),
+                userType.getSubType()
         );
     }
 

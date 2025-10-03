@@ -9,13 +9,15 @@ public class UserTypeEntityMapper {
     public UserTypeEntity toEntity(UserType d) {
         UserTypeEntity e = new UserTypeEntity();
         e.setId(d.getId());
-        e.setName(d.getTypeName());
+        e.setName(d.getName());
+        e.setSubType(d.getSubType());
         return e;
     }
 
     public UserType toDomain(UserTypeEntity e) {
         return new UserType(
                 e.getId(),
-                e.getName());
+                e.getName(),
+                e.getSubType());
     }
 }

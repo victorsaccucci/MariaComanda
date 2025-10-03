@@ -7,14 +7,14 @@ import java.util.UUID;
 
 public class DeleteUserUseCaseImpl implements DeleteUserUseCase {
 
-    private final UserGateway repository;
+    private final UserGateway gateway;
 
-    public DeleteUserUseCaseImpl(UserGateway repository) {
-        this.repository = repository;
+    public DeleteUserUseCaseImpl(UserGateway gateway) {
+        this.gateway = gateway;
     }
 
     @Override
     public void execute(UUID id) {
-        repository.deleteById(id);
+        gateway.deleteById(id);
     }
 }

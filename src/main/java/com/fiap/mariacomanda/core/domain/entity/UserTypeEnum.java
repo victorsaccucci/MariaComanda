@@ -8,23 +8,23 @@ import lombok.Getter;
  */
 @Getter
 public enum UserTypeEnum {
-    CLIENT("CLIENT", "Standard client user"),
-    RESTAURANT_OWNER("RESTAURANT_OWNER", "Restaurant owner with management privileges");
+    CUSTOMER("CUSTOMER", "Standard customer user"),
+    OWNER("OWNER", "Restaurant owner with management privileges");
 
-    private final String typeName;
+    private final String subTypeName;
     private final String description;
 
-    UserTypeEnum(String typeName, String description) {
-        this.typeName = typeName;
+    UserTypeEnum(String subTypeName, String description) {
+        this.subTypeName = subTypeName;
         this.description = description;
     }
 
-    public static UserTypeEnum fromTypeName(String typeName) {
+    public static UserTypeEnum fromSubTypeName(String subTypeName) {
         for (UserTypeEnum type : values()) {
-            if (type.typeName.equals(typeName)) {
+            if (type.subTypeName.equalsIgnoreCase(subTypeName)) {
                 return type;
             }
         }
-        throw new IllegalArgumentException("Unknown user type: " + typeName);
+        throw new IllegalArgumentException("Unknown user subType: " + subTypeName);
     }
 }

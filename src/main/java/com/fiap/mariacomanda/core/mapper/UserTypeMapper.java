@@ -14,10 +14,10 @@ public interface UserTypeMapper {
 
     UserType toDomain(UpdateUserTypeInputDTO dto);
 
-    CreateUserTypeOutputDTO toCreateOutput(UserType user);
+    CreateUserTypeOutputDTO toCreateOutput(UserType userType);
 
-    GetUserTypeOutputDTO toGetOutput(UserType user);
+    GetUserTypeOutputDTO toGetOutput(UserType userType);
 
-    List<GetUserTypeOutputDTO> toGetOutputList(List<UserType> users);
+    List<GetUserTypeOutputDTO> toGetOutputList(List<UserType> userTypes);
 
 }

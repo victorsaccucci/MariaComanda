@@ -16,47 +16,62 @@ import java.util.UUID;
 public class UserType {
     @EqualsAndHashCode.Include
     private UUID id;
-    private String typeName;
+    private String name; // Nome amigável / descritivo
+    private String subType; // Valor técnico que diferencia CUSTOMER ou OWNER
 
-    // Constantes para tipos padrão
-    public static final String CLIENT_TYPE = "CLIENT";
-    public static final String RESTAURANT_OWNER_TYPE = "RESTAURANT_OWNER";
+    // Constantes para subTypes válidos
+    public static final String CUSTOMER = UserTypeEnum.CUSTOMER.getSubTypeName();
+    public static final String OWNER = UserTypeEnum.OWNER.getSubTypeName();
 
-    public UserType(UUID id, String typeName) {
+    public UserType(UUID id, String name, String subType) {
         this.id = id;
-        this.typeName = validateTypeName(typeName);
+        this.name = validateName(name);
+        this.subType = validateSubType(subType);
     }
 
-    // Validações de negócio
-    private String validateTypeName(String typeName) {
-        if (typeName == null || typeName.trim().isEmpty()) {
+    private String validateName(String value) {
+        if (value == null || value.trim().isEmpty()) {
             throw new IllegalArgumentException("UserType name cannot be null or empty");
         }
-        if (typeName.length() > 50) {
-            throw new IllegalArgumentException("UserType name cannot exceed 50 characters");
+        if (value.length() > 120) {
+            throw new IllegalArgumentException("UserType name cannot exceed 120 characters");
         }
-        return typeName.trim().toUpperCase();
+        return value.trim();
     }
 
-    // Métodos de conveniência para criar tipos padrão
-    public static UserType createClientType(UUID id) {
-        return new UserType(id, CLIENT_TYPE);
+    private String validateSubType(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            throw new IllegalArgumentException("UserType subType cannot be null or empty");
+        }
+        String normalized = value.trim();
+        try {
+            return UserTypeEnum.fromSubTypeName(normalized).getSubTypeName();
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException("Invalid user subType: " + value + ". Allowed: CUSTOMER, OWNER", ex);
+        }
     }
 
-    public static UserType createRestaurantOwnerType(UUID id) {
-        return new UserType(id, RESTAURANT_OWNER_TYPE);
+    public static UserType createCustomer(UUID id, String name) {
+        return new UserType(id, name, CUSTOMER);
     }
 
-    public boolean isClient() {
-        return CLIENT_TYPE.equals(this.typeName);
+    public static UserType createOwner(UUID id, String name) {
+        return new UserType(id, name, OWNER);
     }
 
-    public boolean isRestaurantOwner() {
-        return RESTAURANT_OWNER_TYPE.equals(this.typeName);
+    public boolean isCustomer() {
+        return CUSTOMER.equals(this.subType);
     }
 
-    // Setter com validação
-    public void setTypeName(String typeName) {
-        this.typeName = validateTypeName(typeName);
+    public boolean isOwner() {
+        return OWNER.equals(this.subType);
+    }
+
+    public void setName(String name) {
+        this.name = validateName(name);
+    }
+
+    public void setSubType(String subType) {
+        this.subType = validateSubType(subType);
     }
 }

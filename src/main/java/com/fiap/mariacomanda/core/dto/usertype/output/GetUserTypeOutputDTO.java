@@ -4,5 +4,6 @@ import java.util.UUID;
 
 public record GetUserTypeOutputDTO(
     UUID id,
-    String typeName
+    String name,
+    String subType
 ) {}

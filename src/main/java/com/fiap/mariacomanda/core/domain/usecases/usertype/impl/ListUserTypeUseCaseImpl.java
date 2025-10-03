@@ -8,14 +8,14 @@ import java.util.List;
 
 public class ListUserTypeUseCaseImpl implements ListUserTypeUseCase {
 
-    private final UserTypeGateway repository;
+    private final UserTypeGateway gateway;
 
-    public ListUserTypeUseCaseImpl(UserTypeGateway repository) {
-        this.repository = repository;
+    public ListUserTypeUseCaseImpl(UserTypeGateway gateway) {
+        this.gateway = gateway;
     }
 
     @Override
     public List<UserType> execute(int page, int size) {
-        return repository.findAll(page, size);
+        return gateway.findAll(page, size);
     }
 }
