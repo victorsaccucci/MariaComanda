@@ -24,7 +24,6 @@ public class UserEntity {
     @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_type_id")
-    private UserTypeEntity userTypeId;
+    @Column(name = "user_type_id", nullable = false)
+    private UUID userTypeId;
 }
