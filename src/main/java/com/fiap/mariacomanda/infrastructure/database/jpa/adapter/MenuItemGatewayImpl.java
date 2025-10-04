@@ -18,36 +18,36 @@ import java.util.UUID;
 @Component
 public class MenuItemGatewayImpl implements MenuItemGateway {
 
-    private final MenuItemJpaRepository repository;
-    private final RestaurantJpaRepository restaurantRepository;
+    private final MenuItemJpaRepository menuItemJpaRepository;
+    private final RestaurantJpaRepository restaurantJpaRepository;
     private final MenuItemEntityMapper menuItemEntityMapper;
 
-    public MenuItemGatewayImpl(MenuItemJpaRepository repository, RestaurantJpaRepository restaurantRepository,
+    public MenuItemGatewayImpl(MenuItemJpaRepository menuItemJpaRepository, RestaurantJpaRepository restaurantJpaRepository,
                                MenuItemEntityMapper menuItemEntityMapper) {
-        this.repository = repository;
-        this.restaurantRepository = restaurantRepository;
+        this.menuItemJpaRepository = menuItemJpaRepository;
+        this.restaurantJpaRepository = restaurantJpaRepository;
         this.menuItemEntityMapper = menuItemEntityMapper;
     }
 
     @Override
-    public MenuItem save(MenuItem m) {
-        MenuItemEntity entity = menuItemEntityMapper.toEntity(m);
-        RestaurantEntity restaurant = restaurantRepository.findById(m.getRestaurantId())
-                .orElseThrow(() -> new RuntimeException("Restaurant not found for id: " + m.getRestaurantId()));
+    public MenuItem save(MenuItem menuItem) {
+        MenuItemEntity entity = menuItemEntityMapper.toEntity(menuItem);
+        RestaurantEntity restaurant = restaurantJpaRepository.findById(menuItem.getRestaurantId())
+                .orElseThrow(() -> new IllegalStateException("Restaurant not found for id: " + menuItem.getRestaurantId()));
         entity.setRestaurant(restaurant);
-        MenuItemEntity saved = repository.save(entity);
+        MenuItemEntity saved = menuItemJpaRepository.save(entity);
         return menuItemEntityMapper.toDomain(saved);
     }
 
     @Override
     public Optional<MenuItem> findById(UUID id) {
-        return repository.findById(id).map(menuItemEntityMapper::toDomain);
+        return menuItemJpaRepository.findById(id).map(menuItemEntityMapper::toDomain);
     }
 
     @Override
     public List<MenuItem> findByRestaurant(UUID restaurantId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return repository.findByRestaurant_Id(restaurantId, pageable)
+        return menuItemJpaRepository.findByRestaurant_Id(restaurantId, pageable)
                 .stream()
                 .map(menuItemEntityMapper::toDomain)
                 .toList();
@@ -55,6 +55,6 @@ public class MenuItemGatewayImpl implements MenuItemGateway {
 
     @Override
     public void deleteById(UUID id) {
-        repository.deleteById(id);
+        menuItemJpaRepository.deleteById(id);
     }
 }

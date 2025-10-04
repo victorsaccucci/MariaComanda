@@ -57,6 +57,7 @@ public class UserGatewayImpl implements UserGateway {
         userJpaRepository.deleteById(id);
     }
 
+    // Compõe UserType dentro de User
     private User toDomainWithUserType(UserEntity entity) {
         UserType userType = userTypeJpaRepository.findById(entity.getUserTypeId())
                 .map(userTypeEntityMapper::toDomain)

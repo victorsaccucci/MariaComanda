@@ -26,8 +26,8 @@ public class UserTypeGatewayImpl implements UserTypeGateway {
     }
 
     @Override
-    public UserType save(UserType t) {
-        UserTypeEntity userTypeEntity = userTypeEntityMapper.toEntity(t);
+    public UserType save(UserType userType) {
+        UserTypeEntity userTypeEntity = userTypeEntityMapper.toEntity(userType);
         UserTypeEntity saved = userTypeJpaRepository.save(userTypeEntity);
         return userTypeEntityMapper.toDomain(saved);
     }
