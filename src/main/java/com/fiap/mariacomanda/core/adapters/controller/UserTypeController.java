@@ -28,9 +28,9 @@ public class UserTypeController {
         this.userTypeMapper = userTypeMapper;
     }
 
-    public CreateUserTypeOutputDTO create(CreateUserTypeInputDTO inputDTO) {
+    public CreateUserTypeOutputDTO create(CreateUserTypeInputDTO inputDTO, UUID requesterUserId) {
         UserType user = userTypeMapper.toDomain(inputDTO);
-        UserType created = createUseCase.execute(user);
+        UserType created = createUseCase.execute(user, requesterUserId);
         return userTypeMapper.toCreateOutput(created);
     }
 

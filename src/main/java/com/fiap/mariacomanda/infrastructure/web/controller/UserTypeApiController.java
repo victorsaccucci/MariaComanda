@@ -9,7 +9,10 @@ import com.fiap.mariacomanda.infrastructure.web.json.CreateUserTypeJson;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,9 +22,10 @@ public class UserTypeApiController implements UserTypeApi {
 
     private final UserTypeJsonMapper userTypeJsonMapper;
 
-    public CreateUserTypeOutputDTO createUser(@Valid @RequestBody CreateUserTypeJson createUserTypeJson) {
+    public CreateUserTypeOutputDTO createUser(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                              @Valid @RequestBody CreateUserTypeJson createUserTypeJson) {
         CreateUserTypeInputDTO inputDTO = userTypeJsonMapper.toCreateInput(createUserTypeJson);
-        return userTypeController.create(inputDTO);
+        return userTypeController.create(inputDTO, requesterUserId);
     }
 
 }

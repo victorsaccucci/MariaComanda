@@ -2,10 +2,16 @@ package com.fiap.mariacomanda.infrastructure.config.usertype;
 
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
-import com.fiap.mariacomanda.core.domain.usecases.user.*;
-import com.fiap.mariacomanda.core.domain.usecases.user.impl.*;
-import com.fiap.mariacomanda.core.domain.usecases.usertype.*;
-import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.*;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.CreateUserTypeUseCase;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.DeleteUserTypeUseCase;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.GetUserTypeUseCase;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.ListUserTypeUseCase;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.UpdateUserTypeUseCase;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.CreateUserTypeUseCaseImpl;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.DeleteUserTypeUseCaseImpl;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.GetUserTypeUseCaseImpl;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.ListUserTypeUseCaseImpl;
+import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.UpdateUserTypeUseCaseImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,8 +19,8 @@ import org.springframework.context.annotation.Configuration;
 public class UserTypeUseCaseConfig {
 
     @Bean
-    public CreateUserTypeUseCase createUserTypeUsecase(UserTypeGateway userTypeGateway) {
-        return new CreateUserTypeUseCaseImpl(userTypeGateway);
+    public CreateUserTypeUseCase createUserTypeUsecase(UserTypeGateway userTypeGateway, UserGateway userGateway) {
+        return new CreateUserTypeUseCaseImpl(userTypeGateway, userGateway);
     }
 
     @Bean

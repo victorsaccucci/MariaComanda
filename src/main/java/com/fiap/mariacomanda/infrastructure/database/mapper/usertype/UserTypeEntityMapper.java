@@ -4,6 +4,8 @@ import com.fiap.mariacomanda.core.domain.entity.UserType;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.UserTypeEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component("userTypeEntityMapper")
 public class UserTypeEntityMapper {
     public UserTypeEntity toEntity(UserType d) {
@@ -15,9 +17,10 @@ public class UserTypeEntityMapper {
     }
 
     public UserType toDomain(UserTypeEntity e) {
-        return new UserType(
-                e.getId(),
-                e.getName(),
-                e.getSubType());
+        return buildUserType(e.getId(), e.getName(), e.getSubType());
+    }
+
+    private UserType buildUserType(UUID id, String name, String subType) {
+        return id == null ? new UserType(name, subType) : new UserType(id, name, subType);
     }
 }

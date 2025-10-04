@@ -8,6 +8,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+
+import java.util.UUID;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Tag(name = "Tipo de Usuário", description = "Operações relacionada ao tipo de usuário")
@@ -19,5 +22,7 @@ public interface UserTypeApi {
             @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso")
     })
     @PostMapping
-    CreateUserTypeOutputDTO createUser(@RequestBody CreateUserTypeJson createUserTypeJson);
+    CreateUserTypeOutputDTO createUser(
+            @RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+            @RequestBody CreateUserTypeJson createUserTypeJson);
 }

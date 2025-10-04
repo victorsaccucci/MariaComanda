@@ -6,21 +6,17 @@ import com.fiap.mariacomanda.core.dto.usertype.input.UpdateUserTypeInputDTO;
 import com.fiap.mariacomanda.core.dto.usertype.output.CreateUserTypeOutputDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 
 @Component
 public class UserTypeDtoMapper {
     public UserType toDomain(CreateUserTypeInputDTO dto) {
-        return new UserType(
-                dto.id(),
-                dto.name(),
-                dto.subType());
+        return buildUserType(null, dto.name(), dto.subType());
     }
 
     public UserType toDomain(UpdateUserTypeInputDTO dto) {
-        return new UserType(
-                dto.id(),
-                dto.name(),
-                dto.subType());
+        return buildUserType(dto.id(), dto.name(), dto.subType());
     }
 
     public CreateUserTypeOutputDTO toCreateOutput(UserType userType) {
@@ -29,6 +25,10 @@ public class UserTypeDtoMapper {
                 userType.getName(),
                 userType.getSubType()
         );
+    }
+
+    private UserType buildUserType(UUID id, String name, String subType) {
+        return id == null ? new UserType(name, subType) : new UserType(id, name, subType);
     }
 
 }

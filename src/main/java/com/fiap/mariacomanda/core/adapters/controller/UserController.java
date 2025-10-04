@@ -29,8 +29,7 @@ public class UserController {
     }
 
     public CreateUserOutputDTO create(CreateUserInputDTO inputDTO) {
-        User user = userMapper.toDomain(inputDTO);
-        User created = createUseCase.execute(user);
+        User created = createUseCase.execute(inputDTO);
         return userMapper.toCreateOutput(created);
     }
 
@@ -45,8 +44,7 @@ public class UserController {
     }
 
     public GetUserOutputDTO update(UpdateUserInputDTO inputDTO) {
-        User user = userMapper.toDomain(inputDTO);
-        User updated = updateUseCase.execute(user);
+        User updated = updateUseCase.execute(inputDTO);
         return userMapper.toGetOutput(updated);
     }
 
@@ -54,4 +52,5 @@ public class UserController {
         UUID id = inputDTO.id();
         deleteUseCase.execute(id);
     }
+
 }

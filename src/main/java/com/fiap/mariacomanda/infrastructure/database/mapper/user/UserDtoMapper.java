@@ -1,43 +1,47 @@
 package com.fiap.mariacomanda.infrastructure.database.mapper.user;
 
 import com.fiap.mariacomanda.core.domain.entity.User;
-import com.fiap.mariacomanda.core.domain.entity.UserType;
 import com.fiap.mariacomanda.core.dto.user.input.CreateUserInputDTO;
 import com.fiap.mariacomanda.core.dto.user.input.UpdateUserInputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.usertype.output.GetUserTypeOutputDTO;
 import com.fiap.mariacomanda.core.mapper.UserTypeMapper;
+import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
+import com.fiap.mariacomanda.core.domain.entity.UserType;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
 public class UserDtoMapper {
 
     private final UserTypeMapper userTypeMapper;
+    private final UserTypeGateway userTypeGateway;
 
-    public UserDtoMapper(UserTypeMapper userTypeMapper) {
+    public UserDtoMapper(UserTypeMapper userTypeMapper, UserTypeGateway userTypeGateway) {
         this.userTypeMapper = userTypeMapper;
+        this.userTypeGateway = userTypeGateway;
     }
 
     public User toDomain(CreateUserInputDTO dto) {
-        return new User(
-                dto.id(),
-                dto.name(),
-                dto.email(),
-                dto.password(),
-                UserType.reference(dto.userTypeId()));
+    return new User(
+        dto.id(),
+        dto.name(),
+        dto.email(),
+        dto.password(),
+                resolveUserType(dto.userTypeId()));
     }
 
     public User toDomain(UpdateUserInputDTO dto) {
-        return new User(
-                dto.id(),
-                dto.name(),
-                dto.email(),
-                dto.password(),
-                UserType.reference(dto.userTypeId()));
+    return new User(
+        dto.id(),
+        dto.name(),
+        dto.email(),
+        dto.password(),
+                resolveUserType(dto.userTypeId()));
     }
 
     public CreateUserOutputDTO toCreateOutput(User user) {
@@ -64,4 +68,12 @@ public class UserDtoMapper {
         return users.stream().map(this::toGetOutput).collect(Collectors.toList());
     }
 
+    private UserType resolveUserType(UUID userTypeId) {
+        if (userTypeId == null) {
+            throw new IllegalArgumentException("UserType ID cannot be null");
+        }
+
+        return userTypeGateway.findById(userTypeId)
+                .orElseThrow(() -> new IllegalArgumentException("UserType not found for id: " + userTypeId));
+    }
 }

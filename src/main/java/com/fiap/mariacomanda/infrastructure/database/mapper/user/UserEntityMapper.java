@@ -1,19 +1,23 @@
 package com.fiap.mariacomanda.infrastructure.database.mapper.user;
 
 import com.fiap.mariacomanda.core.domain.entity.User;
-import com.fiap.mariacomanda.core.domain.entity.UserType;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.UserEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.UserTypeEntity;
-import com.fiap.mariacomanda.infrastructure.database.jpa.repository.UserTypeJpaRepository;
+import com.fiap.mariacomanda.infrastructure.database.mapper.usertype.UserTypeEntityMapper;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 
 @Component("userEntityMapper")
 public class UserEntityMapper {
 
-    private final UserTypeJpaRepository userTypeJpaRepository;
+    private final UserTypeEntityMapper userTypeEntityMapper;
 
-    public UserEntityMapper(UserTypeJpaRepository userTypeJpaRepository) {
-        this.userTypeJpaRepository = userTypeJpaRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public UserEntityMapper(UserTypeEntityMapper userTypeEntityMapper) {
+        this.userTypeEntityMapper = userTypeEntityMapper;
     }
 
     public UserEntity toEntity(User d) {
@@ -23,19 +27,16 @@ public class UserEntityMapper {
         e.setEmail(d.getEmail());
         e.setPasswordHash(d.getPasswordHash());
 
-        UserTypeEntity userTypeEntity = userTypeJpaRepository.getReferenceById(d.getUserTypeId());
+        UserTypeEntity userTypeEntity = mapUserTypeToEntity(d);
         e.setUserTypeId(userTypeEntity);
         return e;
     }
 
     public User toDomain(UserEntity e) {
-    UserTypeEntity userTypeEntity = e.getUserTypeId();
-    UserType userType = userTypeEntity != null
-        ? new UserType(
-            userTypeEntity.getId(),
-            userTypeEntity.getName(),
-            userTypeEntity.getSubType())
-        : null;
+        UserTypeEntity userTypeEntity = e.getUserTypeId();
+        com.fiap.mariacomanda.core.domain.entity.UserType userType = userTypeEntity != null
+                ? userTypeEntityMapper.toDomain(userTypeEntity)
+                : null;
         return new User(
                 e.getId(),
                 e.getName(),
@@ -43,5 +44,15 @@ public class UserEntityMapper {
                 e.getPasswordHash(),
                 userType
         );
+    }
+
+    private UserTypeEntity mapUserTypeToEntity(User user) {
+        if (user.getUserType() == null) {
+            throw new IllegalArgumentException("UserType cannot be null when mapping to entity");
+        }
+        if (user.getUserType().getId() == null) {
+            throw new IllegalArgumentException("UserType ID cannot be null when mapping to entity");
+        }
+        return entityManager.getReference(UserTypeEntity.class, user.getUserType().getId());
     }
 }

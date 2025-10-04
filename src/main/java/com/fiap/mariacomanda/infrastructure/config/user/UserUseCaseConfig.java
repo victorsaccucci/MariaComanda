@@ -1,8 +1,10 @@
 package com.fiap.mariacomanda.infrastructure.config.user;
 
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
 import com.fiap.mariacomanda.core.domain.usecases.user.*;
 import com.fiap.mariacomanda.core.domain.usecases.user.impl.*;
+import com.fiap.mariacomanda.core.mapper.UserMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 public class UserUseCaseConfig {
 
     @Bean
-    public CreateUserUseCase createUserUsecase(UserGateway userGateway) {
-        return new CreateUserUseCaseImpl(userGateway);
+    public CreateUserUseCase createUserUsecase(UserGateway userGateway, UserTypeGateway userTypeGateway, UserMapper userMapper) {
+        return new CreateUserUseCaseImpl(userGateway, userTypeGateway, userMapper);
     }
 
     @Bean
@@ -30,7 +32,7 @@ public class UserUseCaseConfig {
     }
 
     @Bean
-    public UpdateUserUseCase updateUserUsecase(UserGateway userGateway) {
-        return new UpdateUserUseCaseImpl(userGateway);
+    public UpdateUserUseCase updateUserUsecase(UserGateway userGateway, UserTypeGateway userTypeGateway, UserMapper userMapper) {
+        return new UpdateUserUseCaseImpl(userGateway, userTypeGateway, userMapper);
     }
 }

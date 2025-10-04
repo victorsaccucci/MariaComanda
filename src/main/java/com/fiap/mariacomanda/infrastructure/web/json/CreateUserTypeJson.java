@@ -5,13 +5,9 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Getter
 @NoArgsConstructor
 public class CreateUserTypeJson {
-
-    private UUID id;
 
     @NotBlank
     private String name; // Nome descritivo (ex: Cliente, Dono do Restaurante)

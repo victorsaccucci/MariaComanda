@@ -8,32 +8,30 @@ import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.usertype.output.GetUserTypeOutputDTO;
 import com.fiap.mariacomanda.core.mapper.UserMapper;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 public class UserMapperImpl implements UserMapper {
 
     @Override
-    public User toDomain(CreateUserInputDTO dto) {
+    public User toDomain(CreateUserInputDTO dto, UserType userType) {
         return new User(
                 dto.id(),
                 dto.name(),
                 dto.email(),
                 dto.password(),
-                UserType.reference(dto.userTypeId()));
+                userType);
     }
 
     @Override
-    public User toDomain(UpdateUserInputDTO dto) {
+    public User toDomain(UpdateUserInputDTO dto, UserType userType) {
         return new User(
                 dto.id(),
                 dto.name(),
                 dto.email(),
                 dto.password(),
-                UserType.reference(dto.userTypeId())
+                userType
         );
     }
 

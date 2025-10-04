@@ -3,13 +3,11 @@ package com.fiap.mariacomanda.core.domain.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.util.UUID;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -24,7 +22,12 @@ public class UserType {
     public static final String OWNER = UserTypeEnum.OWNER.getSubTypeName();
 
     public UserType(UUID id, String name, String subType) {
-        this.id = id;
+        this.id = validateId(id);
+        this.name = validateName(name);
+        this.subType = validateSubType(subType);
+    }
+
+    public UserType(String name, String subType) {
         this.name = validateName(name);
         this.subType = validateSubType(subType);
     }
@@ -37,15 +40,6 @@ public class UserType {
         return new UserType(id, name, OWNER);
     }
 
-    public static UserType reference(UUID id) {
-        if (id == null) {
-            throw new IllegalArgumentException("UserType ID cannot be null");
-        }
-        UserType userType = new UserType();
-        userType.setId(id);
-        return userType;
-    }
-
     private String validateName(String value) {
         if (value == null || value.trim().isEmpty()) {
             throw new IllegalArgumentException("UserType name cannot be null or empty");
@@ -54,6 +48,13 @@ public class UserType {
             throw new IllegalArgumentException("UserType name cannot exceed 120 characters");
         }
         return value.trim();
+    }
+
+    private UUID validateId(UUID value) {
+        if (value == null) {
+            throw new IllegalArgumentException("UserType ID cannot be null");
+        }
+        return value;
     }
 
     private String validateSubType(String value) {
