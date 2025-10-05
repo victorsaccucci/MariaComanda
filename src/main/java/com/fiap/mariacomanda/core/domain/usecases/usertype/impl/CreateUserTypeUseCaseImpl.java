@@ -5,6 +5,9 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
 import com.fiap.mariacomanda.core.domain.usecases.usertype.CreateUserTypeUseCase;
+import com.fiap.mariacomanda.core.dto.usertype.input.CreateUserTypeInputDTO;
+import com.fiap.mariacomanda.core.mapper.UserTypeMapper;
+
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
@@ -14,14 +17,17 @@ public class CreateUserTypeUseCaseImpl implements CreateUserTypeUseCase {
 
     private final UserTypeGateway userTypeGateway;
     private final UserGateway userGateway;
+    private final UserTypeMapper userTypeMapper;
 
-    public CreateUserTypeUseCaseImpl(UserTypeGateway userTypeGateway, UserGateway userGateway) {
+    public CreateUserTypeUseCaseImpl(UserTypeGateway userTypeGateway, UserGateway userGateway, UserTypeMapper userTypeMapper) {
         this.userTypeGateway = userTypeGateway;
         this.userGateway = userGateway;
+        this.userTypeMapper = userTypeMapper;
     }
 
     @Override
-    public UserType execute(UserType userType, UUID requesterUserId) {
+    public UserType execute(CreateUserTypeInputDTO inputDTO, UUID requesterUserId) {
+
         if (requesterUserId == null) {
             throw new IllegalArgumentException("requesterUserId is required");
         }
@@ -35,6 +41,8 @@ public class CreateUserTypeUseCaseImpl implements CreateUserTypeUseCase {
                     requesterUserId, requesterType != null ? requesterType.getSubType() : "unknown");
             throw new IllegalStateException("Only OWNER users can create user types");
         }
+
+        UserType userType = userTypeMapper.toDomain(inputDTO);
 
         return userTypeGateway.save(userType);
     }

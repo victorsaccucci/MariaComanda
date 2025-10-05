@@ -12,6 +12,8 @@ import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.DeleteUserTypeUs
 import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.GetUserTypeUseCaseImpl;
 import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.ListUserTypeUseCaseImpl;
 import com.fiap.mariacomanda.core.domain.usecases.usertype.impl.UpdateUserTypeUseCaseImpl;
+import com.fiap.mariacomanda.core.mapper.UserTypeMapper;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,8 +21,8 @@ import org.springframework.context.annotation.Configuration;
 public class UserTypeUseCaseConfig {
 
     @Bean
-    public CreateUserTypeUseCase createUserTypeUsecase(UserTypeGateway userTypeGateway, UserGateway userGateway) {
-        return new CreateUserTypeUseCaseImpl(userTypeGateway, userGateway);
+    public CreateUserTypeUseCase createUserTypeUsecase(UserTypeGateway userTypeGateway, UserGateway userGateway, UserTypeMapper userTypeMapper) {
+        return new CreateUserTypeUseCaseImpl(userTypeGateway, userGateway, userTypeMapper);
     }
 
     @Bean
