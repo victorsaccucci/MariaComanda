@@ -9,11 +9,7 @@ import com.fiap.mariacomanda.infrastructure.database.mapper.user.UserJsonMapper;
 import com.fiap.mariacomanda.infrastructure.web.json.CreateUserJson;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -52,5 +48,4 @@ public class UserApiController implements UserApi {
         DeleteUserInputDTO inputDTO = new DeleteUserInputDTO(id);
         userController.delete(inputDTO);
     }
-
 }

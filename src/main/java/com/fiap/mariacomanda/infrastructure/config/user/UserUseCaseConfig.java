@@ -32,7 +32,7 @@ public class UserUseCaseConfig {
     }
 
     @Bean
-    public UpdateUserUseCase updateUserUsecase(UserGateway userGateway, UserTypeGateway userTypeGateway, UserMapper userMapper) {
-        return new UpdateUserUseCaseImpl(userGateway, userTypeGateway, userMapper);
+    public UpdateUserUseCase updateUserUsecase(UserGateway userGateway, UserTypeGateway userTypeGateway) {
+        return new UpdateUserUseCaseImpl(userGateway, userTypeGateway);
     }
 }

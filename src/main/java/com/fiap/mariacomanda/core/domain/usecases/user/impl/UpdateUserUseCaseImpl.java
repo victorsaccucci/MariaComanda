@@ -6,18 +6,15 @@ import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
 import com.fiap.mariacomanda.core.domain.usecases.user.UpdateUserUseCase;
 import com.fiap.mariacomanda.core.dto.user.input.UpdateUserInputDTO;
-import com.fiap.mariacomanda.core.mapper.UserMapper;
 
 public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
 
     private final UserGateway userGateway;
     private final UserTypeGateway userTypeGateway;
-    private final UserMapper userMapper;
 
-    public UpdateUserUseCaseImpl(UserGateway userGateway, UserTypeGateway userTypeGateway, UserMapper userMapper) {
+    public UpdateUserUseCaseImpl(UserGateway userGateway, UserTypeGateway userTypeGateway) {
         this.userGateway = userGateway;
         this.userTypeGateway = userTypeGateway;
-        this.userMapper = userMapper;
     }
 
     @Override
