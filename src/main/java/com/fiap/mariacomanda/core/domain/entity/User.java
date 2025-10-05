@@ -18,7 +18,11 @@ public class User {
     private UserType userType;
 
     public User(UUID id, String name, String email, String passwordHash, UserType userType) {
-        this.id = id;
+        this(name, email, passwordHash, userType);
+        this.id = validateId(id);
+    }
+
+    public User(String name, String email, String passwordHash, UserType userType) {
         this.name = validateName(name);
         this.email = validateEmail(email);
         this.passwordHash = validatePasswordHash(passwordHash);
@@ -80,6 +84,13 @@ public class User {
             throw new IllegalArgumentException("UserType ID cannot be null");
         }
         return userType;
+    }
+
+    private UUID validateId(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        return id;
     }
 
     // Setters apenas para campos permitidos

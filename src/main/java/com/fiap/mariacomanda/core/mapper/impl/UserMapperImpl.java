@@ -10,29 +10,19 @@ import com.fiap.mariacomanda.core.dto.usertype.output.GetUserTypeOutputDTO;
 import com.fiap.mariacomanda.core.mapper.UserMapper;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class UserMapperImpl implements UserMapper {
 
     @Override
     public User toDomain(CreateUserInputDTO dto, UserType userType) {
-        return new User(
-                dto.id(),
-                dto.name(),
-                dto.email(),
-                dto.password(),
-                userType);
+        return buildUser(null, dto.name(), dto.email(), dto.password(), userType);
     }
 
     @Override
     public User toDomain(UpdateUserInputDTO dto, UserType userType) {
-        return new User(
-                dto.id(),
-                dto.name(),
-                dto.email(),
-                dto.password(),
-                userType
-        );
+        return buildUser(dto.id(), dto.name(), dto.email(), dto.password(), userType);
     }
 
     @Override
@@ -67,6 +57,12 @@ public class UserMapperImpl implements UserMapper {
                         userType.getName(),
                         userType.getSubType())
                 : null;
+    }
+
+    private User buildUser(UUID id, String name, String email, String password, UserType userType) {
+        return id == null
+                ? new User(name, email, password, userType)
+                : new User(id, name, email, password, userType);
     }
 
 }

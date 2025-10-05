@@ -11,8 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CreateUserJson {
 
-    private UUID id;
-
     @NotBlank
     private String name;
 

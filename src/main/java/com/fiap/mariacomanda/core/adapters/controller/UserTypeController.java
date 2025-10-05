@@ -29,24 +29,24 @@ public class UserTypeController {
     }
 
     public CreateUserTypeOutputDTO create(CreateUserTypeInputDTO inputDTO, UUID requesterUserId) {
-        UserType user = userTypeMapper.toDomain(inputDTO);
-        UserType created = createUseCase.execute(user, requesterUserId);
+        UserType userType = userTypeMapper.toDomain(inputDTO);
+        UserType created = createUseCase.execute(userType, requesterUserId);
         return userTypeMapper.toCreateOutput(created);
     }
 
     public GetUserTypeOutputDTO get(GetUserTypeInputDTO inputDTO) {
-        UserType user = getUseCase.execute(inputDTO.id()).orElseThrow();
-        return userTypeMapper.toGetOutput(user);
+        UserType userType = getUseCase.execute(inputDTO.id()).orElseThrow();
+        return userTypeMapper.toGetOutput(userType);
     }
 
     public List<GetUserTypeOutputDTO> list(ListUserTypeInputDTO inputDTO) {
-        List<UserType> users = listUseCase.execute(inputDTO.page(), inputDTO.size());
-        return userTypeMapper.toGetOutputList(users);
+        List<UserType> userTypes = listUseCase.execute(inputDTO.page(), inputDTO.size());
+        return userTypeMapper.toGetOutputList(userTypes);
     }
 
     public GetUserTypeOutputDTO update(UpdateUserTypeInputDTO inputDTO) {
-        UserType user = userTypeMapper.toDomain(inputDTO);
-        UserType updated = updateUseCase.execute(user);
+        UserType userType = userTypeMapper.toDomain(inputDTO);
+        UserType updated = updateUseCase.execute(userType);
         return userTypeMapper.toGetOutput(updated);
     }
 

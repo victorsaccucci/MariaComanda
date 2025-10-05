@@ -9,7 +9,6 @@ public class UserJsonMapper {
 
     public CreateUserInputDTO toCreateInput(CreateUserJson json) {
         return new CreateUserInputDTO(
-                json.getId(),
                 json.getName(),
                 json.getEmail(),
                 json.getPassword(),

@@ -22,16 +22,34 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     }
 
     @Override
-    public User execute(CreateUserInputDTO inputDTO) {
+    public User execute(CreateUserInputDTO inputDTO, UUID requesterUserId) {
         if (inputDTO == null) {
             throw new IllegalArgumentException("CreateUserInputDTO cannot be null");
         }
+        User requester = resolveRequester(requesterUserId);
+        UserType requesterType = requester.getUserType();
+        if (requesterType == null || !requesterType.isOwner()) {
+            throw new IllegalStateException("Only OWNER users can create users");
+        }
 
+        // buscando userType que foi definido pelo requester para compor o novo usuário
         UserType userType = resolveUserType(inputDTO.userTypeId());
+        // montando o domain, com o userType definido pelo requester
         User user = userMapper.toDomain(inputDTO, userType);
         return userGateway.save(user);
     }
 
+    // busca o usuário que fez a requisição
+    private User resolveRequester(UUID requesterUserId) {
+        if (requesterUserId == null) {
+            throw new IllegalArgumentException("Requester user ID cannot be null");
+        }
+
+        return userGateway.findById(requesterUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
+    }
+
+    // busca o UserType que foi definido pelo requester para o novo usuário
     private UserType resolveUserType(UUID userTypeId) {
         if (userTypeId == null) {
             throw new IllegalArgumentException("UserType ID cannot be null");

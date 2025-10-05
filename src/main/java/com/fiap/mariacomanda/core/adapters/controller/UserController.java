@@ -28,8 +28,8 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    public CreateUserOutputDTO create(CreateUserInputDTO inputDTO) {
-        User created = createUseCase.execute(inputDTO);
+    public CreateUserOutputDTO create(CreateUserInputDTO inputDTO, UUID requesterUserId) {
+        User created = createUseCase.execute(inputDTO, requesterUserId);
         return userMapper.toCreateOutput(created);
     }
 

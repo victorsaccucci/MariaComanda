@@ -29,11 +29,26 @@ public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
             throw new IllegalArgumentException("User id is required");
         }
 
-        UserType userType = resolveUserType(inputDTO.userTypeId());
-        User user = userMapper.toDomain(inputDTO, userType);
-        return userGateway.save(user);
+        User existing = userGateway.findById(inputDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // se foi selecionado um novo userType, aqui atualiza para o novo selecionado, se não mantem o existente
+        UserType userType = inputDTO.userTypeId() != null
+                ? resolveUserType(inputDTO.userTypeId())
+                : existing.getUserType();
+        // usuario com dados atualizados, de acordo com que foi passado pelo requester
+        User merged = new User(
+            existing.getId(),
+            updateValue(inputDTO.name(), existing.getName()),
+            updateValue(inputDTO.email(), existing.getEmail()),
+            updateValue(inputDTO.password(), existing.getPasswordHash()),
+            userType
+        );
+
+        return userGateway.save(merged);
     }
 
+    // busca novo userTypeId passado pelo requester
     private UserType resolveUserType(java.util.UUID userTypeId) {
         if (userTypeId == null) {
             throw new IllegalArgumentException("UserType ID cannot be null");
@@ -41,5 +56,9 @@ public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
 
         return userTypeGateway.findById(userTypeId)
                 .orElseThrow(() -> new IllegalArgumentException("UserType not found for id: " + userTypeId));
+    }
+
+    private String updateValue(String newValue, String current) {
+        return newValue != null ? newValue : current;
     }
 }

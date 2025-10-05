@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,9 +26,10 @@ public class UserApiController implements UserApi {
 
     private final UserJsonMapper userJsonMapper;
 
-    public CreateUserOutputDTO createUser(@Valid @RequestBody CreateUserJson createUserJson) {
+    public CreateUserOutputDTO createUser(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                          @Valid @RequestBody CreateUserJson createUserJson) {
         CreateUserInputDTO inputDTO = userJsonMapper.toCreateInput(createUserJson);
-        return userController.create(inputDTO);
+        return userController.create(inputDTO, requesterUserId);
     }
 
     public GetUserOutputDTO get(@PathVariable UUID id) {

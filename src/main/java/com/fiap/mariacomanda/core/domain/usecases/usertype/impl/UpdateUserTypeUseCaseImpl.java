@@ -13,8 +13,8 @@ public class UpdateUserTypeUseCaseImpl implements UpdateUserTypeUseCase {
     }
 
     @Override
-    public UserType execute(UserType user) {
-        if (user.getId() == null) throw new IllegalArgumentException("id is required");
-        return gateway.save(user);
+    public UserType execute(UserType userType) {
+        if (userType.getId() == null) throw new IllegalArgumentException("id is required");
+        return gateway.save(userType);
     }
 }

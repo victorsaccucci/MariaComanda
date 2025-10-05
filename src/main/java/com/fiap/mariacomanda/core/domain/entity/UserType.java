@@ -14,7 +14,7 @@ import java.util.UUID;
 public class UserType {
     @EqualsAndHashCode.Include
     private UUID id;
-    private String name; // Nome amigável / descritivo
+    private String name;
     private String subType; // Valor técnico que diferencia CUSTOMER ou OWNER
 
     // Constantes para subTypes válidos
