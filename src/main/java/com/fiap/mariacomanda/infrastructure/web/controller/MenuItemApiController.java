@@ -10,7 +10,15 @@ import com.fiap.mariacomanda.infrastructure.web.json.CreateMenuItemJson;
 import com.fiap.mariacomanda.infrastructure.web.json.UpdateMenuItemJson;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,9 +31,9 @@ public class MenuItemApiController implements MenuItemApi {
 
     private final MenuItemJsonMapper menuItemJsonMapper;
 
-    public CreateMenuItemOutputDTO create(@Valid @RequestBody CreateMenuItemJson createMenuItemJson) {
+    public CreateMenuItemOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @Valid @RequestBody CreateMenuItemJson createMenuItemJson) {
         CreateMenuItemInputDTO inputDTO = menuItemJsonMapper.toCreateInput(createMenuItemJson);
-        return menuItemController.create(inputDTO);
+        return menuItemController.create(inputDTO, requesterUserId);
     }
 
     public void delete(@PathVariable UUID id) {

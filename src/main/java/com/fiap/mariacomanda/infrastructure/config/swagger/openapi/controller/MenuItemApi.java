@@ -23,7 +23,7 @@ public interface MenuItemApi {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Prato criado com sucesso")
     })
-    CreateMenuItemOutputDTO create(@Valid @RequestBody CreateMenuItemJson createMenuItemJson);
+    CreateMenuItemOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @Valid @RequestBody CreateMenuItemJson createMenuItemJson);
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Excluir um prato no menu pelo ID")

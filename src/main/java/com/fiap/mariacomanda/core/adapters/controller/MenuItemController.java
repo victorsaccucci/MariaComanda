@@ -29,9 +29,8 @@ public class MenuItemController {
         this.menuItemMapper = menuItemMapper;
     }
 
-    public CreateMenuItemOutputDTO create(CreateMenuItemInputDTO inputDTO) {
-        MenuItem menuItem = menuItemMapper.toDomain(inputDTO);
-        MenuItem created = createUseCase.execute(menuItem);
+    public CreateMenuItemOutputDTO create(CreateMenuItemInputDTO inputDTO, UUID requesterUserId) {
+        MenuItem created = createUseCase.execute(inputDTO, requesterUserId);
         return menuItemMapper.toCreateOutput(created);
     }
 
@@ -51,8 +50,7 @@ public class MenuItemController {
     }
 
     public GetMenuItemOutputDTO update(UpdateMenuItemInputDTO inputDTO) {
-        MenuItem menuItem = menuItemMapper.toDomain(inputDTO);
-        MenuItem updated = updateUseCase.execute(menuItem);
+        MenuItem updated = updateUseCase.execute(inputDTO);
         return menuItemMapper.toGetOutput(updated);
     }
 }

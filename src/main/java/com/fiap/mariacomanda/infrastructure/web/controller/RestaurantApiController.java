@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,9 +26,9 @@ public class RestaurantApiController implements RestaurantApi {
 
     private final RestaurantJsonMapper restaurantJsonMapper;
 
-    public CreateRestaurantOutputDTO create(@Valid @RequestBody RestaurantJson restaurantJson) {
+    public CreateRestaurantOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @Valid @RequestBody RestaurantJson restaurantJson) {
         CreateRestaurantInputDTO inputDTO = restaurantJsonMapper.toCreateInput(restaurantJson);
-        return restaurantController.create(inputDTO);
+        return restaurantController.create(inputDTO, requesterUserId);
     }
 
     public GetRestaurantOutputDTO get(@PathVariable String name) {

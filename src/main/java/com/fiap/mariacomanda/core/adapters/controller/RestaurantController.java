@@ -28,9 +28,8 @@ public class RestaurantController {
         this.restaurantMapper = restaurantMapper;
     }
 
-    public CreateRestaurantOutputDTO create(CreateRestaurantInputDTO inputDTO) {
-        Restaurant restaurant = restaurantMapper.toDomain(inputDTO);
-        Restaurant created = createUseCase.execute(restaurant);
+    public CreateRestaurantOutputDTO create(CreateRestaurantInputDTO inputDTO, UUID requesterUserId) {
+        Restaurant created = createUseCase.execute(inputDTO, requesterUserId);
         return restaurantMapper.toCreateOutput(created);
     }
 
@@ -45,8 +44,7 @@ public class RestaurantController {
     }
 
     public GetRestaurantOutputDTO update(UpdateRestaurantInputDTO inputDTO) {
-        Restaurant restaurant = restaurantMapper.toDomain(inputDTO);
-        Restaurant updated = updateUseCase.execute(restaurant);
+        Restaurant updated = updateUseCase.execute(inputDTO);
         return restaurantMapper.toGetOutput(updated);
     }
 

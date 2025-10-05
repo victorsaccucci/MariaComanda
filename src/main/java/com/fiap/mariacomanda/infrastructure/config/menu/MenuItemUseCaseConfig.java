@@ -2,7 +2,10 @@ package com.fiap.mariacomanda.infrastructure.config.menu;
 
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.*;
 import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.impl.*;
+import com.fiap.mariacomanda.core.mapper.MenuItemMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
 public class MenuItemUseCaseConfig {
 
     @Bean
-    public CreateMenuItemUseCase createMenuItemUseCase(MenuItemGateway menuItemGateway) {
-        return new CreateMenuItemUseCaseImpl(menuItemGateway);
+    public CreateMenuItemUseCase createMenuItemUseCase(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway, UserGateway userGateway, MenuItemMapper menuItemMapper) {
+        return new CreateMenuItemUseCaseImpl(menuItemGateway, restaurantGateway, userGateway, menuItemMapper);
     }
 
     @Bean
@@ -30,7 +33,7 @@ public class MenuItemUseCaseConfig {
     }
 
     @Bean
-    public UpdateMenuItemUseCase updateMenuItemUseCase(MenuItemGateway menuItemGateway) {
-        return new UpdateMenuItemUseCaseImpl(menuItemGateway);
+    public UpdateMenuItemUseCase updateMenuItemUseCase(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway) {
+        return new UpdateMenuItemUseCaseImpl(menuItemGateway, restaurantGateway);
     }
 }

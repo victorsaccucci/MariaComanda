@@ -22,7 +22,7 @@ public interface RestaurantApi {
             @ApiResponse(responseCode = "201", description = "Restaurante criado com sucesso")
     })
     @PostMapping
-    CreateRestaurantOutputDTO create(@RequestBody RestaurantJson restaurantJson);
+    CreateRestaurantOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @RequestBody RestaurantJson restaurantJson);
 
     @Operation(summary = "Busca um restaurante pelo nome")
     @ApiResponses(value = {
