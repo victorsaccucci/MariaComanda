@@ -43,9 +43,7 @@ public class MenuItemApiController implements MenuItemApi {
     }
 
     public GetMenuItemOutputDTO update(@PathVariable UUID id, @RequestBody UpdateMenuItemJson updateMenuItemJson) {
-        GetMenuItemOutputDTO existingDto = menuItemController.get(new GetMenuItemInputDTO(id, null, null, null, null, false, null));
-        UUID restaurantId = existingDto.restaurantId();
-        UpdateMenuItemInputDTO inputDTO = new UpdateMenuItemInputDTO(id, updateMenuItemJson.getName(), updateMenuItemJson.getDescription(), updateMenuItemJson.getPrice(), restaurantId, updateMenuItemJson.isDineInOnly(), updateMenuItemJson.getPhotoPath());
+        UpdateMenuItemInputDTO inputDTO = menuItemJsonMapper.toUpdateInput(updateMenuItemJson);
         return menuItemController.update(inputDTO);
     }
 

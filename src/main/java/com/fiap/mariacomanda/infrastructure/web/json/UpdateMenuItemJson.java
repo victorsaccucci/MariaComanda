@@ -1,6 +1,7 @@
 package com.fiap.mariacomanda.infrastructure.web.json;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -14,6 +15,9 @@ import lombok.NoArgsConstructor;
 public class UpdateMenuItemJson {
 
     @NotBlank
+    private UUID id;
+
+    @NotBlank
     @Size(max = 100)
     private String name;
 
@@ -23,6 +27,9 @@ public class UpdateMenuItemJson {
     @NotNull
     @DecimalMin(value = "0.0", inclusive = false)
     private BigDecimal price;
+
+    @NotBlank
+    private UUID restaurantId;
 
     private boolean dineInOnly;
 
