@@ -15,6 +15,7 @@ public class UpdateUserTypeUseCaseImpl implements UpdateUserTypeUseCase {
     @Override
     public UserType execute(UserType userType) {
         if (userType.getId() == null) throw new IllegalArgumentException("id is required");
+        // ... implementar
         return gateway.save(userType);
     }
 }

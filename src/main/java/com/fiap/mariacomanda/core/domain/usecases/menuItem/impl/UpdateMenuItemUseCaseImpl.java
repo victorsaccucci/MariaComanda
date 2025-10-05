@@ -36,11 +36,7 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
         UUID restaurantId = inputDTO.restaurantId() != null ? inputDTO.restaurantId() : existing.getRestaurantId();
         resolveRestaurant(restaurantId);
 
-        // Verificar se o requester é owner do restaurante (mas aqui não temos requesterUserId, talvez precise adicionar)
-        // Para simplificar, assumindo que a validação é feita no controller ou em outro lugar.
-        // Mas para seguir o padrão, talvez o UpdateMenuItemUseCase também precise de requesterUserId.
-
-        // Por enquanto, vamos manter sem, mas ideal seria adicionar requesterUserId.
+        // validar requester id
 
         // menuItem com dados atualizados
         MenuItem merged = new MenuItem(

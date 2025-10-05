@@ -29,6 +29,8 @@ public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
         User existing = userGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
+        // validar requester id
+
         // se foi selecionado um novo userType, aqui atualiza para o novo selecionado, se não mantem o existente
         UserType userType = inputDTO.userTypeId() != null
                 ? resolveUserType(inputDTO.userTypeId())

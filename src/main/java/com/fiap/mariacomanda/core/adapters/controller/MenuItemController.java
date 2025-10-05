@@ -34,11 +34,6 @@ public class MenuItemController {
         return menuItemMapper.toCreateOutput(created);
     }
 
-    public void delete(DeleteMenuItemInputDTO inputDTO) {
-        UUID id = inputDTO.id();
-        deleteUseCase.execute(id);
-    }
-
     public GetMenuItemOutputDTO get(GetMenuItemInputDTO inputDTO) {
         MenuItem menuItem = getUseCase.execute(inputDTO.id()).orElseThrow();
         return menuItemMapper.toGetOutput(menuItem);
@@ -52,5 +47,10 @@ public class MenuItemController {
     public GetMenuItemOutputDTO update(UpdateMenuItemInputDTO inputDTO) {
         MenuItem updated = updateUseCase.execute(inputDTO);
         return menuItemMapper.toGetOutput(updated);
+    }
+
+    public void delete(DeleteMenuItemInputDTO inputDTO) {
+        UUID id = inputDTO.id();
+        deleteUseCase.execute(id);
     }
 }

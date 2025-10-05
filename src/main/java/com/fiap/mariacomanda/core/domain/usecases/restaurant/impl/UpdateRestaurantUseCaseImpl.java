@@ -31,6 +31,8 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
         Restaurant existing = restaurantGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));
 
+        // validar requesterId
+
         // Verificar se o ownerUserId foi passado e se é válido
         UUID ownerUserId = inputDTO.ownerUserId() != null ? inputDTO.ownerUserId() : existing.getOwnerUserId();
         User owner = resolveUser(ownerUserId);
