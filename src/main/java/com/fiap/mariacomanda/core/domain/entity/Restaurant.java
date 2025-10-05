@@ -30,6 +30,15 @@ public class Restaurant {
         this.ownerUserId = validateOwnerUserId(ownerUserId);
     }
 
+    public Restaurant(String name, String address, String cuisineType,
+                     String openingHours, UUID ownerUserId) {
+        this.name = validateName(name);
+        this.address = validateAddress(address);
+        this.cuisineType = validateCuisineType(cuisineType);
+        this.openingHours = openingHours;
+        this.ownerUserId = validateOwnerUserId(ownerUserId);
+    }
+
     // Validações de negócio
     private String validateName(String name) {
         if (name == null || name.trim().isEmpty()) {

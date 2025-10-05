@@ -35,6 +35,16 @@ public class MenuItem {
         this.photoPath = photoPath;
     }
 
+    public MenuItem(UUID restaurantId, String name, String description,
+                   BigDecimal price, boolean dineInOnly, String photoPath) {
+        this.restaurantId = validateRestaurantId(restaurantId);
+        this.name = validateName(name);
+        this.description = description;
+        this.price = validatePrice(price);
+        this.dineInOnly = dineInOnly;
+        this.photoPath = photoPath;
+    }
+
     // Validações de negócio
     private UUID validateRestaurantId(UUID restaurantId) {
         if (restaurantId == null) {

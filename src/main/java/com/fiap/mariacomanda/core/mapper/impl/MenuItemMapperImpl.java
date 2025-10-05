@@ -12,8 +12,21 @@ import java.util.stream.Collectors;
 
 public class MenuItemMapperImpl implements MenuItemMapper {
 
+    // Entradas
     @Override
     public MenuItem toDomain(CreateMenuItemInputDTO dto) {
+        return new MenuItem(
+                dto.restaurantId(),
+                dto.name(),
+                dto.description(),
+                dto.price(),
+                dto.dineInOnly(),
+                dto.photoPath()
+        );
+    }
+
+    @Override
+    public MenuItem toDomain(UpdateMenuItemInputDTO dto) {
         return new MenuItem(
                 dto.id(),
                 dto.restaurantId(),
@@ -25,6 +38,7 @@ public class MenuItemMapperImpl implements MenuItemMapper {
         );
     }
 
+    // Saídas
     @Override
     public CreateMenuItemOutputDTO toCreateOutput(MenuItem menuItem) {
         return new CreateMenuItemOutputDTO(
@@ -55,18 +69,4 @@ public class MenuItemMapperImpl implements MenuItemMapper {
     public List<GetMenuItemOutputDTO> toGetOutputList(List<MenuItem> menuItens) {
         return menuItens.stream().map(this::toGetOutput).collect(Collectors.toList());
     }
-
-    @Override
-    public MenuItem toDomain(UpdateMenuItemInputDTO dto) {
-        return new MenuItem(
-                dto.id(),
-                dto.restaurantId(),
-                dto.name(),
-                dto.description(),
-                dto.price(),
-                dto.dineInOnly(),
-                dto.photoPath()
-        );
-    }
-
 }

@@ -12,8 +12,20 @@ import java.util.stream.Collectors;
 
 public class RestaurantMapperImpl implements RestaurantMapper {
 
+    // Entradas
     @Override
     public Restaurant toDomain(CreateRestaurantInputDTO dto) {
+        return new Restaurant(
+                dto.name(),
+                dto.address(),
+                dto.cuisineType(),
+                dto.openingHours(),
+                dto.ownerUserId()
+        );
+    }
+
+    @Override
+    public Restaurant toDomain(UpdateRestaurantInputDTO dto) {
         return new Restaurant(
                 dto.id(),
                 dto.name(),
@@ -24,6 +36,7 @@ public class RestaurantMapperImpl implements RestaurantMapper {
         );
     }
 
+    // Saídas
     @Override
     public CreateRestaurantOutputDTO toCreateOutput(Restaurant restaurant) {
         return new CreateRestaurantOutputDTO(
@@ -51,17 +64,5 @@ public class RestaurantMapperImpl implements RestaurantMapper {
     @Override
     public List<GetRestaurantOutputDTO> toGetOutputList(List<Restaurant> restaurants) {
         return restaurants.stream().map(this::toGetOutput).collect(Collectors.toList());
-    }
-
-    @Override
-    public Restaurant toDomain(UpdateRestaurantInputDTO dto) {
-        return new Restaurant(
-                dto.id(),
-                dto.name(),
-                dto.address(),
-                dto.cuisineType(),
-                dto.openingHours(),
-                dto.ownerUserId()
-        );
     }
 }

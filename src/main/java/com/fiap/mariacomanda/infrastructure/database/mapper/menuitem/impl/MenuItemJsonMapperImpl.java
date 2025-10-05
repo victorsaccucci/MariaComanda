@@ -11,7 +11,6 @@ public class MenuItemJsonMapperImpl implements MenuItemJsonMapper {
     @Override
     public CreateMenuItemInputDTO toCreateInput(CreateMenuItemJson json) {
         return new CreateMenuItemInputDTO(
-                json.getId(),
                 json.getName(),
                 json.getDescription(),
                 json.getPrice(),

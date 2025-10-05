@@ -26,8 +26,9 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         if (inputDTO == null) {
             throw new IllegalArgumentException("CreateUserInputDTO cannot be null");
         }
-        User requester = resolveRequester(requesterUserId);
+        User requester = resolveRequester(requesterUserId); // gateway já traz o User completo conforme domain espera. gateway pode conversar com quantos repositórios forem necessários para reconstruir o agregado (User) que o domínio espera
         UserType requesterType = requester.getUserType();
+        // verificando se requester é do tipo dono
         if (requesterType == null || !requesterType.isOwner()) {
             throw new IllegalStateException("Only OWNER users can create users");
         }

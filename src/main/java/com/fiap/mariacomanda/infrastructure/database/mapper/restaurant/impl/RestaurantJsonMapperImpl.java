@@ -11,7 +11,6 @@ public class RestaurantJsonMapperImpl implements RestaurantJsonMapper {
     @Override
     public CreateRestaurantInputDTO toCreateInput(RestaurantJson json) {
         return new CreateRestaurantInputDTO(
-                json.getId(),
                 json.getName(),
                 json.getAddress(),
                 json.getCuisineType(),
