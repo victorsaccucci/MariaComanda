@@ -58,15 +58,17 @@ public class User {
             throw new IllegalArgumentException("User email cannot be null or empty");
         }
 
+        String cleanedEmail = email.toLowerCase().trim();
+
         EmailValidator emailValidator = EmailValidator.getInstance();
-        if (!emailValidator.isValid(email)) {
+        if (!emailValidator.isValid(cleanedEmail)) {
             throw new IllegalArgumentException("Invalid email format");
         }
 
-        if (email.length() > 255) {
+        if (cleanedEmail.length() > 255) {
             throw new IllegalArgumentException("Email cannot exceed 255 characters");
         }
-        return email.toLowerCase().trim();
+        return cleanedEmail;
     }
 
     private String validatePasswordHash(String passwordHash) {
