@@ -52,7 +52,7 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
         return menuItemGateway.save(merged);
     }
 
-    private Restaurant resolveRestaurant(UUID restaurantId) {
+    protected Restaurant resolveRestaurant(UUID restaurantId) {
         if (restaurantId == null) {
             throw new IllegalArgumentException("Restaurant ID cannot be null");
         }
@@ -61,11 +61,11 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));
     }
 
-    private String updateValue(String newValue, String current) {
+    protected String updateValue(String newValue, String current) {
         return newValue != null ? newValue : current;
     }
 
-    private BigDecimal updateValue(BigDecimal newValue, BigDecimal current) {
+    protected BigDecimal updateValue(BigDecimal newValue, BigDecimal current) {
         return newValue != null ? newValue : current;
     }
 }

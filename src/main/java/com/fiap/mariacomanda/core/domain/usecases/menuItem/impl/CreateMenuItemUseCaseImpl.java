@@ -51,7 +51,7 @@ public class CreateMenuItemUseCaseImpl implements CreateMenuItemUseCase {
     }
 
     // busca o usuário que fez a requisição
-    private User resolveRequester(UUID requesterUserId) {
+    protected User resolveRequester(UUID requesterUserId) {
         if (requesterUserId == null) {
             throw new IllegalArgumentException("Requester user ID cannot be null");
         }
@@ -61,7 +61,7 @@ public class CreateMenuItemUseCaseImpl implements CreateMenuItemUseCase {
     }
 
     // busca o restaurante
-    private Restaurant resolveRestaurant(UUID restaurantId) {
+    protected Restaurant resolveRestaurant(UUID restaurantId) {
         if (restaurantId == null) {
             throw new IllegalArgumentException("Restaurant ID cannot be null");
         }
