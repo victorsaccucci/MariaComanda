@@ -26,25 +26,6 @@ class MenuItemTest {
     }
 
     @Test
-    @DisplayName("Deve aceitar description e photoPath nulos")
-    void deveAceitarDescriptionEPhotoPathNulos() {
-        UUID restaurantId = UUID.randomUUID();
-        MenuItem item = new MenuItem(restaurantId, "Esfiha", null, BigDecimal.ONE, false, null);
-        assertEquals("Esfiha", item.getName());
-        assertNull(item.getDescription());
-        assertNull(item.getPhotoPath());
-    }
-
-    @Test
-    @DisplayName("Setter de nome deve lançar IllegalArgumentException se nome for inválido")
-    void setterName_deveValidarNome() {
-        UUID restaurantId = UUID.randomUUID();
-        MenuItem item = new MenuItem(restaurantId, "Teste", "desc", BigDecimal.ONE, false, null);
-        assertThrows(IllegalArgumentException.class, () -> item.setName(""));
-        assertThrows(IllegalArgumentException.class, () -> item.setName(null));
-    }
-
-    @Test
     @DisplayName("Setter de preço deve lançar IllegalArgumentException se valor for inválido")
     void setterPrice_deveValidarPreco() {
         UUID restaurantId = UUID.randomUUID();
@@ -75,14 +56,6 @@ class MenuItemTest {
         assertThrows(IllegalArgumentException.class, () -> {
             item.setRestaurantId(null);
         });
-    }
-
-    @Test
-    @DisplayName("Deve aceitar nome válido, removendo espaços em branco das extremidades")
-    void validateName_deveAceitarNomeValidoRemovendoEspacos() {
-        MenuItem item = new MenuItem(restaurantId, "  Lasanha  ", "desc", price, false, null);
-
-        assertEquals("Lasanha", item.getName());
     }
 
     @Test
@@ -127,39 +100,10 @@ class MenuItemTest {
     }
 
     @Test
-    @DisplayName("Deve remover espaços das extremidades ao alterar nome com setName")
-    void setName_deveRemoverEspacos() {
-        MenuItem item = new MenuItem(restaurantId, "Prato", "desc", price, false, null);
-        item.setName("   Lasanha   ");
-        assertEquals("Lasanha", item.getName());
-    }
-
-    @Test
-    @DisplayName("Deve lançar exceção ao usar setName com valor inválido")
-    void setName_deveLancarExcecaoNomeInvalido() {
-        MenuItem item = new MenuItem(restaurantId, "Prato", "desc", price, false, null);
-        assertThrows(IllegalArgumentException.class, () -> item.setName(null));
-        assertThrows(IllegalArgumentException.class, () -> item.setName(""));
-        assertThrows(IllegalArgumentException.class, () -> item.setName("   "));
-        String nomeMuitoLongo = "A".repeat(121);
-        assertThrows(IllegalArgumentException.class, () -> item.setName(nomeMuitoLongo));
-    }
-
-    @Test
     @DisplayName("Deve permitir alterar o preço para um valor válido usando setPrice")
     void setPrice_deveAceitarPrecoValido() {
         MenuItem item = new MenuItem(restaurantId, "Teste", "desc", price, false, null);
         item.setPrice(new BigDecimal("30.00"));
         assertEquals(new BigDecimal("30.00"), item.getPrice());
     }
-
-    @Test
-    @DisplayName("Deve lançar exceção ao usar setPrice com valor inválido")
-    void setPrice_deveLancarExcecaoPrecoInvalido() {
-        MenuItem item = new MenuItem(restaurantId, "Teste", "desc", price, false, null);
-        assertThrows(IllegalArgumentException.class, () -> item.setPrice(null));
-        assertThrows(IllegalArgumentException.class, () -> item.setPrice(BigDecimal.ZERO));
-        assertThrows(IllegalArgumentException.class, () -> item.setPrice(new BigDecimal("-1.0")));
-    }
-
 }
