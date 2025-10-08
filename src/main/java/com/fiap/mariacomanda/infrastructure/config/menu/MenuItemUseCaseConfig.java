@@ -4,6 +4,9 @@ import com.fiap.mariacomanda.core.domain.usecases.menuItem.*;
 import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
+import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RestaurantValidator;
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.impl.*;
 import com.fiap.mariacomanda.core.mapper.MenuItemMapper;
 import org.springframework.context.annotation.Bean;
@@ -13,8 +16,18 @@ import org.springframework.context.annotation.Configuration;
 public class MenuItemUseCaseConfig {
 
     @Bean
-    public CreateMenuItemUseCase createMenuItemUseCase(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway, UserGateway userGateway, MenuItemMapper menuItemMapper) {
-        return new CreateMenuItemUseCaseImpl(menuItemGateway, restaurantGateway, userGateway, menuItemMapper);
+    public RestaurantValidator restaurantValidator(RestaurantGateway restaurantGateway) {
+        return new RestaurantValidator(restaurantGateway);
+    }
+
+    @Bean
+    public CreateMenuItemUseCase createMenuItemUseCase(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway,
+                                                    UserGateway userGateway, MenuItemMapper menuItemMapper,
+                                                    NullObjectValidator nullObjectValidator, AuthorizationValidator authorizationValidator,
+                                                    RestaurantValidator restaurantValidator) {
+        return new CreateMenuItemUseCaseImpl(menuItemGateway, restaurantGateway,
+                                            userGateway, menuItemMapper, nullObjectValidator,
+                                            authorizationValidator, restaurantValidator);
     }
 
     @Bean

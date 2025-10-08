@@ -2,6 +2,9 @@ package com.fiap.mariacomanda.infrastructure.config.user;
 
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
+import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.UserTypeValidator;
 import com.fiap.mariacomanda.core.domain.usecases.user.*;
 import com.fiap.mariacomanda.core.domain.usecases.user.impl.*;
 import com.fiap.mariacomanda.core.mapper.UserMapper;
@@ -12,8 +15,26 @@ import org.springframework.context.annotation.Configuration;
 public class UserUseCaseConfig {
 
     @Bean
-    public CreateUserUseCase createUserUsecase(UserGateway userGateway, UserTypeGateway userTypeGateway, UserMapper userMapper) {
-        return new CreateUserUseCaseImpl(userGateway, userTypeGateway, userMapper);
+    public NullObjectValidator nullObjectValidator() {
+        return new NullObjectValidator();
+    }
+
+    @Bean
+    public AuthorizationValidator authorizationValidator(UserGateway userGateway) {
+        return new AuthorizationValidator(userGateway);
+    }
+
+    @Bean
+    public UserTypeValidator userTypeValidator(UserTypeGateway userTypeGateway) {
+        return new UserTypeValidator(userTypeGateway);
+    }
+
+    @Bean
+    public CreateUserUseCase createUserUsecase(UserGateway userGateway, UserTypeGateway userTypeGateway, UserMapper userMapper,
+                                            NullObjectValidator nullObjectValidator, AuthorizationValidator authorizationValidator,
+                                            UserTypeValidator userTypeValidator) {
+        return new CreateUserUseCaseImpl(userGateway, userTypeGateway, userMapper,
+                                        nullObjectValidator, authorizationValidator, userTypeValidator);
     }
 
     @Bean

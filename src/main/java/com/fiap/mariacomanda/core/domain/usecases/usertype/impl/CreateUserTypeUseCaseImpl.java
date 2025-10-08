@@ -4,7 +4,9 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
+import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.usertype.CreateUserTypeUseCase;
+import com.fiap.mariacomanda.core.dto.restaurant.input.CreateRestaurantInputDTO;
 import com.fiap.mariacomanda.core.dto.usertype.input.CreateUserTypeInputDTO;
 import com.fiap.mariacomanda.core.mapper.UserTypeMapper;
 
@@ -18,15 +20,19 @@ public class CreateUserTypeUseCaseImpl implements CreateUserTypeUseCase {
     private final UserTypeGateway userTypeGateway;
     private final UserGateway userGateway;
     private final UserTypeMapper userTypeMapper;
+    private final NullObjectValidator nullObjectValidator;
 
-    public CreateUserTypeUseCaseImpl(UserTypeGateway userTypeGateway, UserGateway userGateway, UserTypeMapper userTypeMapper) {
+    public CreateUserTypeUseCaseImpl(UserTypeGateway userTypeGateway, UserGateway userGateway,
+                                    UserTypeMapper userTypeMapper, NullObjectValidator nullObjectValidator) {
         this.userTypeGateway = userTypeGateway;
         this.userGateway = userGateway;
         this.userTypeMapper = userTypeMapper;
+        this.nullObjectValidator = nullObjectValidator;
     }
 
     @Override
     public UserType execute(CreateUserTypeInputDTO inputDTO, UUID requesterUserId) {
+        nullObjectValidator.validateNotNull(inputDTO, CreateUserTypeInputDTO.class.getName());
 
         if (requesterUserId == null) {
             throw new IllegalArgumentException("requesterUserId is required");
