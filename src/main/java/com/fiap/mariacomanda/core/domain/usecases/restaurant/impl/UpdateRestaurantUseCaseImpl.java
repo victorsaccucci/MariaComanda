@@ -54,7 +54,7 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
         return restaurantGateway.save(merged);
     }
 
-    private User resolveUser(UUID userId) {
+    protected User resolveUser(UUID userId) {
         if (userId == null) {
             throw new IllegalArgumentException("User ID cannot be null");
         }
@@ -63,7 +63,7 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
                 .orElseThrow(() -> new IllegalArgumentException("User not found for id: " + userId));
     }
 
-    private String updateValue(String newValue, String current) {
+    protected String updateValue(String newValue, String current) {
         return newValue != null ? newValue : current;
     }
 }
