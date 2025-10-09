@@ -6,8 +6,8 @@ import com.fiap.mariacomanda.infrastructure.database.jpa.entity.UserEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.UserTypeEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.UserJpaRepository;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.UserTypeJpaRepository;
-import com.fiap.mariacomanda.infrastructure.database.mapper.user.UserEntityMapper;
-import com.fiap.mariacomanda.infrastructure.database.mapper.usertype.UserTypeEntityMapper;
+import com.fiap.mariacomanda.infrastructure.database.mapper.user.impl.UserEntityMapperImpl;
+import com.fiap.mariacomanda.infrastructure.database.mapper.usertype.impl.UserTypeEntityMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,18 +24,18 @@ import static org.mockito.Mockito.*;
 class UserGatewayImplTest {
 
     private UserJpaRepository userJpaRepository;
-    private UserEntityMapper userEntityMapper;
+    private UserEntityMapperImpl userEntityMapperImpl;
     private UserTypeJpaRepository userTypeJpaRepository;
-    private UserTypeEntityMapper userTypeEntityMapper;
+    private UserTypeEntityMapperImpl userTypeEntityMapperImpl;
     private UserGatewayImpl gateway;
 
     @BeforeEach
     void setUp() {
         userJpaRepository = mock(UserJpaRepository.class);
-        userEntityMapper = mock(UserEntityMapper.class);
+        userEntityMapperImpl = mock(UserEntityMapperImpl.class);
         userTypeJpaRepository = mock(UserTypeJpaRepository.class);
-        userTypeEntityMapper = mock(UserTypeEntityMapper.class);
-        gateway = new UserGatewayImpl(userJpaRepository, userEntityMapper, userTypeJpaRepository, userTypeEntityMapper);
+        userTypeEntityMapperImpl = mock(UserTypeEntityMapperImpl.class);
+        gateway = new UserGatewayImpl(userJpaRepository, userEntityMapperImpl, userTypeJpaRepository, userTypeEntityMapperImpl);
     }
 
     @Test
@@ -47,9 +47,9 @@ class UserGatewayImplTest {
         UserEntity entity = new UserEntity();
         entity.setId(UUID.randomUUID());
 
-        when(userEntityMapper.toEntity(user)).thenReturn(entity);
+        when(userEntityMapperImpl.toEntity(user)).thenReturn(entity);
         when(userJpaRepository.save(entity)).thenReturn(entity);
-        when(userEntityMapper.toDomain(entity, userType)).thenReturn(user);
+        when(userEntityMapperImpl.toDomain(entity, userType)).thenReturn(user);
 
         User result = gateway.save(user);
 
@@ -76,8 +76,8 @@ class UserGatewayImplTest {
 
         when(userJpaRepository.findById(userId)).thenReturn(Optional.of(userEntity));
         when(userTypeJpaRepository.findById(userTypeId)).thenReturn(Optional.of(userTypeEntity));
-        when(userTypeEntityMapper.toDomain(userTypeEntity)).thenReturn(userType);
-        when(userEntityMapper.toDomain(userEntity, userType)).thenReturn(user);
+        when(userTypeEntityMapperImpl.toDomain(userTypeEntity)).thenReturn(userType);
+        when(userEntityMapperImpl.toDomain(userEntity, userType)).thenReturn(user);
 
         Optional<User> result = gateway.findById(userId);
 
@@ -123,8 +123,8 @@ class UserGatewayImplTest {
         when(userJpaRepository.findAll(PageRequest.of(0, 10)))
                 .thenReturn(new PageImpl<>(List.of(entity)));
         when(userTypeJpaRepository.findById(userTypeId)).thenReturn(Optional.of(userTypeEntity));
-        when(userTypeEntityMapper.toDomain(userTypeEntity)).thenReturn(userType);
-        when(userEntityMapper.toDomain(entity, userType)).thenReturn(user);
+        when(userTypeEntityMapperImpl.toDomain(userTypeEntity)).thenReturn(userType);
+        when(userEntityMapperImpl.toDomain(entity, userType)).thenReturn(user);
 
         List<User> result = gateway.findAll(0, 10);
 

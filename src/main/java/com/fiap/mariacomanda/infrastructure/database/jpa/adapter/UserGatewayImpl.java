@@ -6,8 +6,8 @@ import com.fiap.mariacomanda.core.domain.entity.UserType;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.UserEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.UserJpaRepository;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.UserTypeJpaRepository;
-import com.fiap.mariacomanda.infrastructure.database.mapper.user.UserEntityMapper;
-import com.fiap.mariacomanda.infrastructure.database.mapper.usertype.UserTypeEntityMapper;
+import com.fiap.mariacomanda.infrastructure.database.mapper.user.impl.UserEntityMapperImpl;
+import com.fiap.mariacomanda.infrastructure.database.mapper.usertype.impl.UserTypeEntityMapperImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
@@ -19,25 +19,25 @@ import java.util.UUID;
 public class UserGatewayImpl implements UserGateway {
 
     private final UserJpaRepository userJpaRepository;
-    private final UserEntityMapper userEntityMapper;
+    private final UserEntityMapperImpl userEntityMapperImpl;
     private final UserTypeJpaRepository userTypeJpaRepository;
-    private final UserTypeEntityMapper userTypeEntityMapper;
+    private final UserTypeEntityMapperImpl userTypeEntityMapperImpl;
 
     public UserGatewayImpl(UserJpaRepository userJpaRepository,
-                           UserEntityMapper userEntityMapper,
+                           UserEntityMapperImpl userEntityMapperImpl,
                            UserTypeJpaRepository userTypeJpaRepository,
-                           UserTypeEntityMapper userTypeEntityMapper) {
+                           UserTypeEntityMapperImpl userTypeEntityMapperImpl) {
         this.userJpaRepository = userJpaRepository;
-        this.userEntityMapper = userEntityMapper;
+        this.userEntityMapperImpl = userEntityMapperImpl;
         this.userTypeJpaRepository = userTypeJpaRepository;
-        this.userTypeEntityMapper = userTypeEntityMapper;
+        this.userTypeEntityMapperImpl = userTypeEntityMapperImpl;
     }
 
     @Override
     public User save(User user) {
-        UserEntity userEntity = userEntityMapper.toEntity(user);
+        UserEntity userEntity = userEntityMapperImpl.toEntity(user);
         UserEntity saved = userJpaRepository.save(userEntity);
-        return userEntityMapper.toDomain(saved, user.getUserType());
+        return userEntityMapperImpl.toDomain(saved, user.getUserType());
     }
 
     @Override
@@ -60,9 +60,9 @@ public class UserGatewayImpl implements UserGateway {
     // Compõe UserType dentro de User
     private User toDomainWithUserType(UserEntity entity) {
         UserType userType = userTypeJpaRepository.findById(entity.getUserTypeId())
-                .map(userTypeEntityMapper::toDomain)
+                .map(userTypeEntityMapperImpl::toDomain)
                 .orElseThrow(() -> new IllegalStateException("UserType not found for id " + entity.getUserTypeId()));
 
-        return userEntityMapper.toDomain(entity, userType);
+        return userEntityMapperImpl.toDomain(entity, userType);
     }
 }

@@ -3,7 +3,7 @@ package com.fiap.mariacomanda.infrastructure.database.jpa.adapter;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
 import com.fiap.mariacomanda.infrastructure.database.jpa.entity.UserTypeEntity;
 import com.fiap.mariacomanda.infrastructure.database.jpa.repository.UserTypeJpaRepository;
-import com.fiap.mariacomanda.infrastructure.database.mapper.usertype.UserTypeEntityMapper;
+import com.fiap.mariacomanda.infrastructure.database.mapper.usertype.impl.UserTypeEntityMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,14 +20,14 @@ import static org.mockito.Mockito.*;
 class UserTypeGatewayImplTest {
 
     private UserTypeJpaRepository userTypeJpaRepository;
-    private UserTypeEntityMapper userTypeEntityMapper;
+    private UserTypeEntityMapperImpl userTypeEntityMapperImpl;
     private UserTypeGatewayImpl gateway;
 
     @BeforeEach
     void setUp() {
         userTypeJpaRepository = mock(UserTypeJpaRepository.class);
-        userTypeEntityMapper = mock(UserTypeEntityMapper.class);
-        gateway = new UserTypeGatewayImpl(userTypeJpaRepository, userTypeEntityMapper);
+        userTypeEntityMapperImpl = mock(UserTypeEntityMapperImpl.class);
+        gateway = new UserTypeGatewayImpl(userTypeJpaRepository, userTypeEntityMapperImpl);
     }
 
     @Test
@@ -37,9 +37,9 @@ class UserTypeGatewayImplTest {
         UserTypeEntity entity = new UserTypeEntity();
         entity.setId(UUID.randomUUID());
 
-        when(userTypeEntityMapper.toEntity(userType)).thenReturn(entity);
+        when(userTypeEntityMapperImpl.toEntity(userType)).thenReturn(entity);
         when(userTypeJpaRepository.save(entity)).thenReturn(entity);
-        when(userTypeEntityMapper.toDomain(entity)).thenReturn(userType);
+        when(userTypeEntityMapperImpl.toDomain(entity)).thenReturn(userType);
 
         UserType result = gateway.save(userType);
 
@@ -56,7 +56,7 @@ class UserTypeGatewayImplTest {
         UserType userType = new UserType(id, "Admin", "OWNER");
 
         when(userTypeJpaRepository.findById(id)).thenReturn(Optional.of(entity));
-        when(userTypeEntityMapper.toDomain(entity)).thenReturn(userType);
+        when(userTypeEntityMapperImpl.toDomain(entity)).thenReturn(userType);
 
         Optional<UserType> result = gateway.findById(id);
 
@@ -73,7 +73,7 @@ class UserTypeGatewayImplTest {
 
         when(userTypeJpaRepository.findAll(PageRequest.of(0, 10)))
                 .thenReturn(new PageImpl<>(List.of(entity)));
-        when(userTypeEntityMapper.toDomain(entity)).thenReturn(userType);
+        when(userTypeEntityMapperImpl.toDomain(entity)).thenReturn(userType);
 
         List<UserType> result = gateway.findAll(0, 10);
 

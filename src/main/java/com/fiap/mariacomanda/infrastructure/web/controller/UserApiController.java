@@ -5,7 +5,7 @@ import com.fiap.mariacomanda.core.dto.user.input.*;
 import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
 import com.fiap.mariacomanda.infrastructure.config.swagger.openapi.controller.UserApi;
-import com.fiap.mariacomanda.infrastructure.database.mapper.user.UserJsonMapper;
+import com.fiap.mariacomanda.infrastructure.database.mapper.user.impl.UserJsonMapperImpl;
 import com.fiap.mariacomanda.infrastructure.web.json.CreateUserJson;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +20,11 @@ public class UserApiController implements UserApi {
 
     private final UserController userController;
 
-    private final UserJsonMapper userJsonMapper;
+    private final UserJsonMapperImpl userJsonMapperImpl;
 
     public CreateUserOutputDTO createUser(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                                           @Valid @RequestBody CreateUserJson createUserJson) {
-        CreateUserInputDTO inputDTO = userJsonMapper.toCreateInput(createUserJson);
+        CreateUserInputDTO inputDTO = userJsonMapperImpl.toCreateInput(createUserJson);
         return userController.create(inputDTO, requesterUserId);
     }
 
