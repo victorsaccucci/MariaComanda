@@ -38,14 +38,14 @@ public class RestaurantApiController implements RestaurantApi {
     }
 
     public List<GetRestaurantOutputDTO> list(@RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "20") int size) {
+                                            @RequestParam(defaultValue = "20") int size) {
         ListRestaurantsInputDTO inputDTO = new ListRestaurantsInputDTO(page, size);
         return restaurantController.list(inputDTO);
     }
 
     public GetRestaurantOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
-                                      @PathVariable UUID id,
-                                      @Valid @RequestBody UpdateRestaurantJson updateRestaurantJson) {
+                                        @PathVariable UUID id,
+                                        @Valid @RequestBody UpdateRestaurantJson updateRestaurantJson) {
         UpdateRestaurantInputDTO inputDTO = restaurantJsonMapper.toUpdateInput(id, updateRestaurantJson);
         return restaurantController.update(inputDTO, requesterUserId);
     }

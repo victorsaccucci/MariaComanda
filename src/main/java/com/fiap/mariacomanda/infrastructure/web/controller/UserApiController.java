@@ -24,7 +24,7 @@ public class UserApiController implements UserApi {
     private final UserJsonMapper userJsonMapper;
 
     public CreateUserOutputDTO createUser(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
-                                          @Valid @RequestBody CreateUserJson createUserJson) {
+                                        @Valid @RequestBody CreateUserJson createUserJson) {
         CreateUserInputDTO inputDTO = userJsonMapper.toCreateInput(createUserJson);
         return userController.create(inputDTO, requesterUserId);
     }
@@ -35,7 +35,7 @@ public class UserApiController implements UserApi {
     }
 
     public List<GetUserOutputDTO> list(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "20") int size) {
+                                    @RequestParam(defaultValue = "20") int size) {
         ListUserInputDTO inputDTO = new ListUserInputDTO(page, size);
         return userController.list(inputDTO);
     }
