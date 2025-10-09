@@ -4,9 +4,9 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
+import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.usertype.CreateUserTypeUseCase;
-import com.fiap.mariacomanda.core.dto.restaurant.input.CreateRestaurantInputDTO;
 import com.fiap.mariacomanda.core.dto.usertype.input.CreateUserTypeInputDTO;
 import com.fiap.mariacomanda.core.mapper.UserTypeMapper;
 
@@ -20,32 +20,31 @@ public class CreateUserTypeUseCaseImpl implements CreateUserTypeUseCase {
     private final UserTypeGateway userTypeGateway;
     private final UserGateway userGateway;
     private final UserTypeMapper userTypeMapper;
-    private final NullObjectValidator nullObjectValidator;
 
     public CreateUserTypeUseCaseImpl(UserTypeGateway userTypeGateway, UserGateway userGateway,
-                                    UserTypeMapper userTypeMapper, NullObjectValidator nullObjectValidator) {
+                                    UserTypeMapper userTypeMapper) {
         this.userTypeGateway = userTypeGateway;
         this.userGateway = userGateway;
         this.userTypeMapper = userTypeMapper;
-        this.nullObjectValidator = nullObjectValidator;
     }
 
     @Override
     public UserType execute(CreateUserTypeInputDTO inputDTO, UUID requesterUserId) {
-        nullObjectValidator.validateNotNull(inputDTO, CreateUserTypeInputDTO.class.getName());
 
-        if (requesterUserId == null) {
-            throw new IllegalArgumentException("requesterUserId is required");
-        }
+        NullObjectValidator.validateNotNull(inputDTO, CreateUserTypeInputDTO.class.getName());
+
+        AuthorizationValidator.validateRequesterUserId(requesterUserId);
 
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
 
-        UserType requesterType = requester.getUserType();
-        if (requesterType == null || !requesterType.isOwner()) {
+        try {
+            AuthorizationValidator.validateRequesterIsOwner(requester, "create user types");
+        } catch (IllegalStateException ex) {
+            UserType requesterType = requester.getUserType();
             log.warn("User {} attempted to create a user type without OWNER privileges. Current type: {}",
                     requesterUserId, requesterType != null ? requesterType.getSubType() : "unknown");
-            throw new IllegalStateException("Only OWNER users can create user types");
+            throw ex;
         }
 
         UserType userType = userTypeMapper.toDomain(inputDTO);

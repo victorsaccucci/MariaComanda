@@ -2,7 +2,6 @@ package com.fiap.mariacomanda.infrastructure.config.usertype;
 
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
-import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.usertype.CreateUserTypeUseCase;
 import com.fiap.mariacomanda.core.domain.usecases.usertype.DeleteUserTypeUseCase;
 import com.fiap.mariacomanda.core.domain.usecases.usertype.GetUserTypeUseCase;
@@ -23,8 +22,8 @@ public class UserTypeUseCaseConfig {
 
     @Bean
     public CreateUserTypeUseCase createUserTypeUsecase(UserTypeGateway userTypeGateway, UserGateway userGateway,
-                                                    UserTypeMapper userTypeMapper, NullObjectValidator nullObjectValidator) {
-        return new CreateUserTypeUseCaseImpl(userTypeGateway, userGateway, userTypeMapper, nullObjectValidator);
+                                                    UserTypeMapper userTypeMapper) {
+        return new CreateUserTypeUseCaseImpl(userTypeGateway, userGateway, userTypeMapper);
     }
 
     @Bean

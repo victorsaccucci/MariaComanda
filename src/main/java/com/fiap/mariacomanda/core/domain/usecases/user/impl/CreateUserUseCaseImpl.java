@@ -17,30 +17,28 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     private final UserGateway userGateway;
     private final UserTypeGateway userTypeGateway;
     private final UserMapper userMapper;
-    private final NullObjectValidator nullObjectValidator;
-    private final AuthorizationValidator authorizationValidator;
-    private final UserTypeValidator userTypeValidator;
 
     public CreateUserUseCaseImpl(UserGateway userGateway, UserTypeGateway userTypeGateway,
-                                UserMapper userMapper, NullObjectValidator nullObjectValidator,
-                                AuthorizationValidator authorizationValidator, UserTypeValidator userTypeValidator) {
+                                UserMapper userMapper) {
         this.userGateway = userGateway;
         this.userTypeGateway = userTypeGateway;
         this.userMapper = userMapper;
-        this.nullObjectValidator = nullObjectValidator;
-        this.authorizationValidator = authorizationValidator;
-        this.userTypeValidator = userTypeValidator;
     }
 
     @Override
     public User execute(CreateUserInputDTO inputDTO, UUID requesterUserId) {
-        nullObjectValidator.validateNotNull(inputDTO, CreateUserInputDTO.class.getName());
+        NullObjectValidator.validateNotNull(inputDTO, CreateUserInputDTO.class.getName());
 
-        authorizationValidator.validateRequesterAndAuthorizeOwner(requesterUserId, "create users");
+        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        User requester = userGateway.findById(requesterUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
+        AuthorizationValidator.validateRequesterIsOwner(requester, "create users");
 
         // buscando userType que foi definido pelo requester para compor o novo usuário
-        UserType userType = userTypeValidator.validateAndFindUserType(inputDTO.userTypeId());
-        userTypeValidator.validateUserTypeForUserCreation(userType);
+        NullObjectValidator.validateNotNull(inputDTO.userTypeId(), "userTypeId");
+        UserType userType = userTypeGateway.findById(inputDTO.userTypeId())
+                .orElseThrow(() -> new IllegalArgumentException("UserType not found for id: " + inputDTO.userTypeId()));
+        UserTypeValidator.validateUserTypeForUserCreation(userType);
 
         // montando o domain, com o userType definido pelo requester
         User user = userMapper.toDomain(inputDTO, userType);
