@@ -43,9 +43,9 @@ public class UserTypeController {
         return userTypeMapper.toGetOutputList(userTypes);
     }
 
-    public GetUserTypeOutputDTO update(UpdateUserTypeInputDTO inputDTO) {
+    public GetUserTypeOutputDTO update(UpdateUserTypeInputDTO inputDTO, UUID requesterUserId) {
         UserType userType = userTypeMapper.toDomain(inputDTO);
-        UserType updated = updateUseCase.execute(userType);
+        UserType updated = updateUseCase.execute(userType, requesterUserId);
         return userTypeMapper.toGetOutput(updated);
     }
 

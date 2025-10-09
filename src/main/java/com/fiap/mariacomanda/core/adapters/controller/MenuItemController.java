@@ -44,8 +44,8 @@ public class MenuItemController {
         return menuItemMapper.toGetOutputList(menuItems);
     }
 
-    public GetMenuItemOutputDTO update(UpdateMenuItemInputDTO inputDTO) {
-        MenuItem updated = updateUseCase.execute(inputDTO);
+    public GetMenuItemOutputDTO update(UpdateMenuItemInputDTO inputDTO, UUID requesterUserId) {
+        MenuItem updated = updateUseCase.execute(inputDTO, requesterUserId);
         return menuItemMapper.toGetOutput(updated);
     }
 

@@ -55,5 +55,7 @@ public interface MenuItemApi {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Prato atualizado com sucesso")
     })
-    GetMenuItemOutputDTO update(@PathVariable UUID id, @RequestBody UpdateMenuItemJson updateMenuItemJson);
+    GetMenuItemOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                @PathVariable UUID id,
+                                @RequestBody UpdateMenuItemJson updateMenuItemJson);
 }

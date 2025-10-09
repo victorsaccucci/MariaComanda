@@ -43,8 +43,8 @@ public class RestaurantController {
         return restaurantMapper.toGetOutputList(restaurants);
     }
 
-    public GetRestaurantOutputDTO update(UpdateRestaurantInputDTO inputDTO) {
-        Restaurant updated = updateUseCase.execute(inputDTO);
+    public GetRestaurantOutputDTO update(UpdateRestaurantInputDTO inputDTO, UUID requesterUserId) {
+        Restaurant updated = updateUseCase.execute(inputDTO, requesterUserId);
         return restaurantMapper.toGetOutput(updated);
     }
 

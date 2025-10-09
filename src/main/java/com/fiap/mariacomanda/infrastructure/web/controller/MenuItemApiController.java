@@ -42,9 +42,12 @@ public class MenuItemApiController implements MenuItemApi {
         return menuItemController.list(inputDTO);
     }
 
-    public GetMenuItemOutputDTO update(@PathVariable UUID id, @RequestBody UpdateMenuItemJson updateMenuItemJson) {
+    public GetMenuItemOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                    @PathVariable UUID id,
+                                    @RequestBody UpdateMenuItemJson updateMenuItemJson) {
+
         UpdateMenuItemInputDTO inputDTO = menuItemJsonMapper.toUpdateInput(updateMenuItemJson);
-        return menuItemController.update(inputDTO);
+        return menuItemController.update(inputDTO, requesterUserId);
     }
 
     public void delete(@PathVariable UUID id) {

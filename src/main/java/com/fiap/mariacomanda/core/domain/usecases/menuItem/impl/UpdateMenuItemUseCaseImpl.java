@@ -2,8 +2,13 @@ package com.fiap.mariacomanda.core.domain.usecases.menuItem.impl;
 
 import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
+import com.fiap.mariacomanda.core.domain.entity.User;
+import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RestaurantValidator;
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.UpdateMenuItemUseCase;
 import com.fiap.mariacomanda.core.dto.menuitem.input.UpdateMenuItemInputDTO;
 
@@ -14,34 +19,45 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
 
     private final MenuItemGateway menuItemGateway;
     private final RestaurantGateway restaurantGateway;
+    private final UserGateway userGateway;
 
-    public UpdateMenuItemUseCaseImpl(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway) {
+    public UpdateMenuItemUseCaseImpl(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway,
+                                     UserGateway userGateway) {
         this.menuItemGateway = menuItemGateway;
         this.restaurantGateway = restaurantGateway;
+        this.userGateway = userGateway;
     }
 
     @Override
-    public MenuItem execute(UpdateMenuItemInputDTO inputDTO) {
-        if (inputDTO == null) {
-            throw new IllegalArgumentException("UpdateMenuItemInputDTO cannot be null");
-        }
-        if (inputDTO.id() == null) {
-            throw new IllegalArgumentException("MenuItem id is required");
-        }
+    public MenuItem execute(UpdateMenuItemInputDTO inputDTO, UUID requesterUserId) {
+        NullObjectValidator.validateNotNull(inputDTO, UpdateMenuItemInputDTO.class.getName());
+        NullObjectValidator.validateNotNull(inputDTO.id(), "menuItemId");
+
+        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        User requester = userGateway.findById(requesterUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
+        AuthorizationValidator.validateRequesterIsOwner(requester, "update menu items");
 
         MenuItem existing = menuItemGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("MenuItem not found"));
 
-        // Verificar se o restaurantId foi passado e validar
+        Restaurant existingRestaurant = restaurantGateway.findById(existing.getRestaurantId())
+                .orElseThrow(() -> new IllegalArgumentException("Restaurant not found for menu item"));
+        RestaurantValidator.validateUserOwnsRestaurant(existingRestaurant, requesterUserId);
+
         UUID restaurantId = inputDTO.restaurantId() != null ? inputDTO.restaurantId() : existing.getRestaurantId();
-        resolveRestaurant(restaurantId);
+        Restaurant targetRestaurant = existingRestaurant;
 
-        // validar requester id
+        if (!existing.getRestaurantId().equals(restaurantId)) {
+            RestaurantValidator.validateRestaurantId(restaurantId);
+            targetRestaurant = restaurantGateway.findById(restaurantId)
+                    .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));
+            RestaurantValidator.validateUserOwnsRestaurant(targetRestaurant, requesterUserId);
+        }
 
-        // menuItem com dados atualizados
         MenuItem merged = new MenuItem(
             existing.getId(),
-            restaurantId,
+            targetRestaurant.getId(),
             updateValue(inputDTO.name(), existing.getName()),
             updateValue(inputDTO.description(), existing.getDescription()),
             updateValue(inputDTO.price(), existing.getPrice()),
@@ -50,15 +66,6 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
         );
 
         return menuItemGateway.save(merged);
-    }
-
-    private Restaurant resolveRestaurant(UUID restaurantId) {
-        if (restaurantId == null) {
-            throw new IllegalArgumentException("Restaurant ID cannot be null");
-        }
-
-        return restaurantGateway.findById(restaurantId)
-                .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));
     }
 
     private String updateValue(String newValue, String current) {

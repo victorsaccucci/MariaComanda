@@ -43,8 +43,10 @@ public interface RestaurantApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Restaurante atualizado com sucesso")
     })
-    @PutMapping("/{id}")
-    GetRestaurantOutputDTO update(@PathVariable UUID id, @RequestBody UpdateRestaurantInputDTO dto);
+        @PutMapping("/{id}")
+        GetRestaurantOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                                                  @PathVariable UUID id,
+                                                                  @RequestBody UpdateRestaurantInputDTO dto);
 
     @Operation(summary = "Exclui um restaurante pelo ID")
     @ApiResponses(value = {

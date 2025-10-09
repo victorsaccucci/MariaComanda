@@ -42,9 +42,11 @@ public class RestaurantApiController implements RestaurantApi {
         return restaurantController.list(inputDTO);
     }
 
-    public GetRestaurantOutputDTO update(@PathVariable UUID id, @RequestBody UpdateRestaurantInputDTO dto) {
+    public GetRestaurantOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                         @PathVariable UUID id,
+                                         @RequestBody UpdateRestaurantInputDTO dto) {
         UpdateRestaurantInputDTO inputDTO = new UpdateRestaurantInputDTO(id, dto.name(), dto.address(), dto.cuisineType(), dto.openingHours(), dto.ownerUserId());
-        return restaurantController.update(inputDTO);
+        return restaurantController.update(inputDTO, requesterUserId);
     }
 
     public void delete(@PathVariable UUID id) {

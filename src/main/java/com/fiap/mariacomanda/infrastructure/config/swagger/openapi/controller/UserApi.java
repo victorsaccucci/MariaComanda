@@ -52,8 +52,10 @@ public interface UserApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso")
     })
-    @PutMapping("/{id}")
-    GetUserOutputDTO update(@PathVariable UUID id, @RequestBody UpdateUserInputDTO dto);
+        @PutMapping("/{id}")
+        GetUserOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                                         @PathVariable UUID id,
+                                                         @RequestBody UpdateUserInputDTO dto);
 
     @Operation(summary = "Exclui um usuário pelo ID")
     @ApiResponses(value = {

@@ -39,9 +39,11 @@ public class UserApiController implements UserApi {
         return userController.list(inputDTO);
     }
 
-    public GetUserOutputDTO update(@PathVariable UUID id, @RequestBody UpdateUserInputDTO dto) {
+    public GetUserOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                   @PathVariable UUID id,
+                                   @RequestBody UpdateUserInputDTO dto) {
         UpdateUserInputDTO inputDTO = new UpdateUserInputDTO(id, dto.name(), dto.email(), dto.password(), dto.userTypeId());
-        return userController.update(inputDTO);
+        return userController.update(inputDTO, requesterUserId);
     }
 
     public void delete(@PathVariable UUID id) {

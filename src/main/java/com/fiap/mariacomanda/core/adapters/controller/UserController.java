@@ -43,8 +43,8 @@ public class UserController {
         return userMapper.toGetOutputList(users);
     }
 
-    public GetUserOutputDTO update(UpdateUserInputDTO inputDTO) {
-        User updated = updateUseCase.execute(inputDTO);
+    public GetUserOutputDTO update(UpdateUserInputDTO inputDTO, UUID requesterUserId) {
+        User updated = updateUseCase.execute(inputDTO, requesterUserId);
         return userMapper.toGetOutput(updated);
     }
 

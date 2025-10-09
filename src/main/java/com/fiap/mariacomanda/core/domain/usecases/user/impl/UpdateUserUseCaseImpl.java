@@ -4,8 +4,13 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
+import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.UserTypeValidator;
 import com.fiap.mariacomanda.core.domain.usecases.user.UpdateUserUseCase;
 import com.fiap.mariacomanda.core.dto.user.input.UpdateUserInputDTO;
+
+import java.util.UUID;
 
 public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
 
@@ -18,24 +23,27 @@ public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
     }
 
     @Override
-    public User execute(UpdateUserInputDTO inputDTO) {
-        if (inputDTO == null) {
-            throw new IllegalArgumentException("UpdateUserInputDTO cannot be null");
-        }
-        if (inputDTO.id() == null) {
-            throw new IllegalArgumentException("User id is required");
-        }
+    public User execute(UpdateUserInputDTO inputDTO, UUID requesterUserId) {
+        NullObjectValidator.validateNotNull(inputDTO, UpdateUserInputDTO.class.getName());
+        NullObjectValidator.validateNotNull(inputDTO.id(), "userId");
+
+        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        User requester = userGateway.findById(requesterUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
+        AuthorizationValidator.validateRequesterIsOwner(requester, "update users");
 
         User existing = userGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // validar requester id
+        NullObjectValidator.validateNotNull(existing, "existingUser");
 
-        // se foi selecionado um novo userType, aqui atualiza para o novo selecionado, se não mantem o existente
         UserType userType = inputDTO.userTypeId() != null
                 ? resolveUserType(inputDTO.userTypeId())
                 : existing.getUserType();
-        // usuario com dados atualizados, de acordo com que foi passado pelo requester
+        if (inputDTO.userTypeId() != null) {
+            UserTypeValidator.validateUserType(userType);
+        }
+
         User merged = new User(
             existing.getId(),
             updateValue(inputDTO.name(), existing.getName()),
@@ -49,9 +57,7 @@ public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
 
     // busca novo userTypeId passado pelo requester
     private UserType resolveUserType(java.util.UUID userTypeId) {
-        if (userTypeId == null) {
-            throw new IllegalArgumentException("UserType ID cannot be null");
-        }
+        NullObjectValidator.validateNotNull(userTypeId, "userTypeId");
 
         return userTypeGateway.findById(userTypeId)
                 .orElseThrow(() -> new IllegalArgumentException("UserType not found for id: " + userTypeId));

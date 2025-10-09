@@ -4,7 +4,9 @@ import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.entity.User;
-import com.fiap.mariacomanda.core.domain.entity.UserType;
+import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RestaurantValidator;
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.UpdateRestaurantUseCase;
 import com.fiap.mariacomanda.core.dto.restaurant.input.UpdateRestaurantInputDTO;
 
@@ -20,28 +22,29 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
     }
 
     @Override
-    public Restaurant execute(UpdateRestaurantInputDTO inputDTO) {
-        if (inputDTO == null) {
-            throw new IllegalArgumentException("UpdateRestaurantInputDTO cannot be null");
-        }
-        if (inputDTO.id() == null) {
-            throw new IllegalArgumentException("Restaurant id is required");
-        }
+    public Restaurant execute(UpdateRestaurantInputDTO inputDTO, UUID requesterUserId) {
+        NullObjectValidator.validateNotNull(inputDTO, UpdateRestaurantInputDTO.class.getName());
+        NullObjectValidator.validateNotNull(inputDTO.id(), "restaurantId");
+
+        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        User requester = userGateway.findById(requesterUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
+        AuthorizationValidator.validateRequesterIsOwner(requester, "update restaurants");
 
         Restaurant existing = restaurantGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));
 
-        // validar requesterId
+        RestaurantValidator.validateUserOwnsRestaurant(existing, requesterUserId);
 
-        // Verificar se o ownerUserId foi passado e se é válido
         UUID ownerUserId = inputDTO.ownerUserId() != null ? inputDTO.ownerUserId() : existing.getOwnerUserId();
-        User owner = resolveUser(ownerUserId);
-        UserType ownerType = owner.getUserType();
-        if (ownerType == null || !ownerType.isOwner()) {
-            throw new IllegalStateException("Only OWNER users can own restaurants");
-        }
+        NullObjectValidator.validateNotNull(ownerUserId, "ownerUserId");
 
-        // restaurante com dados atualizados
+        User owner = ownerUserId.equals(requesterUserId)
+                ? requester
+                : userGateway.findById(ownerUserId)
+                        .orElseThrow(() -> new IllegalArgumentException("Owner user not found"));
+        AuthorizationValidator.validateRequesterIsOwner(owner, "own restaurants");
+
         Restaurant merged = new Restaurant(
             existing.getId(),
             updateValue(inputDTO.name(), existing.getName()),
@@ -52,15 +55,6 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
         );
 
         return restaurantGateway.save(merged);
-    }
-
-    private User resolveUser(UUID userId) {
-        if (userId == null) {
-            throw new IllegalArgumentException("User ID cannot be null");
-        }
-
-        return userGateway.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found for id: " + userId));
     }
 
     private String updateValue(String newValue, String current) {

@@ -34,7 +34,8 @@ public class MenuItemUseCaseConfig {
     }
 
     @Bean
-    public UpdateMenuItemUseCase updateMenuItemUseCase(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway) {
-        return new UpdateMenuItemUseCaseImpl(menuItemGateway, restaurantGateway);
+    public UpdateMenuItemUseCase updateMenuItemUseCase(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway,
+                                                    UserGateway userGateway) {
+        return new UpdateMenuItemUseCaseImpl(menuItemGateway, restaurantGateway, userGateway);
     }
 }
