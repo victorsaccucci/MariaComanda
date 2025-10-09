@@ -18,8 +18,8 @@ public class RestaurantUseCaseConfig {
     }
 
     @Bean
-    public DeleteRestaurantUseCase deleteRestaurantUsecase(RestaurantGateway restaurantGateway) {
-        return new DeleteRestaurantUseCaseImpl(restaurantGateway);
+    public DeleteRestaurantUseCase deleteRestaurantUsecase(RestaurantGateway restaurantGateway, UserGateway userGateway) {
+        return new DeleteRestaurantUseCaseImpl(restaurantGateway, userGateway);
     }
 
     @Bean

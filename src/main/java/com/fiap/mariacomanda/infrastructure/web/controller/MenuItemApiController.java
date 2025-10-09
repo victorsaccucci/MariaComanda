@@ -50,8 +50,9 @@ public class MenuItemApiController implements MenuItemApi {
         return menuItemController.update(inputDTO, requesterUserId);
     }
 
-    public void delete(@PathVariable UUID id) {
+    public void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                       @PathVariable UUID id) {
         DeleteMenuItemInputDTO inputDTO = new DeleteMenuItemInputDTO(id);
-        menuItemController.delete(inputDTO);
+        menuItemController.delete(inputDTO, requesterUserId);
     }
 }

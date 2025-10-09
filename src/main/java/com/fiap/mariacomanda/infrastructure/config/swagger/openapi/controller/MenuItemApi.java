@@ -30,7 +30,8 @@ public interface MenuItemApi {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Prato excluído com sucesso")
     })
-    void delete(@PathVariable UUID id);
+        void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                @PathVariable UUID id);
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar um prato no menu pelo ID")

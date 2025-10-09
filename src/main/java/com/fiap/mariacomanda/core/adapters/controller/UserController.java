@@ -48,9 +48,9 @@ public class UserController {
         return userMapper.toGetOutput(updated);
     }
 
-    public void delete(DeleteUserInputDTO inputDTO) {
+    public void delete(DeleteUserInputDTO inputDTO, UUID requesterUserId) {
         UUID id = inputDTO.id();
-        deleteUseCase.execute(id);
+        deleteUseCase.execute(id, requesterUserId);
     }
 
 }

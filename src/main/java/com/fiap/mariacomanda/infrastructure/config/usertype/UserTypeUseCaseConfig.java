@@ -27,8 +27,8 @@ public class UserTypeUseCaseConfig {
     }
 
     @Bean
-    public DeleteUserTypeUseCase deleteUserTypeUsecase(UserTypeGateway userTypeGateway) {
-        return new DeleteUserTypeUseCaseImpl(userTypeGateway);
+    public DeleteUserTypeUseCase deleteUserTypeUsecase(UserTypeGateway userTypeGateway, UserGateway userGateway) {
+        return new DeleteUserTypeUseCaseImpl(userTypeGateway, userGateway);
     }
 
     @Bean

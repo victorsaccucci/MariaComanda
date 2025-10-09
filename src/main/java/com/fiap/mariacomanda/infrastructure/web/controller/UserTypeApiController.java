@@ -51,9 +51,10 @@ public class UserTypeApiController implements UserTypeApi {
         return userTypeController.update(inputDTO, requesterUserId);
     }
 
-    public void delete(@PathVariable UUID id) {
+    public void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                       @PathVariable UUID id) {
         DeleteUserTypeInputDTO inputDTO = new DeleteUserTypeInputDTO(id);
-        userTypeController.delete(inputDTO);
+        userTypeController.delete(inputDTO, requesterUserId);
     }
 
 }

@@ -19,8 +19,10 @@ public class MenuItemUseCaseConfig {
     }
 
     @Bean
-    public DeleteMenuItemUseCase deleteMenuItemUseCase(MenuItemGateway menuItemGateway) {
-        return new DeleteMenuItemUseCaseImpl(menuItemGateway);
+    public DeleteMenuItemUseCase deleteMenuItemUseCase(MenuItemGateway menuItemGateway,
+                                                       RestaurantGateway restaurantGateway,
+                                                       UserGateway userGateway) {
+        return new DeleteMenuItemUseCaseImpl(menuItemGateway, restaurantGateway, userGateway);
     }
 
     @Bean

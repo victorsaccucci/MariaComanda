@@ -1,20 +1,47 @@
 package com.fiap.mariacomanda.core.domain.usecases.menuItem.impl;
 
 import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
+import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
+import com.fiap.mariacomanda.core.domain.entity.MenuItem;
+import com.fiap.mariacomanda.core.domain.entity.Restaurant;
+import com.fiap.mariacomanda.core.domain.entity.User;
+import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RestaurantValidator;
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.DeleteMenuItemUseCase;
 
 import java.util.UUID;
 
 public class DeleteMenuItemUseCaseImpl implements DeleteMenuItemUseCase {
 
-    private final MenuItemGateway gateway;
+    private final MenuItemGateway menuItemGateway;
+    private final RestaurantGateway restaurantGateway;
+    private final UserGateway userGateway;
 
-    public DeleteMenuItemUseCaseImpl(MenuItemGateway gateway) {
-        this.gateway = gateway;
+    public DeleteMenuItemUseCaseImpl(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway,
+                                     UserGateway userGateway) {
+        this.menuItemGateway = menuItemGateway;
+        this.restaurantGateway = restaurantGateway;
+        this.userGateway = userGateway;
     }
 
     @Override
-    public void execute(UUID id) {
-        gateway.deleteById(id);
+    public void execute(UUID id, UUID requesterUserId) {
+        NullObjectValidator.validateNotNull(id, "menuItemId");
+
+        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        User requester = userGateway.findById(requesterUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
+        AuthorizationValidator.validateRequesterIsOwner(requester, "delete menu items");
+
+        MenuItem existing = menuItemGateway.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("MenuItem not found for id: " + id));
+
+        Restaurant restaurant = restaurantGateway.findById(existing.getRestaurantId())
+                .orElseThrow(() -> new IllegalArgumentException("Restaurant not found for menu item"));
+        RestaurantValidator.validateUserOwnsRestaurant(restaurant, requesterUserId);
+
+        menuItemGateway.deleteById(id);
     }
 }

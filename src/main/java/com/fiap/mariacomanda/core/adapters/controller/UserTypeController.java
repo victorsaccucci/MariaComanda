@@ -49,8 +49,8 @@ public class UserTypeController {
         return userTypeMapper.toGetOutput(updated);
     }
 
-    public void delete(DeleteUserTypeInputDTO inputDTO) {
+    public void delete(DeleteUserTypeInputDTO inputDTO, UUID requesterUserId) {
         UUID id = inputDTO.id();
-        deleteUseCase.execute(id);
+        deleteUseCase.execute(id, requesterUserId);
     }
 }

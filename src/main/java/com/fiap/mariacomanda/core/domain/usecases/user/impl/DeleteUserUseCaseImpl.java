@@ -1,6 +1,9 @@
 package com.fiap.mariacomanda.core.domain.usecases.user.impl;
 
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
+import com.fiap.mariacomanda.core.domain.entity.User;
+import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.user.DeleteUserUseCase;
 
 import java.util.UUID;
@@ -14,7 +17,17 @@ public class DeleteUserUseCaseImpl implements DeleteUserUseCase {
     }
 
     @Override
-    public void execute(UUID id) {
+    public void execute(UUID id, UUID requesterUserId) {
+        NullObjectValidator.validateNotNull(id, "userId");
+
+        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        User requester = gateway.findById(requesterUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
+        AuthorizationValidator.validateRequesterIsOwner(requester, "delete users");
+
+        gateway.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found for id: " + id));
+
         gateway.deleteById(id);
     }
 }

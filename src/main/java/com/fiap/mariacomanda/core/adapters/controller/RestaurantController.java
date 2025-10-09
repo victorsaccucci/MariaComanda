@@ -48,8 +48,8 @@ public class RestaurantController {
         return restaurantMapper.toGetOutput(updated);
     }
 
-    public void delete(DeleteRestaurantInputDTO inputDTO) {
+    public void delete(DeleteRestaurantInputDTO inputDTO, UUID requesterUserId) {
         UUID id = inputDTO.id();
-        deleteUseCase.execute(id);
+        deleteUseCase.execute(id, requesterUserId);
     }
 }

@@ -53,5 +53,6 @@ public interface RestaurantApi {
             @ApiResponse(responseCode = "204", description = "Restaurante excluído com sucesso")
     })
     @DeleteMapping("/{id}")
-    void delete(@PathVariable UUID id);
+        void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                @PathVariable UUID id);
 }

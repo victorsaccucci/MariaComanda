@@ -55,5 +55,6 @@ public interface UserTypeApi {
             @ApiResponse(responseCode = "204", description = "Tipo de usuário excluído com sucesso")
     })
     @DeleteMapping("/{id}")
-    void delete(@PathVariable UUID id);
+        void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                @PathVariable UUID id);
 }

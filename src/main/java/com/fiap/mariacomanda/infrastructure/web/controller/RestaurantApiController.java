@@ -50,8 +50,9 @@ public class RestaurantApiController implements RestaurantApi {
         return restaurantController.update(inputDTO, requesterUserId);
     }
 
-    public void delete(@PathVariable UUID id) {
+    public void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                      @PathVariable UUID id) {
         DeleteRestaurantInputDTO inputDTO = new DeleteRestaurantInputDTO(id);
-        restaurantController.delete(inputDTO);
+        restaurantController.delete(inputDTO, requesterUserId);
     }
 }
