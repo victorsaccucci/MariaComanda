@@ -9,9 +9,9 @@ import java.util.UUID;
  * Helper para validações de autorização.
  * Métodos estáticos, sem dependências externas.
  */
-public final class AuthorizationValidator {
+public final class RequesterValidator {
 
-    private AuthorizationValidator() {
+    private RequesterValidator() {
         throw new IllegalStateException("Utility class");
     }
 

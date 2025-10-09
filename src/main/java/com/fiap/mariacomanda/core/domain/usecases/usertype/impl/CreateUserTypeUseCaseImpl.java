@@ -4,7 +4,7 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
-import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RequesterValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.usertype.CreateUserTypeUseCase;
 import com.fiap.mariacomanda.core.dto.usertype.input.CreateUserTypeInputDTO;
@@ -33,13 +33,13 @@ public class CreateUserTypeUseCaseImpl implements CreateUserTypeUseCase {
 
         NullObjectValidator.validateNotNull(inputDTO, CreateUserTypeInputDTO.class.getName());
 
-        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
 
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
 
         try {
-            AuthorizationValidator.validateRequesterIsOwner(requester, "create user types");
+            RequesterValidator.validateRequesterIsOwner(requester, "create user types");
         } catch (IllegalStateException ex) {
             UserType requesterType = requester.getUserType();
             log.warn("User {} attempted to create a user type without OWNER privileges. Current type: {}",

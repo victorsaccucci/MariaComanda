@@ -12,11 +12,9 @@ public final class UserTypeValidator {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void validateUserTypeForUserCreation(UserType userType) {
+    public static void validateUserType(UserType userType) {
         if (userType == null) {
             throw new IllegalArgumentException("UserType cannot be null");
         }
-        // Regras específicas podem ser adicionadas aqui
-        // Por exemplo: validar se o tipo está ativo, se permite criação, etc.
     }
 }

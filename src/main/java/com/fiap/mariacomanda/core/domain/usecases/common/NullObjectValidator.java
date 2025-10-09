@@ -11,15 +11,9 @@ public final class NullObjectValidator {
     }
 
     public static void validateNotNull(Object object, String objectName) {
+        // Validação objeto nao pode ser null
         if (object == null) {
             throw new IllegalArgumentException(objectName + " cannot be null");
-        }
-    }
-
-    public static void validateNotNullOrEmpty(String value, String fieldName) {
-        validateNotNull(value, fieldName);
-        if (value.trim().isEmpty()) {
-            throw new IllegalArgumentException(fieldName + " cannot be empty");
         }
     }
 }

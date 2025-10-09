@@ -6,7 +6,7 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserTypeGateway;
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
-import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RequesterValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.UserTypeValidator;
 import com.fiap.mariacomanda.core.domain.usecases.user.CreateUserUseCase;
@@ -29,16 +29,18 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     public User execute(CreateUserInputDTO inputDTO, UUID requesterUserId) {
         NullObjectValidator.validateNotNull(inputDTO, CreateUserInputDTO.class.getName());
 
-        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
+
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-        AuthorizationValidator.validateRequesterIsOwner(requester, "create users");
+        RequesterValidator.validateRequesterIsOwner(requester, "create users");
+
+        NullObjectValidator.validateNotNull(inputDTO.userTypeId(), "userTypeId");
 
         // buscando userType que foi definido pelo requester para compor o novo usuário
-        NullObjectValidator.validateNotNull(inputDTO.userTypeId(), "userTypeId");
         UserType userType = userTypeGateway.findById(inputDTO.userTypeId())
                 .orElseThrow(() -> new IllegalArgumentException("UserType not found for id: " + inputDTO.userTypeId()));
-        UserTypeValidator.validateUserTypeForUserCreation(userType);
+        UserTypeValidator.validateUserType(userType);
 
         // montando o domain, com o userType definido pelo requester
         User user = userMapper.toDomain(inputDTO, userType);

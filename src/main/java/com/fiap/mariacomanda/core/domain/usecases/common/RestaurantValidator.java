@@ -21,6 +21,7 @@ public final class RestaurantValidator {
     }
 
     public static void validateUserOwnsRestaurant(Restaurant restaurant, UUID ownerUserId) {
+        // Substituir exceptions para especificos de validação de restaurant
         if (restaurant == null) {
             throw new IllegalArgumentException("Restaurant cannot be null");
         }

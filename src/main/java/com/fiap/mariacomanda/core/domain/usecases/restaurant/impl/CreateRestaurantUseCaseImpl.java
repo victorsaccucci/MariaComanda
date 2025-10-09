@@ -6,7 +6,7 @@ import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.entity.User;
-import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RequesterValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.CreateRestaurantUseCase;
 import com.fiap.mariacomanda.core.dto.restaurant.input.CreateRestaurantInputDTO;
@@ -28,10 +28,10 @@ public class CreateRestaurantUseCaseImpl implements CreateRestaurantUseCase {
     public Restaurant execute(CreateRestaurantInputDTO inputDTO, UUID requesterUserId) {
         NullObjectValidator.validateNotNull(inputDTO, CreateRestaurantInputDTO.class.getName());
 
-        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-        AuthorizationValidator.validateRequesterIsOwner(requester, "create restaurants");
+        RequesterValidator.validateRequesterIsOwner(requester, "create restaurants");
 
         // montando o domain
         Restaurant restaurant = restaurantMapper.toDomain(inputDTO);
