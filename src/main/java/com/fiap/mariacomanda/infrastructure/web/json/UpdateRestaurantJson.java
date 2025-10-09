@@ -1,7 +1,6 @@
 package com.fiap.mariacomanda.infrastructure.web.json;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,22 +8,19 @@ import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
-public class RestaurantJson {
-    private UUID id;
+public class UpdateRestaurantJson {
 
-    @NotBlank
+    @Size(max = 255)
     private String name;
 
-    @NotBlank
+    @Size(max = 255)
     private String address;
 
-    @NotNull
+    @Size(max = 120)
     private String cuisineType;
 
-    @NotNull
+    @Size(max = 120)
     private String openingHours;
 
-    @NotNull
     private UUID ownerUserId;
-
 }

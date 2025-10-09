@@ -8,6 +8,8 @@ import com.fiap.mariacomanda.infrastructure.web.json.UpdateMenuItemJson;
 
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class MenuItemJsonMapperImpl implements MenuItemJsonMapper {
 
@@ -24,9 +26,9 @@ public class MenuItemJsonMapperImpl implements MenuItemJsonMapper {
     }
 
     @Override
-    public UpdateMenuItemInputDTO toUpdateInput(UpdateMenuItemJson json) {
+    public UpdateMenuItemInputDTO toUpdateInput(UUID id, UpdateMenuItemJson json) {
         return new UpdateMenuItemInputDTO(
-                json.getId(),
+                id,
                 json.getName(),
                 json.getDescription(),
                 json.getPrice(),

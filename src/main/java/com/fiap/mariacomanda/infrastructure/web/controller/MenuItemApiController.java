@@ -44,9 +44,9 @@ public class MenuItemApiController implements MenuItemApi {
 
     public GetMenuItemOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                                     @PathVariable UUID id,
-                                    @RequestBody UpdateMenuItemJson updateMenuItemJson) {
+                                    @Valid @RequestBody UpdateMenuItemJson updateMenuItemJson) {
 
-        UpdateMenuItemInputDTO inputDTO = menuItemJsonMapper.toUpdateInput(updateMenuItemJson);
+    UpdateMenuItemInputDTO inputDTO = menuItemJsonMapper.toUpdateInput(id, updateMenuItemJson);
         return menuItemController.update(inputDTO, requesterUserId);
     }
 

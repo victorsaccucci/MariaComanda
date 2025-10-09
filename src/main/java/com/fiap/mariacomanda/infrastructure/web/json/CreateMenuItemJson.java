@@ -14,8 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CreateMenuItemJson {
 
-    private UUID id;
-
     @NotNull
     private UUID restaurantId;
 

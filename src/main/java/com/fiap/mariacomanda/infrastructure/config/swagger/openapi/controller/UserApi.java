@@ -1,9 +1,9 @@
 package com.fiap.mariacomanda.infrastructure.config.swagger.openapi.controller;
 
-import com.fiap.mariacomanda.core.dto.user.input.UpdateUserInputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
 import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
 import com.fiap.mariacomanda.infrastructure.web.json.CreateUserJson;
+import com.fiap.mariacomanda.infrastructure.web.json.UpdateUserJson;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -52,10 +52,10 @@ public interface UserApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso")
     })
-        @PutMapping("/{id}")
-        GetUserOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
-                                                         @PathVariable UUID id,
-                                                         @RequestBody UpdateUserInputDTO dto);
+                @PutMapping("/{id}")
+                GetUserOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                                                 @PathVariable UUID id,
+                                                                 @RequestBody UpdateUserJson updateUserJson);
 
     @Operation(summary = "Exclui um usuário pelo ID")
     @ApiResponses(value = {

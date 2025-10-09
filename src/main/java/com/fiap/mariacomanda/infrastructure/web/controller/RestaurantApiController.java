@@ -6,7 +6,8 @@ import com.fiap.mariacomanda.core.dto.restaurant.output.CreateRestaurantOutputDT
 import com.fiap.mariacomanda.core.dto.restaurant.output.GetRestaurantOutputDTO;
 import com.fiap.mariacomanda.infrastructure.config.swagger.openapi.controller.RestaurantApi;
 import com.fiap.mariacomanda.infrastructure.database.mapper.restaurant.RestaurantJsonMapper;
-import com.fiap.mariacomanda.infrastructure.web.json.RestaurantJson;
+import com.fiap.mariacomanda.infrastructure.web.json.CreateRestaurantJson;
+import com.fiap.mariacomanda.infrastructure.web.json.UpdateRestaurantJson;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,7 @@ public class RestaurantApiController implements RestaurantApi {
 
     private final RestaurantJsonMapper restaurantJsonMapper;
 
-    public CreateRestaurantOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @Valid @RequestBody RestaurantJson restaurantJson) {
+    public CreateRestaurantOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @Valid @RequestBody CreateRestaurantJson restaurantJson) {
         CreateRestaurantInputDTO inputDTO = restaurantJsonMapper.toCreateInput(restaurantJson);
         return restaurantController.create(inputDTO, requesterUserId);
     }
@@ -43,9 +44,9 @@ public class RestaurantApiController implements RestaurantApi {
     }
 
     public GetRestaurantOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
-                                         @PathVariable UUID id,
-                                         @RequestBody UpdateRestaurantInputDTO dto) {
-        UpdateRestaurantInputDTO inputDTO = new UpdateRestaurantInputDTO(id, dto.name(), dto.address(), dto.cuisineType(), dto.openingHours(), dto.ownerUserId());
+                                      @PathVariable UUID id,
+                                      @Valid @RequestBody UpdateRestaurantJson updateRestaurantJson) {
+        UpdateRestaurantInputDTO inputDTO = restaurantJsonMapper.toUpdateInput(id, updateRestaurantJson);
         return restaurantController.update(inputDTO, requesterUserId);
     }
 

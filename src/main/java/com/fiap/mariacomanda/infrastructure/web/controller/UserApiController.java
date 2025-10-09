@@ -7,6 +7,7 @@ import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
 import com.fiap.mariacomanda.infrastructure.config.swagger.openapi.controller.UserApi;
 import com.fiap.mariacomanda.infrastructure.database.mapper.user.UserJsonMapper;
 import com.fiap.mariacomanda.infrastructure.web.json.CreateUserJson;
+import com.fiap.mariacomanda.infrastructure.web.json.UpdateUserJson;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -40,9 +41,9 @@ public class UserApiController implements UserApi {
     }
 
     public GetUserOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
-                                   @PathVariable UUID id,
-                                   @RequestBody UpdateUserInputDTO dto) {
-        UpdateUserInputDTO inputDTO = new UpdateUserInputDTO(id, dto.name(), dto.email(), dto.password(), dto.userTypeId());
+                                @PathVariable UUID id,
+                                @Valid @RequestBody UpdateUserJson updateUserJson) {
+        UpdateUserInputDTO inputDTO = userJsonMapper.toUpdateInput(id, updateUserJson);
         return userController.update(inputDTO, requesterUserId);
     }
 

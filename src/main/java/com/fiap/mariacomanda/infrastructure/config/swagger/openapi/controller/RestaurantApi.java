@@ -1,9 +1,9 @@
 package com.fiap.mariacomanda.infrastructure.config.swagger.openapi.controller;
 
-import com.fiap.mariacomanda.core.dto.restaurant.input.UpdateRestaurantInputDTO;
 import com.fiap.mariacomanda.core.dto.restaurant.output.CreateRestaurantOutputDTO;
 import com.fiap.mariacomanda.core.dto.restaurant.output.GetRestaurantOutputDTO;
-import com.fiap.mariacomanda.infrastructure.web.json.RestaurantJson;
+import com.fiap.mariacomanda.infrastructure.web.json.CreateRestaurantJson;
+import com.fiap.mariacomanda.infrastructure.web.json.UpdateRestaurantJson;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -22,7 +22,7 @@ public interface RestaurantApi {
             @ApiResponse(responseCode = "201", description = "Restaurante criado com sucesso")
     })
     @PostMapping
-    CreateRestaurantOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @RequestBody RestaurantJson restaurantJson);
+    CreateRestaurantOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @RequestBody CreateRestaurantJson restaurantJson);
 
     @Operation(summary = "Busca um restaurante pelo nome")
     @ApiResponses(value = {
@@ -44,9 +44,9 @@ public interface RestaurantApi {
             @ApiResponse(responseCode = "200", description = "Restaurante atualizado com sucesso")
     })
         @PutMapping("/{id}")
-        GetRestaurantOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
-                                                                  @PathVariable UUID id,
-                                                                  @RequestBody UpdateRestaurantInputDTO dto);
+                GetRestaurantOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+                                                                          @PathVariable UUID id,
+                                                                          @RequestBody UpdateRestaurantJson updateRestaurantJson);
 
     @Operation(summary = "Exclui um restaurante pelo ID")
     @ApiResponses(value = {
