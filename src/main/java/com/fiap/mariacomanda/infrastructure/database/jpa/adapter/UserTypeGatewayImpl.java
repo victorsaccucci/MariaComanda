@@ -47,6 +47,5 @@ public class UserTypeGatewayImpl implements UserTypeGateway {
     @Override
     public void deleteById(UUID id) {
         userTypeJpaRepository.deleteById(id);
-
     }
 }
