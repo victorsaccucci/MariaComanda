@@ -29,16 +29,6 @@ public class User {
         this.userType = validateUserType(userType);
     }
 
-    // Getter restrito para passwordHash
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    // Metodo específico para alteração de senha
-    public void changePassword(String newPasswordHash) {
-        this.passwordHash = validatePasswordHash(newPasswordHash);
-    }
-
     public UUID getUserTypeId() {
         return userType != null ? userType.getId() : null;
     }
