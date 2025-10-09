@@ -62,7 +62,7 @@ public class UserMapperImpl implements UserMapper {
         return users.stream().map(this::toGetOutput).collect(Collectors.toList());
     }
 
-    private GetUserTypeOutputDTO toUserTypeOutput(UserType userType) {
+    protected GetUserTypeOutputDTO toUserTypeOutput(UserType userType) {
         return userType != null
                 ? new GetUserTypeOutputDTO(
                         userType.getId(),
