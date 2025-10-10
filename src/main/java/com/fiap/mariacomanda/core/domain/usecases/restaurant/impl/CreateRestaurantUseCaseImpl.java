@@ -33,8 +33,21 @@ public class CreateRestaurantUseCaseImpl implements CreateRestaurantUseCase {
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
         RequesterValidator.validateRequesterIsOwner(requester, "create restaurants");
 
-        // montando o domain
+        NullObjectValidator.validateNotNull(inputDTO.ownerUserId(), "Owner user ID");
+        User ownerUser = resolveOwnerUser(inputDTO.ownerUserId(), requester);
+        RequesterValidator.validateRequesterIsOwner(ownerUser, "be associated as restaurant owner");
+
         Restaurant restaurant = restaurantMapper.toDomain(inputDTO);
         return restaurantGateway.save(restaurant);
+    }
+
+    // verifica se o usuário que sera vinculado ao restaurante é o proprio requester, caso não, busca o user que será vinculado ao restaurante
+    private User resolveOwnerUser(UUID ownerUserId, User requester) {
+        if (requester.getId() != null && requester.getId().equals(ownerUserId)) {
+            return requester;
+        }
+
+        return userGateway.findById(ownerUserId)
+                .orElseThrow(() -> new IllegalArgumentException("Owner user not found"));
     }
 }

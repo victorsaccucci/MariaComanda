@@ -4,7 +4,7 @@ import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.entity.User;
-import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RequesterValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.RestaurantValidator;
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.UpdateRestaurantUseCase;
@@ -26,10 +26,10 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
         NullObjectValidator.validateNotNull(inputDTO, UpdateRestaurantInputDTO.class.getName());
         NullObjectValidator.validateNotNull(inputDTO.id(), "restaurantId");
 
-        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+    RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-        AuthorizationValidator.validateRequesterIsOwner(requester, "update restaurants");
+    RequesterValidator.validateRequesterIsOwner(requester, "update restaurants");
 
         Restaurant existing = restaurantGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));
@@ -43,7 +43,7 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
                 ? requester
                 : userGateway.findById(ownerUserId)
                         .orElseThrow(() -> new IllegalArgumentException("Owner user not found"));
-        AuthorizationValidator.validateRequesterIsOwner(owner, "own restaurants");
+    RequesterValidator.validateRequesterIsOwner(owner, "own restaurants");
 
         Restaurant merged = new Restaurant(
             existing.getId(),

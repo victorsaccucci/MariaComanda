@@ -6,7 +6,7 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.entity.User;
-import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RequesterValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.RestaurantValidator;
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.UpdateMenuItemUseCase;
@@ -33,10 +33,10 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
         NullObjectValidator.validateNotNull(inputDTO, UpdateMenuItemInputDTO.class.getName());
         NullObjectValidator.validateNotNull(inputDTO.id(), "menuItemId");
 
-        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+    RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-        AuthorizationValidator.validateRequesterIsOwner(requester, "update menu items");
+    RequesterValidator.validateRequesterIsOwner(requester, "update menu items");
 
         MenuItem existing = menuItemGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("MenuItem not found"));

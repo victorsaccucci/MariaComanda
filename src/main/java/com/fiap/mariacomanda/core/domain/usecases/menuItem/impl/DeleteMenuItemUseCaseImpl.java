@@ -6,7 +6,7 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.entity.User;
-import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RequesterValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.RestaurantValidator;
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.DeleteMenuItemUseCase;
@@ -30,10 +30,10 @@ public class DeleteMenuItemUseCaseImpl implements DeleteMenuItemUseCase {
     public void execute(UUID id, UUID requesterUserId) {
         NullObjectValidator.validateNotNull(id, "menuItemId");
 
-        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-        AuthorizationValidator.validateRequesterIsOwner(requester, "delete menu items");
+        RequesterValidator.validateRequesterIsOwner(requester, "delete menu items");
 
         MenuItem existing = menuItemGateway.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("MenuItem not found for id: " + id));

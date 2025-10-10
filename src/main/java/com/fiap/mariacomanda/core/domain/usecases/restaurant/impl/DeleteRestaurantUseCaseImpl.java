@@ -4,7 +4,7 @@ import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
 import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.entity.User;
-import com.fiap.mariacomanda.core.domain.usecases.common.AuthorizationValidator;
+import com.fiap.mariacomanda.core.domain.usecases.common.RequesterValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.RestaurantValidator;
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.DeleteRestaurantUseCase;
@@ -24,10 +24,10 @@ public class DeleteRestaurantUseCaseImpl implements DeleteRestaurantUseCase {
     public void execute(UUID id, UUID requesterUserId) {
         NullObjectValidator.validateNotNull(id, "restaurantId");
 
-        AuthorizationValidator.validateRequesterUserId(requesterUserId);
+    RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-        AuthorizationValidator.validateRequesterIsOwner(requester, "delete restaurants");
+    RequesterValidator.validateRequesterIsOwner(requester, "delete restaurants");
 
         Restaurant restaurant = gateway.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found for id: " + id));
