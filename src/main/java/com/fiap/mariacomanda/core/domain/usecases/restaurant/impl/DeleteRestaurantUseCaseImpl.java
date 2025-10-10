@@ -24,10 +24,10 @@ public class DeleteRestaurantUseCaseImpl implements DeleteRestaurantUseCase {
     public void execute(UUID id, UUID requesterUserId) {
         NullObjectValidator.validateNotNull(id, "restaurantId");
 
-    RequesterValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-    RequesterValidator.validateRequesterIsOwner(requester, "delete restaurants");
+        RequesterValidator.validateRequesterIsOwner(requester, "delete restaurants");
 
         Restaurant restaurant = gateway.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found for id: " + id));

@@ -43,6 +43,8 @@ public class CreateMenuItemUseCaseImpl implements CreateMenuItemUseCase {
         RestaurantValidator.validateRestaurantId(inputDTO.restaurantId());
         Restaurant restaurant = restaurantGateway.findById(inputDTO.restaurantId())
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));
+
+        // valida se o criador do MenuItem é dono do restaurante que ele esta vinculando o prato (só o dono pode vincular comida ao seu proprio restaurante)
         RestaurantValidator.validateUserOwnsRestaurant(restaurant, requesterUserId);
 
         MenuItem menuItem = menuItemMapper.toDomain(inputDTO);
