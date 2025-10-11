@@ -31,6 +31,7 @@ public class DeleteRestaurantUseCaseImpl implements DeleteRestaurantUseCase {
 
         Restaurant restaurant = gateway.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found for id: " + id));
+        // só o proprio dono consegue deletar seu restaurante
         RestaurantValidator.validateUserOwnsRestaurant(restaurant, requesterUserId);
 
         gateway.deleteById(id);

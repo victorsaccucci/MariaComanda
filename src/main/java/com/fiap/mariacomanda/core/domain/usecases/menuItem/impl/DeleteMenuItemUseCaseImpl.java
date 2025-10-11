@@ -20,7 +20,7 @@ public class DeleteMenuItemUseCaseImpl implements DeleteMenuItemUseCase {
     private final UserGateway userGateway;
 
     public DeleteMenuItemUseCaseImpl(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway,
-                                     UserGateway userGateway) {
+                                UserGateway userGateway) {
         this.menuItemGateway = menuItemGateway;
         this.restaurantGateway = restaurantGateway;
         this.userGateway = userGateway;
@@ -40,6 +40,7 @@ public class DeleteMenuItemUseCaseImpl implements DeleteMenuItemUseCase {
 
         Restaurant restaurant = restaurantGateway.findById(existing.getRestaurantId())
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found for menu item"));
+        // só o próprio dono do restaurante pode deletar seu menuitem
         RestaurantValidator.validateUserOwnsRestaurant(restaurant, requesterUserId);
 
         menuItemGateway.deleteById(id);

@@ -27,10 +27,10 @@ public class UpdateUserUseCaseImpl implements UpdateUserUseCase {
         NullObjectValidator.validateNotNull(inputDTO, UpdateUserInputDTO.class.getName());
         NullObjectValidator.validateNotNull(inputDTO.id(), "userId");
 
-    RequesterValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-    RequesterValidator.validateRequesterIsOwner(requester, "update users");
+        RequesterValidator.validateRequesterIsOwner(requester, "update users");
 
         User existing = userGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));

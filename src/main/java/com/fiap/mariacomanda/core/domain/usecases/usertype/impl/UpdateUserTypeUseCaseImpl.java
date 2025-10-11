@@ -26,10 +26,10 @@ public class UpdateUserTypeUseCaseImpl implements UpdateUserTypeUseCase {
         NullObjectValidator.validateNotNull(userType, UserType.class.getName());
         NullObjectValidator.validateNotNull(userType.getId(), "userTypeId");
 
-    RequesterValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-    RequesterValidator.validateRequesterIsOwner(requester, "update user types");
+        RequesterValidator.validateRequesterIsOwner(requester, "update user types");
 
         userTypeGateway.findById(userType.getId())
                 .orElseThrow(() -> new IllegalArgumentException("UserType not found for id: " + userType.getId()));

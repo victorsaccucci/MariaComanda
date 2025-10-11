@@ -20,10 +20,10 @@ public class DeleteUserUseCaseImpl implements DeleteUserUseCase {
     public void execute(UUID id, UUID requesterUserId) {
         NullObjectValidator.validateNotNull(id, "userId");
 
-    RequesterValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = gateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-    RequesterValidator.validateRequesterIsOwner(requester, "delete users");
+        RequesterValidator.validateRequesterIsOwner(requester, "delete users");
 
         gateway.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found for id: " + id));

@@ -33,16 +33,19 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
         NullObjectValidator.validateNotNull(inputDTO, UpdateMenuItemInputDTO.class.getName());
         NullObjectValidator.validateNotNull(inputDTO.id(), "menuItemId");
 
-    RequesterValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-    RequesterValidator.validateRequesterIsOwner(requester, "update menu items");
+        RequesterValidator.validateRequesterIsOwner(requester, "update menu items");
 
+        // menuitem existente a ser alterado
         MenuItem existing = menuItemGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("MenuItem not found"));
 
+        // restaurante no qual menuitem está
         Restaurant existingRestaurant = restaurantGateway.findById(existing.getRestaurantId())
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found for menu item"));
+        // verifica se o requester é dono desse restaurante especifico (só o dono do restaurante pode atualizar seus items)
         RestaurantValidator.validateUserOwnsRestaurant(existingRestaurant, requesterUserId);
 
         UUID restaurantId = inputDTO.restaurantId() != null ? inputDTO.restaurantId() : existing.getRestaurantId();

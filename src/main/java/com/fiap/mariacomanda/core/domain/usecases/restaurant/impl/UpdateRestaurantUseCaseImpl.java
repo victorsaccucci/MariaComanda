@@ -26,10 +26,10 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
         NullObjectValidator.validateNotNull(inputDTO, UpdateRestaurantInputDTO.class.getName());
         NullObjectValidator.validateNotNull(inputDTO.id(), "restaurantId");
 
-    RequesterValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-    RequesterValidator.validateRequesterIsOwner(requester, "update restaurants");
+        RequesterValidator.validateRequesterIsOwner(requester, "update restaurants");
 
         Restaurant existing = restaurantGateway.findById(inputDTO.id())
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));
@@ -43,7 +43,7 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
                 ? requester
                 : userGateway.findById(ownerUserId)
                         .orElseThrow(() -> new IllegalArgumentException("Owner user not found"));
-    RequesterValidator.validateRequesterIsOwner(owner, "own restaurants");
+        RequesterValidator.validateRequesterIsOwner(owner, "own restaurants");
 
         Restaurant merged = new Restaurant(
             existing.getId(),

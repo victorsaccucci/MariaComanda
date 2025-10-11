@@ -38,14 +38,7 @@ public class CreateUserTypeUseCaseImpl implements CreateUserTypeUseCase {
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
 
-        try {
-            RequesterValidator.validateRequesterIsOwner(requester, "create user types");
-        } catch (IllegalStateException ex) {
-            UserType requesterType = requester.getUserType();
-            log.warn("User {} attempted to create a user type without OWNER privileges. Current type: {}",
-                    requesterUserId, requesterType != null ? requesterType.getSubType() : "unknown");
-            throw ex;
-        }
+        RequesterValidator.validateRequesterIsOwner(requester, "create user types");
 
         UserType userType = userTypeMapper.toDomain(inputDTO);
 

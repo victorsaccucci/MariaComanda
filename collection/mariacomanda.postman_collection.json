@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d245406c-ea0d-46cb-b8fd-d6450422aebd",
+		"_postman_id": "bba7aba6-c7ca-4990-badb-873b16c69cdb",
 		"name": "mariacomanda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "15464134"
+		"_exporter_id": "12136162"
 	},
 	"item": [
 		{
@@ -17,19 +17,22 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Restaurante Exemplo\",\n  \"address\": \"Rua X, 123\",\n  \"cuisineType\": \"Italiana\",\n  \"openingHours\": \"10:00-22:00\",\n  \"ownerUserId\": \"123e4567-e89b-12d3-a456-426614174000\"\n}"
+							"raw": "{\n  \"name\": \"Restaurante Exemplo\",\n  \"address\": \"Rua X, 123\",\n  \"cuisineType\": \"Italiana\",\n  \"openingHours\": \"10:00-22:00\",\n  \"ownerUserId\": \"ea52c8ae-8273-4ed9-a11f-1ba395354b61\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/restaurants",
-							"protocol": "http",
+							"raw": "{{base_url}}/api/restaurants",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"restaurants"
@@ -97,11 +100,16 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Novo Nome\",\n  \"address\": \"Nova Rua, 456\",\n  \"cuisineType\": \"Japonesa\",\n  \"openingHours\": \"11:00-23:00\",\n  \"ownerUserId\": \"UUID_DO_DONO\"\n}"
+							"raw": "{\n  \"name\": \"Novo Nome\",\n  \"address\": \"Nova Rua, 456\",\n  \"cuisineType\": \"Japonesa\",\n  \"openingHours\": \"11:00-23:00\",\n  \"ownerUserId\": \"0bf07077-79b3-45b5-aef9-82528808d933\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/restaurants/{{restaurantId}}",
@@ -123,7 +131,13 @@
 					"name": "Deletar Restaurante",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:8080/api/restaurants/{{restaurantId}}",
 							"protocol": "http",
@@ -153,6 +167,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -160,12 +179,10 @@
 							"raw": "{\n  \"restaurantId\": \"7d793cc8-8f0d-4a3b-8690-0c66b62eb0ec\",\n  \"name\": \"Pizza Margherita\",\n  \"description\": \"Pizza tradicional com molho de tomate, mussarela e manjericão.\",\n  \"price\": 39.90,\n  \"dineInOnly\": false,\n  \"photoPath\": \"/images/pizza-margherita.jpg\"\n}\n"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/menu-item",
-							"protocol": "http",
+							"raw": "{{base_url}}/api/menu-item",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"menu-item"
@@ -237,6 +254,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -263,7 +285,13 @@
 					"name": "Deletar Item por ID",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:8080/api/menu-item/{{menuItemId}}",
 							"protocol": "http",
@@ -289,10 +317,16 @@
 					"name": "Criar Usuário",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"adriely\",\r\n  \"email\": \"adriely@fiap.com.br\",\r\n  \"password\": \"1234\",\r\n  \"userTypeId\": \"c37d661d-7e61-49ea-96a5-68c34e83db3a\"\r\n}",
+							"raw": "{\r\n  \"name\": \"jocimar\",\r\n  \"email\": \"jocimar@fiap.com.br\",\r\n  \"password\": \"1234\",\r\n  \"userTypeId\": \"c37d661d-7e61-49ea-96a5-68c34e83db3a\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -300,12 +334,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/user",
-							"protocol": "http",
+							"raw": "{{base_url}}/api/user",
 							"host": [
-								"localhost"
+								"{{base_url}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"user"
@@ -315,7 +347,7 @@
 					"response": []
 				},
 				{
-					"name": "Listar Usuário por ID",
+					"name": "Buscar Usuário por ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -373,14 +405,19 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Gustavo\",\n  \"email\": \"gu@fiap.com.br\",\n  \"password\": \"1234\",\n  \"userTypeId\": \"a68a8d55-92c7-4c4d-a41a-1f43b47f7f5c\"\n}"
+							"raw": "{\n  \"name\": \"Mariao\",\n  \"email\": \"jocimar@faiap.com.br\",\n  \"password\": \"12348888888888888\",\n  \"userTypeId\": \"a68a8d55-92c7-4c4d-a41a-1f43b47f7f5c\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/menu-item/{{userId}}",
+							"raw": "http://localhost:8080/api/user/{{userId}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -388,7 +425,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"menu-item",
+								"user",
 								"{{userId}}"
 							]
 						}
@@ -399,7 +436,13 @@
 					"name": "Deletar Usuário por ID",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:8080/api/user/{{userId}}",
 							"protocol": "http",
@@ -417,6 +460,137 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "usertypes",
+			"item": [
+				{
+					"name": "Criar Tipo de Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"oioioi\",\r\n    \"subType\": \"CUSTOMER\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user-type",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user-type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar um Tipo de usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Administrador\",\n  \"subType\": \"OWNER\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user-type/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user-type",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Tipo de usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Requester-User-Id",
+								"value": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/user-type/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user-type",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "",
+			"type": "default"
 		}
 	]
 }

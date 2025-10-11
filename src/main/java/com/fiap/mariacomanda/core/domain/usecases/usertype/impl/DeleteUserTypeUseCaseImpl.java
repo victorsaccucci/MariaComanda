@@ -24,10 +24,10 @@ public class DeleteUserTypeUseCaseImpl implements DeleteUserTypeUseCase {
     public void execute(UUID id, UUID requesterUserId) {
         NullObjectValidator.validateNotNull(id, "userTypeId");
 
-    RequesterValidator.validateRequesterUserId(requesterUserId);
+        RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
-    RequesterValidator.validateRequesterIsOwner(requester, "delete user types");
+        RequesterValidator.validateRequesterIsOwner(requester, "delete user types");
 
         UserType existing = gateway.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("UserType not found for id: " + id));
