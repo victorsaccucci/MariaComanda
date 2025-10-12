@@ -27,13 +27,13 @@ public class RestaurantApiController implements RestaurantApi {
 
     private final RestaurantJsonMapper restaurantJsonMapper;
 
-    public CreateRestaurantOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @Valid @RequestBody CreateRestaurantJson restaurantJson) {
+    public CreateRestaurantOutputDTO create(@RequestHeader("X-Requester-User-Id") UUID requesterUserId, @RequestBody CreateRestaurantJson restaurantJson) {
         CreateRestaurantInputDTO inputDTO = restaurantJsonMapper.toCreateInput(restaurantJson);
         return restaurantController.create(inputDTO, requesterUserId);
     }
 
-    public GetRestaurantOutputDTO get(@PathVariable String name) {
-        GetRestaurantInputDTO inputDTO = new GetRestaurantInputDTO(name);
+    public GetRestaurantOutputDTO get(@PathVariable UUID id) {
+        GetRestaurantInputDTO inputDTO = new GetRestaurantInputDTO(id.toString());
         return restaurantController.get(inputDTO);
     }
 

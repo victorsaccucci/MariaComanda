@@ -49,8 +49,8 @@ public class UpdateRestaurantUseCaseImpl implements UpdateRestaurantUseCase {
             existing.getId(),
             updateValue(inputDTO.name(), existing.getName()),
             updateValue(inputDTO.address(), existing.getAddress()),
-            updateValue(inputDTO.cuisineType(), existing.getCuisineType()),
-            updateValue(inputDTO.openingHours(), existing.getOpeningHours()),
+            updateValue(inputDTO.cuisineType(), existing.getCuisineTypeForDisplay()),
+            updateValue(inputDTO.openingHours(), existing.getOpeningHoursForStorage()),
             ownerUserId
         );
 

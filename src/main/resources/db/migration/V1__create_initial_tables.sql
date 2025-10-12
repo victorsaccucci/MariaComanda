@@ -56,7 +56,7 @@ INSERT INTO app_user (id, name, email, password_hash, user_type_id) VALUES
 INSERT INTO restaurant (id, name, address, cuisine_type, opening_hours, owner_user_id) VALUES
     ('7d793cc8-8f0d-4a3b-8690-0c66b62eb0ec', 'Restaurante do João',
      'Rua das Flores, 123 - Centro', 'Brasileira',
-     'Seg-Sex: 11h-22h, Sáb-Dom: 11h-23h',
+     'SEG-SEX:09:00-22:00',
      'f47ac10b-58cc-4372-a567-0e02b2c3d479');
 
 -- Inserção de itens do cardápio

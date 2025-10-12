@@ -2,9 +2,9 @@ package com.fiap.mariacomanda.core.domain.usecases.restaurant.impl;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.adapters.gateway.RestaurantGateway;
+import com.fiap.mariacomanda.core.domain.exception.EntityNotFoundException;
 import com.fiap.mariacomanda.core.domain.usecases.restaurant.GetRestaurantUseCase;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class GetRestaurantUseCaseImpl implements GetRestaurantUseCase {
@@ -15,7 +15,8 @@ public class GetRestaurantUseCaseImpl implements GetRestaurantUseCase {
     }
 
     @Override
-    public Optional<Restaurant> execute(UUID id) {
-        return gateway.findById(id);
+    public Restaurant execute(UUID id) {
+        return gateway.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Restaurant", id.toString()));
     }
 }

@@ -40,12 +40,7 @@ public class RestaurantMapperImpl implements RestaurantMapper {
     @Override
     public CreateRestaurantOutputDTO toCreateOutput(Restaurant restaurant) {
         return new CreateRestaurantOutputDTO(
-                restaurant.getId(),
-                restaurant.getName(),
-                restaurant.getAddress(),
-                restaurant.getCuisineType(),
-                restaurant.getOpeningHours(),
-                restaurant.getOwnerUserId()
+                restaurant.getId()
         );
     }
 
@@ -55,8 +50,8 @@ public class RestaurantMapperImpl implements RestaurantMapper {
                 restaurant.getId(),
                 restaurant.getName(),
                 restaurant.getAddress(),
-                restaurant.getCuisineType(),
-                restaurant.getOpeningHours(),
+                restaurant.getCuisineTypeForDisplay(),
+                restaurant.getOpeningHoursForDisplay(),
                 restaurant.getOwnerUserId()
         );
     }
