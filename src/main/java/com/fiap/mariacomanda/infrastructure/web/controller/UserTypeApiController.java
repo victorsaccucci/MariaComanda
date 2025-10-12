@@ -28,7 +28,7 @@ public class UserTypeApiController implements UserTypeApi {
     private final UserTypeJsonMapper userTypeJsonMapper;
 
     public CreateUserTypeOutputDTO createUser(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
-                                            @Valid @RequestBody CreateUserTypeJson createUserTypeJson) {
+                                            @RequestBody CreateUserTypeJson createUserTypeJson) {
         CreateUserTypeInputDTO inputDTO = userTypeJsonMapper.toCreateInput(createUserTypeJson);
         return userTypeController.create(inputDTO, requesterUserId);
     }
@@ -46,7 +46,7 @@ public class UserTypeApiController implements UserTypeApi {
 
     public GetUserTypeOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                                     @PathVariable UUID id,
-                                    @Valid @RequestBody UpdateUserTypeJson updateUserTypeJson) {
+                                    @RequestBody UpdateUserTypeJson updateUserTypeJson) {
         UpdateUserTypeInputDTO inputDTO = userTypeJsonMapper.toUpdateInput(id, updateUserTypeJson);
         return userTypeController.update(inputDTO, requesterUserId);
     }

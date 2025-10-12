@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,9 +29,9 @@ public interface MenuItemApi {
     @DeleteMapping("/{id}")
     @Operation(summary = "Excluir um prato no menu pelo ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Prato excluído com sucesso")
+            @ApiResponse(responseCode = "204", description = "Prato excluído com sucesso")
     })
-        void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+    ResponseEntity<Void> delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                                 @PathVariable UUID id);
 
     @GetMapping("/{id}")

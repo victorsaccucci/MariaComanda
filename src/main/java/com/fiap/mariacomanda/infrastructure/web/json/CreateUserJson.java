@@ -11,15 +11,11 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CreateUserJson {
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String email;
 
-    @NotBlank
     private String password;
 
-    @NotNull
     private UUID userTypeId;
 }

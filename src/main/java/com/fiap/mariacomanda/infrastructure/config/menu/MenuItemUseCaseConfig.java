@@ -31,8 +31,8 @@ public class MenuItemUseCaseConfig {
     }
 
     @Bean
-    public ListMenuItemUseCase listMenuItemUseCase(MenuItemGateway menuItemGateway) {
-        return new ListMenuItemUseCaseImpl(menuItemGateway);
+    public ListMenuItemUseCase listMenuItemUseCase(MenuItemGateway menuItemGateway, RestaurantGateway restaurantGateway) {
+        return new ListMenuItemUseCaseImpl(menuItemGateway, restaurantGateway);
     }
 
     @Bean

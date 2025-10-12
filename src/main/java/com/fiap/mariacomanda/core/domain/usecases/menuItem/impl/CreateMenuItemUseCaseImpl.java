@@ -1,5 +1,6 @@
 package com.fiap.mariacomanda.core.domain.usecases.menuItem.impl;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.fiap.mariacomanda.core.adapters.gateway.MenuItemGateway;
@@ -39,7 +40,27 @@ public class CreateMenuItemUseCaseImpl implements CreateMenuItemUseCase {
 
         RequesterValidator.validateRequesterIsOwner(requester, "create menu items");
 
-        NullObjectValidator.validateNotNull(inputDTO.restaurantId(), "restaurantId");
+        NullObjectValidator.validateNotNull(inputDTO.restaurantId(), "Restaurant ID");
+        NullObjectValidator.validateNotNull(inputDTO.name(), "Menu item name");
+        if (inputDTO.name() != null && inputDTO.name().trim().isEmpty()) {
+            throw new IllegalArgumentException("Menu item name cannot be empty");
+        }
+        NullObjectValidator.validateNotNull(inputDTO.description(), "Menu item description");
+        if (inputDTO.description() != null && inputDTO.description().trim().isEmpty()) {
+            throw new IllegalArgumentException("Menu item description cannot be empty");
+        }
+        NullObjectValidator.validateNotNull(inputDTO.dineInOnly(), "Dine in only flag");
+        NullObjectValidator.validateNotNull(inputDTO.photoPath(), "Photo path");
+        if (inputDTO.photoPath() != null && inputDTO.photoPath().trim().isEmpty()) {
+            throw new IllegalArgumentException("Photo path cannot be empty");
+        }
+        if (inputDTO.photoPath() != null && !inputDTO.photoPath().matches("^/images/.*\\.(jpg|jpeg|png|gif|webp)$")) {
+            throw new IllegalArgumentException("Photo path must be a valid image path (e.g., /images/photo.jpg)");
+        }
+        NullObjectValidator.validateNotNull(inputDTO.price(), "Menu item price");
+        if (inputDTO.price() != null && inputDTO.price().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Menu item price must be greater than zero");
+        }
         RestaurantValidator.validateRestaurantId(inputDTO.restaurantId());
         Restaurant restaurant = restaurantGateway.findById(inputDTO.restaurantId())
                 .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));

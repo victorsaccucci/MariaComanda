@@ -11,19 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateMenuItemJson {
 
-    @Size(max = 100)
     private String name;
 
-    @Size(max = 255)
     private String description;
 
     private BigDecimal price;
 
     private UUID restaurantId;
 
-    private boolean dineInOnly;
+    private Boolean dineInOnly;
 
-    @Size(max = 255)
     private String photoPath;
 
 }

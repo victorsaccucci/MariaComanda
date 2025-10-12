@@ -40,10 +40,7 @@ public class UserMapperImpl implements UserMapper {
     @Override
     public CreateUserOutputDTO toCreateOutput(User user) {
         return new CreateUserOutputDTO(
-                user.getId(),
-                user.getName(),
-                user.getEmail(),
-                toUserTypeOutput(user.getUserType())
+                user.getId()
         );
     }
 

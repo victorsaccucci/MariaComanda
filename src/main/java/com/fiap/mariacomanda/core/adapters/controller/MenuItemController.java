@@ -35,7 +35,8 @@ public class MenuItemController {
     }
 
     public GetMenuItemOutputDTO get(GetMenuItemInputDTO inputDTO) {
-        MenuItem menuItem = getUseCase.execute(inputDTO.id()).orElseThrow();
+        MenuItem menuItem = getUseCase.execute(inputDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("Menu item not found"));
         return menuItemMapper.toGetOutput(menuItem);
     }
 

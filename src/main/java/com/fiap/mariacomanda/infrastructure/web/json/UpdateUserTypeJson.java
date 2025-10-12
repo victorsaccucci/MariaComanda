@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateUserTypeJson {
 
-    @Size(max = 100)
     private String name;
 
-    @Pattern(regexp = "(?i)customer|owner", message = "subType must be CUSTOMER or OWNER")
     private String subType;
 }

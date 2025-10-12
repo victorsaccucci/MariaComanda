@@ -14,23 +14,16 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CreateMenuItemJson {
 
-    @NotNull
     private UUID restaurantId;
 
-    @NotBlank
-    @Size(max = 100)
     private String name;
 
-    @Size(max = 255)
     private String description;
 
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = false)
     private BigDecimal price;
 
-    private boolean dineInOnly;
+    private Boolean dineInOnly;
 
-    @Size(max = 255)
     private String photoPath;
 
 }
