@@ -34,7 +34,7 @@ public class RestaurantController {
     }
 
     public GetRestaurantOutputDTO get(GetRestaurantInputDTO inputDTO) {
-        Restaurant restaurant = getUseCase.execute(UUID.fromString(inputDTO.name())).orElseThrow();
+        Restaurant restaurant = getUseCase.execute(UUID.fromString(inputDTO.name()));
         return restaurantMapper.toGetOutput(restaurant);
     }
 

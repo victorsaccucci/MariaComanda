@@ -17,8 +17,8 @@ public class RestaurantEntityMapperImpl implements RestaurantEntityMapper {
         entity.setId(domain.getId());
         entity.setName(domain.getName());
         entity.setAddress(domain.getAddress());
-        entity.setCuisineType(domain.getCuisineType());
-        entity.setOpeningHours(domain.getOpeningHours());
+        entity.setCuisineType(domain.getCuisineTypeForDisplay());
+        entity.setOpeningHours(domain.getOpeningHoursForStorage());
         entity.setOwnerUserId(domain.getOwnerUserId());
         return entity;
     }

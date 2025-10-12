@@ -16,8 +16,8 @@ public class Restaurant {
     private UUID id;
     private String name;
     private String address;
-    private String cuisineType;
-    private String openingHours;
+    private CuisineType cuisineType;
+    private OpeningHours openingHours;
     private UUID ownerUserId;
 
     public Restaurant(UUID id, String name, String address, String cuisineType,
@@ -25,8 +25,8 @@ public class Restaurant {
         this.id = id;
         this.name = validateName(name);
         this.address = validateAddress(address);
-        this.cuisineType = validateCuisineType(cuisineType);
-        this.openingHours = openingHours;
+        this.cuisineType = CuisineType.fromString(cuisineType);
+        this.openingHours = OpeningHours.fromString(openingHours);
         this.ownerUserId = validateOwnerUserId(ownerUserId);
     }
 
@@ -34,8 +34,8 @@ public class Restaurant {
                      String openingHours, UUID ownerUserId) {
         this.name = validateName(name);
         this.address = validateAddress(address);
-        this.cuisineType = validateCuisineType(cuisineType);
-        this.openingHours = openingHours;
+        this.cuisineType = CuisineType.fromString(cuisineType);
+        this.openingHours = OpeningHours.fromString(openingHours);
         this.ownerUserId = validateOwnerUserId(ownerUserId);
     }
 
@@ -60,15 +60,9 @@ public class Restaurant {
         return address.trim();
     }
 
-    private String validateCuisineType(String cuisineType) {
-        if (cuisineType == null || cuisineType.trim().isEmpty()) {
-            throw new IllegalArgumentException("Restaurant cuisine type cannot be null or empty");
-        }
-        if (cuisineType.length() > 50) {
-            throw new IllegalArgumentException("Restaurant cuisine type cannot exceed 50 characters");
-        }
-        return cuisineType.trim();
-    }
+
+
+
 
     private UUID validateOwnerUserId(UUID ownerUserId) {
         if (ownerUserId == null) {
@@ -87,7 +81,23 @@ public class Restaurant {
     }
 
     public void setCuisineType(String cuisineType) {
-        this.cuisineType = validateCuisineType(cuisineType);
+        this.cuisineType = CuisineType.fromString(cuisineType);
+    }
+    
+    public String getCuisineTypeForDisplay() {
+        return cuisineType.getDisplayName();
+    }
+
+    public void setOpeningHours(String openingHours) {
+        this.openingHours = OpeningHours.fromString(openingHours);
+    }
+    
+    public String getOpeningHoursForStorage() {
+        return openingHours.toStorageString();
+    }
+    
+    public String getOpeningHoursForDisplay() {
+        return openingHours.toDisplayString();
     }
 
     public void setOwnerUserId(UUID ownerUserId) {

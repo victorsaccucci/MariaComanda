@@ -26,7 +26,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Restaurante Exemplo\",\n  \"address\": \"Rua X, 123\",\n  \"cuisineType\": \"Italiana\",\n  \"openingHours\": \"10:00-22:00\",\n  \"ownerUserId\": \"ea52c8ae-8273-4ed9-a11f-1ba395354b61\"\n}"
+							"raw": "{\n  \"name\": \"Restaurante Exemplo\",\n  \"address\": \"Rua X, 123\",\n  \"cuisineType\": \"Italiana\",\n  \"openingHours\": \"SEG-SEX:09:00-22:00\",\n  \"ownerUserId\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/restaurants",
@@ -109,7 +109,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Novo Nome\",\n  \"address\": \"Nova Rua, 456\",\n  \"cuisineType\": \"Japonesa\",\n  \"openingHours\": \"11:00-23:00\",\n  \"ownerUserId\": \"0bf07077-79b3-45b5-aef9-82528808d933\"\n}"
+							"raw": "{\n  \"name\": \"Novo Nome\",\n  \"address\": \"Nova Rua, 456\",\n  \"cuisineType\": \"Japonesa\",\n  \"openingHours\": \"SAB-DOM:11:00-23:00\",\n  \"ownerUserId\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/restaurants/{{restaurantId}}",
