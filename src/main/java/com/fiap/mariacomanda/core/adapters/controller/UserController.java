@@ -34,7 +34,8 @@ public class UserController {
     }
 
     public GetUserOutputDTO get(GetUserInputDTO inputDTO) {
-        User user = getUseCase.execute(inputDTO.id()).orElseThrow();
+        User user = getUseCase.execute(inputDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
         return userMapper.toGetOutput(user);
     }
 

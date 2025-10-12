@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -45,14 +46,15 @@ public class RestaurantApiController implements RestaurantApi {
 
     public GetRestaurantOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                                         @PathVariable UUID id,
-                                        @Valid @RequestBody UpdateRestaurantJson updateRestaurantJson) {
+                                        @RequestBody UpdateRestaurantJson updateRestaurantJson) {
         UpdateRestaurantInputDTO inputDTO = restaurantJsonMapper.toUpdateInput(id, updateRestaurantJson);
         return restaurantController.update(inputDTO, requesterUserId);
     }
 
-    public void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+    public ResponseEntity<Void> delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                       @PathVariable UUID id) {
         DeleteRestaurantInputDTO inputDTO = new DeleteRestaurantInputDTO(id);
         restaurantController.delete(inputDTO, requesterUserId);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -76,6 +77,6 @@ public interface RestaurantApi {
     })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-        void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+    ResponseEntity<Void> delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                                 @PathVariable UUID id);
 }

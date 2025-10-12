@@ -34,7 +34,8 @@ public class UserTypeController {
     }
 
     public GetUserTypeOutputDTO get(GetUserTypeInputDTO inputDTO) {
-        UserType userType = getUseCase.execute(inputDTO.id()).orElseThrow();
+        UserType userType = getUseCase.execute(inputDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("User type not found"));
         return userTypeMapper.toGetOutput(userType);
     }
 
