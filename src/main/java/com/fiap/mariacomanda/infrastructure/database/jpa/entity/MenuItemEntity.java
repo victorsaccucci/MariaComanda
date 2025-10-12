@@ -16,8 +16,9 @@ public class MenuItemEntity {
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "restaurant_id", nullable = false)
-    private UUID restaurantId;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private RestaurantEntity restaurant;
 
     @Column(nullable = false, length = 120)
     private String name;
@@ -33,4 +34,9 @@ public class MenuItemEntity {
 
     @Column(name = "photo_path")
     private String photoPath;
+
+    @Transient
+    private UUID restaurantId;
+
+
 }

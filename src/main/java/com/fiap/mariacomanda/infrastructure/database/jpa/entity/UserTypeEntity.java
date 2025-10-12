@@ -15,6 +15,9 @@ public class UserTypeEntity {
     @GeneratedValue
     private UUID id;
 
-    @Column(nullable = false, unique = true, length = 60)
+    @Column(nullable = false, length = 120)
     private String name;
+
+    @Column(name = "sub_type", nullable = false, length = 30)
+    private String subType; // CUSTOMER | OWNER
 }

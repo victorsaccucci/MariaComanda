@@ -1,60 +1,24 @@
 package com.fiap.mariacomanda.core.mapper;
 
-import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.core.domain.entity.User;
-import com.fiap.mariacomanda.core.dto.menuItem.GetMenuItemOutputDTO;
-import com.fiap.mariacomanda.core.dto.menuItem.UpdateMenuItemInputDTO;
-import com.fiap.mariacomanda.core.dto.user.CreateUserInputDTO;
-import com.fiap.mariacomanda.core.dto.user.CreateUserOutputDTO;
-import com.fiap.mariacomanda.core.dto.user.GetUserOutputDTO;
-import com.fiap.mariacomanda.core.dto.user.UpdateUsersInputDTO;
+import com.fiap.mariacomanda.core.domain.entity.UserType;
+import com.fiap.mariacomanda.core.dto.user.input.CreateUserInputDTO;
+import com.fiap.mariacomanda.core.dto.user.input.UpdateUserInputDTO;
+import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
+import com.fiap.mariacomanda.core.dto.user.output.GetUserOutputDTO;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class UserMapper {
+public interface UserMapper {
 
-    public User mapCreateInputToDomain(CreateUserInputDTO dto){
-        return new User(
-                dto.getId(),
-                dto.getName(),
-                dto.getEmail(),
-                dto.getPasswordHash(),
-                dto.getUserType()
-        );
-    }
+    User toDomain(CreateUserInputDTO dto, UserType userType);
 
-    public CreateUserOutputDTO mapCreateDomainToOutput(User user){
-        return new CreateUserOutputDTO(
-                user.id(),
-                user.name(),
-                user.email(),
-                user.passwordHash(),
-                user.userType()
-        );
-    }
+    User toDomain(UpdateUserInputDTO dto, UserType userType);
 
-    public GetUserOutputDTO mapGetDomainToOutput(User user){
-        return new GetUserOutputDTO(
-                user.id(),
-                user.name(),
-                user.email(),
-                user.passwordHash(),
-                user.userType()
-        );
-    }
+    CreateUserOutputDTO toCreateOutput(User user);
 
-    public List<GetUserOutputDTO> mapGetMenuItemOutputDtoToList(List<User> users){
-        return users.stream().map(this::mapGetDomainToOutput).collect(Collectors.toList());
-    }
+    GetUserOutputDTO toGetOutput(User user);
 
-    public User mapUpdateInputToDomain(UpdateUsersInputDTO dto){
-        return new User(
-                dto.getId(),
-                dto.getName(),
-                dto.getEmail(),
-                dto.getPasswordHash(),
-                dto.getUserType()
-        );
-    }
+    List<GetUserOutputDTO> toGetOutputList(List<User> users);
+
 }
