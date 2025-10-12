@@ -34,9 +34,7 @@ public class UserTypeMapperImpl implements UserTypeMapper {
     @Override
     public CreateUserTypeOutputDTO toCreateOutput(UserType userType) {
         return new CreateUserTypeOutputDTO(
-            userType.getId(),
-            userType.getName(),
-            userType.getSubType()
+            userType.getId()
         );
     }
 

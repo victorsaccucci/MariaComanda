@@ -20,7 +20,7 @@ public class MenuItemJsonMapperImpl implements MenuItemJsonMapper {
                 json.getDescription(),
                 json.getPrice(),
                 json.getRestaurantId(),
-                json.isDineInOnly(),
+                json.getDineInOnly(),
                 json.getPhotoPath()
         );
     }
@@ -33,7 +33,7 @@ public class MenuItemJsonMapperImpl implements MenuItemJsonMapper {
                 json.getDescription(),
                 json.getPrice(),
                 json.getRestaurantId(),
-                json.isDineInOnly(),
+                json.getDineInOnly(),
                 json.getPhotoPath()
         );
     }

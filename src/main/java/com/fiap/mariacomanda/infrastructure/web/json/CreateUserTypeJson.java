@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateUserTypeJson {
 
-    @NotBlank
     private String name; // Nome descritivo (ex: Cliente, Dono do Restaurante)
 
-    @NotBlank
-    @Pattern(regexp = "(?i)customer|owner", message = "subType must be CUSTOMER or OWNER")
     private String subType; // Valores permitidos: CUSTOMER, OWNER
 }

@@ -8,6 +8,6 @@ public record CreateMenuItemInputDTO(
     String description,
     BigDecimal price,
     UUID restaurantId,
-    boolean dineInOnly,
+    Boolean dineInOnly,
     String photoPath
 ) {}

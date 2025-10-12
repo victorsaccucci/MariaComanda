@@ -24,7 +24,7 @@ public class UserApiController implements UserApi {
     private final UserJsonMapper userJsonMapper;
 
     public CreateUserOutputDTO createUser(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
-                                        @Valid @RequestBody CreateUserJson createUserJson) {
+                                        @RequestBody CreateUserJson createUserJson) {
         CreateUserInputDTO inputDTO = userJsonMapper.toCreateInput(createUserJson);
         return userController.create(inputDTO, requesterUserId);
     }
@@ -42,7 +42,7 @@ public class UserApiController implements UserApi {
 
     public GetUserOutputDTO update(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                                 @PathVariable UUID id,
-                                @Valid @RequestBody UpdateUserJson updateUserJson) {
+                                @RequestBody UpdateUserJson updateUserJson) {
         UpdateUserInputDTO inputDTO = userJsonMapper.toUpdateInput(id, updateUserJson);
         return userController.update(inputDTO, requesterUserId);
     }

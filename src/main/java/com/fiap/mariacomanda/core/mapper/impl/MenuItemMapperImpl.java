@@ -42,13 +42,7 @@ public class MenuItemMapperImpl implements MenuItemMapper {
     @Override
     public CreateMenuItemOutputDTO toCreateOutput(MenuItem menuItem) {
         return new CreateMenuItemOutputDTO(
-                menuItem.getId(),
-                menuItem.getName(),
-                menuItem.getDescription(),
-                menuItem.getPrice(),
-                menuItem.getRestaurantId(),
-                menuItem.isDineInOnly(),
-                menuItem.getPhotoPath()
+                menuItem.getId()
         );
     }
 

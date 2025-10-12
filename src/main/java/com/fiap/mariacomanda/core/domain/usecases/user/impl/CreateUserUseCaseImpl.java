@@ -35,7 +35,19 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
                 .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
         RequesterValidator.validateRequesterIsOwner(requester, "create users");
 
-        NullObjectValidator.validateNotNull(inputDTO.userTypeId(), "userTypeId");
+        NullObjectValidator.validateNotNull(inputDTO.name(), "User name");
+        if (inputDTO.name() != null && inputDTO.name().trim().isEmpty()) {
+            throw new IllegalArgumentException("User name cannot be empty");
+        }
+        NullObjectValidator.validateNotNull(inputDTO.email(), "User email");
+        if (inputDTO.email() != null && inputDTO.email().trim().isEmpty()) {
+            throw new IllegalArgumentException("User email cannot be empty");
+        }
+        NullObjectValidator.validateNotNull(inputDTO.password(), "User password");
+        if (inputDTO.password() != null && inputDTO.password().trim().isEmpty()) {
+            throw new IllegalArgumentException("User password cannot be empty");
+        }
+        NullObjectValidator.validateNotNull(inputDTO.userTypeId(), "User type ID");
 
         // buscando userType que foi definido pelo requester para compor o novo usuário
         UserType userType = userTypeGateway.findById(inputDTO.userTypeId())

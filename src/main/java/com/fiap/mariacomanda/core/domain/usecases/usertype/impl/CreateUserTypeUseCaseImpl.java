@@ -40,6 +40,15 @@ public class CreateUserTypeUseCaseImpl implements CreateUserTypeUseCase {
 
         RequesterValidator.validateRequesterIsOwner(requester, "create user types");
 
+        NullObjectValidator.validateNotNull(inputDTO.name(), "User type name");
+        if (inputDTO.name() != null && inputDTO.name().trim().isEmpty()) {
+            throw new IllegalArgumentException("User type name cannot be empty");
+        }
+        NullObjectValidator.validateNotNull(inputDTO.subType(), "User type subType");
+        if (inputDTO.subType() != null && !inputDTO.subType().matches("(?i)customer|owner")) {
+            throw new IllegalArgumentException("User type subType must be CUSTOMER or OWNER");
+        }
+
         UserType userType = userTypeMapper.toDomain(inputDTO);
 
         return userTypeGateway.save(userType);

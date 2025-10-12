@@ -161,7 +161,29 @@ public class GlobalExceptionHandler {
                 message = String.format("Invalid UUID format for field '%s'. Expected a valid UUID (e.g., 550e8400-e29b-41d4-a716-446655440000)", fieldName);
             }
         } else if (errorMsg.contains("Cannot deserialize")) {
-            message = "Invalid data format in request body";
+            // Verificar se é erro de boolean
+            if (errorMsg.contains("Boolean") || errorMsg.contains("dineInOnly")) {
+                String fieldName = "dineInOnly";
+                String invalidValue = "";
+                
+                // Extrair o valor inválido
+                if (errorMsg.contains("from String \"")) {
+                    int start = errorMsg.indexOf("from String \"") + 13;
+                    int end = errorMsg.indexOf("\"", start);
+                    if (end > start) {
+                        invalidValue = errorMsg.substring(start, end);
+                    }
+                }
+                
+                if (!invalidValue.isEmpty()) {
+                    message = String.format("Invalid value '%s' for field '%s'. Expected a boolean value (true or false)", 
+                            invalidValue, fieldName);
+                } else {
+                    message = String.format("Invalid value for field '%s'. Expected a boolean value (true or false)", fieldName);
+                }
+            } else {
+                message = "Invalid data format in request body";
+            }
         }
         
         ErrorResponse error = new ErrorResponse(

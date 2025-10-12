@@ -64,7 +64,7 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
             updateValue(inputDTO.name(), existing.getName()),
             updateValue(inputDTO.description(), existing.getDescription()),
             updateValue(inputDTO.price(), existing.getPrice()),
-            inputDTO.dineInOnly(),
+            updateValue(inputDTO.dineInOnly(), existing.isDineInOnly()),
             updateValue(inputDTO.photoPath(), existing.getPhotoPath())
         );
 
@@ -76,6 +76,10 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
     }
 
     private BigDecimal updateValue(BigDecimal newValue, BigDecimal current) {
+        return newValue != null ? newValue : current;
+    }
+
+    private Boolean updateValue(Boolean newValue, Boolean current) {
         return newValue != null ? newValue : current;
     }
 }

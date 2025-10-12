@@ -11,14 +11,10 @@ import java.util.UUID;
 @NoArgsConstructor
 public class UpdateUserJson {
 
-    @Size(max = 100)
     private String name;
 
-    @Email
-    @Size(max = 255)
     private String email;
 
-    @Size(min = 6, max = 255)
     private String password;
 
     private UUID userTypeId;
