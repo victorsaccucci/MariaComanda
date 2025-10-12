@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -62,6 +63,6 @@ public interface UserApi {
             @ApiResponse(responseCode = "204", description = "Usuário excluído com sucesso")
     })
     @DeleteMapping("/{id}")
-        void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+    ResponseEntity<Void> delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                                 @PathVariable UUID id);
 }

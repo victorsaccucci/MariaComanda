@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;
 import java.util.List;
@@ -55,6 +56,6 @@ public interface UserTypeApi {
             @ApiResponse(responseCode = "204", description = "Tipo de usuário excluído com sucesso")
     })
     @DeleteMapping("/{id}")
-        void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+    ResponseEntity<Void> delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                                 @PathVariable UUID id);
 }

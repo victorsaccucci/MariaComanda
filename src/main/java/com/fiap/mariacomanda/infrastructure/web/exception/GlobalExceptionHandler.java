@@ -261,9 +261,21 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(DataIntegrityViolationException ex, HttpServletRequest request) {
         log.warn("Data integrity violation: {}", ex.getMessage());
         
-        String message = "Cannot delete resource because it is referenced by other data";
-        if (ex.getMessage().contains("MENU_ITEM")) {
-            message = "Cannot delete restaurant because it has menu items. Delete menu items first";
+        String message;
+        String method = request.getMethod();
+        
+        if ("DELETE".equals(method)) {
+            message = "Cannot delete resource because it is referenced by other data";
+            if (ex.getMessage().contains("MENU_ITEM")) {
+                message = "Cannot delete restaurant because it has menu items. Delete menu items first";
+            }
+        } else {
+            // Para CREATE/UPDATE
+            if (ex.getMessage().contains("Duplicate entry") || ex.getMessage().contains("duplicate key")) {
+                message = "Resource already exists with the provided data";
+            } else {
+                message = "Data integrity constraint violation";
+            }
         }
         
         ErrorResponse error = new ErrorResponse(

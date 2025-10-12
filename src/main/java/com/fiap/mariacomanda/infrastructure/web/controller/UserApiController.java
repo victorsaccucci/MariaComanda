@@ -11,6 +11,7 @@ import com.fiap.mariacomanda.infrastructure.web.json.UpdateUserJson;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -47,9 +48,10 @@ public class UserApiController implements UserApi {
         return userController.update(inputDTO, requesterUserId);
     }
 
-    public void delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
+    public ResponseEntity<Void> delete(@RequestHeader("X-Requester-User-Id") UUID requesterUserId,
                        @PathVariable UUID id) {
         DeleteUserInputDTO inputDTO = new DeleteUserInputDTO(id);
         userController.delete(inputDTO, requesterUserId);
+        return ResponseEntity.noContent().build();
     }
 }
