@@ -1,5 +1,7 @@
 package com.fiap.mariacomanda.core.domain.entity;
 
+import com.fiap.mariacomanda.core.domain.exception.ValidationException;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -33,7 +35,7 @@ public enum CuisineType {
     
     public static CuisineType fromString(String cuisineTypeStr) {
         if (cuisineTypeStr == null || cuisineTypeStr.trim().isEmpty()) {
-            throw new IllegalArgumentException("Cuisine type cannot be null or empty");
+            throw new ValidationException("Cuisine type cannot be null or empty");
         }
         
         String normalized = cuisineTypeStr.trim().toUpperCase();
