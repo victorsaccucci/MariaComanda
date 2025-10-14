@@ -39,7 +39,7 @@ public class UserMapperImpl implements UserMapper {
     // Saídas
     @Override
     public CreateUserOutputDTO toCreateOutput(User user) {
-        String userTypeName = user.getUserType() != null ? user.getUserType().getName() : "Unknown";
+        String userTypeName = user.getUserType().getName();
         String message = String.format("User created successfully as %s", userTypeName);
         return new CreateUserOutputDTO(
                 user.getId(),
@@ -63,12 +63,10 @@ public class UserMapperImpl implements UserMapper {
     }
 
     private GetUserTypeOutputDTO toUserTypeOutput(UserType userType) {
-        return userType != null
-                ? new GetUserTypeOutputDTO(
+        return  new GetUserTypeOutputDTO(
                         userType.getId(),
                         userType.getName(),
-                        userType.getSubType())
-                : null;
+                        userType.getSubType());
     }
 
 }

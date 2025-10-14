@@ -1,6 +1,5 @@
 package com.fiap.mariacomanda.infrastructure.web.exception;
 
-import com.fiap.mariacomanda.core.domain.exception.BusinessException;
 import com.fiap.mariacomanda.core.domain.exception.EntityNotFoundException;
 import com.fiap.mariacomanda.core.domain.exception.UnauthorizedException;
 import com.fiap.mariacomanda.core.domain.exception.ValidationException;
@@ -11,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +27,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleEntityNotFound(EntityNotFoundException ex, HttpServletRequest request) {
         log.warn("Entity not found: {}", ex.getMessage());
-        
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
@@ -36,14 +35,14 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 request.getRequestURI()
         );
-        
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<ErrorResponse> handleValidation(ValidationException ex, HttpServletRequest request) {
         log.warn("Validation error: {}", ex.getMessage());
-        
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
@@ -51,14 +50,14 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 request.getRequestURI()
         );
-        
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ErrorResponse> handleUnauthorized(UnauthorizedException ex, HttpServletRequest request) {
         log.warn("Unauthorized access: {}", ex.getMessage());
-        
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.FORBIDDEN.value(),
@@ -66,20 +65,20 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 request.getRequestURI()
         );
-        
+
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpServletRequest request) {
         log.warn("Validation failed: {}", ex.getMessage());
-        
+
         List<ValidationErrorResponse.FieldError> fieldErrors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(error -> new ValidationErrorResponse.FieldError(error.getField(), error.getDefaultMessage()))
                 .collect(Collectors.toList());
-        
+
         ValidationErrorResponse error = new ValidationErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
@@ -88,36 +87,21 @@ public class GlobalExceptionHandler {
                 request.getRequestURI(),
                 fieldErrors
         );
-        
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
 
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex, HttpServletRequest request) {
-        log.warn("Business error: {}", ex.getMessage());
-        
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                ex.getMessage(),
-                request.getRequestURI()
-        );
-        
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpServletRequest request) {
         log.warn("JSON parse error: {}", ex.getMessage());
-        
+
         String message = "Invalid JSON format";
         String errorMsg = ex.getMessage();
-        
+
         if (errorMsg.contains("UUID")) {
             String invalidValue = "";
             String fieldName = "";
-            
+
             // Extrair o valor inválido
             if (errorMsg.contains("from String \"")) {
                 int start = errorMsg.indexOf("from String \"") + 13;
@@ -126,7 +110,7 @@ public class GlobalExceptionHandler {
                     invalidValue = errorMsg.substring(start, end);
                 }
             }
-            
+
             // Buscar em toda a cadeia de exceções
             Throwable current = ex;
             while (current != null && fieldName.isEmpty()) {
@@ -144,7 +128,7 @@ public class GlobalExceptionHandler {
                 }
                 current = current.getCause();
             }
-            
+
             // Se não encontrou o campo, assumir baseado no contexto da URL
             if (fieldName.isEmpty()) {
                 if (request.getRequestURI().contains("/restaurants")) {
@@ -153,9 +137,9 @@ public class GlobalExceptionHandler {
                     fieldName = "UUID field";
                 }
             }
-            
+
             if (!invalidValue.isEmpty()) {
-                message = String.format("Invalid value '%s' for field '%s'. Expected a valid UUID format (e.g., 550e8400-e29b-41d4-a716-446655440000)", 
+                message = String.format("Invalid value '%s' for field '%s'. Expected a valid UUID format (e.g., 550e8400-e29b-41d4-a716-446655440000)",
                         invalidValue, fieldName);
             } else {
                 message = String.format("Invalid UUID format for field '%s'. Expected a valid UUID (e.g., 550e8400-e29b-41d4-a716-446655440000)", fieldName);
@@ -165,7 +149,7 @@ public class GlobalExceptionHandler {
             if (errorMsg.contains("Boolean") || errorMsg.contains("dineInOnly")) {
                 String fieldName = "dineInOnly";
                 String invalidValue = "";
-                
+
                 // Extrair o valor inválido
                 if (errorMsg.contains("from String \"")) {
                     int start = errorMsg.indexOf("from String \"") + 13;
@@ -174,9 +158,9 @@ public class GlobalExceptionHandler {
                         invalidValue = errorMsg.substring(start, end);
                     }
                 }
-                
+
                 if (!invalidValue.isEmpty()) {
-                    message = String.format("Invalid value '%s' for field '%s'. Expected a boolean value (true or false)", 
+                    message = String.format("Invalid value '%s' for field '%s'. Expected a boolean value (true or false)",
                             invalidValue, fieldName);
                 } else {
                     message = String.format("Invalid value for field '%s'. Expected a boolean value (true or false)", fieldName);
@@ -185,7 +169,7 @@ public class GlobalExceptionHandler {
                 message = "Invalid data format in request body";
             }
         }
-        
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
@@ -193,17 +177,17 @@ public class GlobalExceptionHandler {
                 message,
                 request.getRequestURI()
         );
-        
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
         log.warn("Type mismatch: {}", ex.getMessage());
-        
-        String message = String.format("Invalid value '%s' for parameter '%s'. Expected type: %s", 
+
+        String message = String.format("Invalid value '%s' for parameter '%s'. Expected type: %s",
                 ex.getValue(), ex.getName(), ex.getRequiredType().getSimpleName());
-        
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
@@ -211,14 +195,14 @@ public class GlobalExceptionHandler {
                 message,
                 request.getRequestURI()
         );
-        
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest request) {
         log.warn("Invalid argument: {}", ex.getMessage());
-        
+
         // Se a mensagem contém "not found", tratar como 404
         if (ex.getMessage().toLowerCase().contains("not found")) {
             ErrorResponse error = new ErrorResponse(
@@ -230,7 +214,7 @@ public class GlobalExceptionHandler {
             );
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
-        
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
@@ -238,14 +222,14 @@ public class GlobalExceptionHandler {
                 "Invalid parameter format: " + ex.getMessage(),
                 request.getRequestURI()
         );
-        
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<ErrorResponse> handleIllegalState(IllegalStateException ex, HttpServletRequest request) {
         log.warn("Permission denied: {}", ex.getMessage());
-        
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.FORBIDDEN.value(),
@@ -253,17 +237,17 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 request.getRequestURI()
         );
-        
+
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(DataIntegrityViolationException ex, HttpServletRequest request) {
         log.warn("Data integrity violation: {}", ex.getMessage());
-        
+
         String message;
         String method = request.getMethod();
-        
+
         if ("DELETE".equals(method)) {
             message = "Cannot delete resource because it is referenced by other data";
             if (ex.getMessage().contains("MENU_ITEM")) {
@@ -277,7 +261,7 @@ public class GlobalExceptionHandler {
                 message = "Data integrity constraint violation";
             }
         }
-        
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.CONFLICT.value(),
@@ -285,14 +269,14 @@ public class GlobalExceptionHandler {
                 message,
                 request.getRequestURI()
         );
-        
+
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex, HttpServletRequest request) {
         log.error("Unexpected error - Type: {}, Message: {}", ex.getClass().getSimpleName(), ex.getMessage(), ex);
-        
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
@@ -300,7 +284,7 @@ public class GlobalExceptionHandler {
                 "An unexpected error occurred: " + ex.getClass().getSimpleName() + " - " + ex.getMessage(),
                 request.getRequestURI()
         );
-        
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 }
