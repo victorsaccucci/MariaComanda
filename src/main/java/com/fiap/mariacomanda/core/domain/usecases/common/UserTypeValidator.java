@@ -1,6 +1,7 @@
 package com.fiap.mariacomanda.core.domain.usecases.common;
 
 import com.fiap.mariacomanda.core.domain.entity.UserType;
+import com.fiap.mariacomanda.core.domain.exception.ValidationException;
 
 /**
  * Helper para validações de tipo de usuário.
@@ -14,7 +15,7 @@ public final class UserTypeValidator {
 
     public static void validateUserType(UserType userType) {
         if (userType == null) {
-            throw new IllegalArgumentException("UserType cannot be null");
+            throw new ValidationException("UserType cannot be null");
         }
     }
 }

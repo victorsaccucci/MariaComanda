@@ -1,6 +1,7 @@
 package com.fiap.mariacomanda.core.adapters.controller;
 
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
+import com.fiap.mariacomanda.core.domain.exception.EntityNotFoundException;
 import com.fiap.mariacomanda.core.domain.usecases.menuItem.*;
 import com.fiap.mariacomanda.core.dto.menuitem.input.*;
 import com.fiap.mariacomanda.core.dto.menuitem.output.CreateMenuItemOutputDTO;
@@ -36,7 +37,7 @@ public class MenuItemController {
 
     public GetMenuItemOutputDTO get(GetMenuItemInputDTO inputDTO) {
         MenuItem menuItem = getUseCase.execute(inputDTO.id())
-                .orElseThrow(() -> new IllegalArgumentException("Menu item not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Menu item not found", inputDTO.id().toString()));
         return menuItemMapper.toGetOutput(menuItem);
     }
 

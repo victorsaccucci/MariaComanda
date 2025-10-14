@@ -1,6 +1,7 @@
 package com.fiap.mariacomanda.core.adapters.controller;
 
 import com.fiap.mariacomanda.core.domain.entity.User;
+import com.fiap.mariacomanda.core.domain.exception.EntityNotFoundException;
 import com.fiap.mariacomanda.core.domain.usecases.user.*;
 import com.fiap.mariacomanda.core.dto.user.input.*;
 import com.fiap.mariacomanda.core.dto.user.output.CreateUserOutputDTO;
@@ -35,7 +36,7 @@ public class UserController {
 
     public GetUserOutputDTO get(GetUserInputDTO inputDTO) {
         User user = getUseCase.execute(inputDTO.id())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found", inputDTO.id().toString()));
         return userMapper.toGetOutput(user);
     }
 

@@ -6,6 +6,7 @@ import com.fiap.mariacomanda.core.adapters.gateway.UserGateway;
 import com.fiap.mariacomanda.core.domain.entity.MenuItem;
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
 import com.fiap.mariacomanda.core.domain.entity.User;
+import com.fiap.mariacomanda.core.domain.exception.EntityNotFoundException;
 import com.fiap.mariacomanda.core.domain.usecases.common.RequesterValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.NullObjectValidator;
 import com.fiap.mariacomanda.core.domain.usecases.common.RestaurantValidator;
@@ -35,16 +36,16 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
 
         RequesterValidator.validateRequesterUserId(requesterUserId);
         User requester = userGateway.findById(requesterUserId)
-                .orElseThrow(() -> new IllegalArgumentException("Requester user not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Requester user not found", requesterUserId.toString()));
         RequesterValidator.validateRequesterIsOwner(requester, "update menu items");
 
         // menuitem existente a ser alterado
         MenuItem existing = menuItemGateway.findById(inputDTO.id())
-                .orElseThrow(() -> new IllegalArgumentException("MenuItem not found"));
+                .orElseThrow(() -> new EntityNotFoundException("MenuItem not found", inputDTO.id().toString()));
 
         // restaurante no qual menuitem está
         Restaurant existingRestaurant = restaurantGateway.findById(existing.getRestaurantId())
-                .orElseThrow(() -> new IllegalArgumentException("Restaurant not found for menu item"));
+                .orElseThrow(() -> new EntityNotFoundException("Restaurant not found for menu item", existing.getRestaurantId().toString()));
         // verifica se o requester é dono desse restaurante especifico (só o dono do restaurante pode atualizar seus items)
         RestaurantValidator.validateUserOwnsRestaurant(existingRestaurant, requesterUserId);
 
@@ -54,7 +55,7 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
         if (!existing.getRestaurantId().equals(restaurantId)) {
             RestaurantValidator.validateRestaurantId(restaurantId);
             targetRestaurant = restaurantGateway.findById(restaurantId)
-                    .orElseThrow(() -> new IllegalArgumentException("Restaurant not found"));
+                    .orElseThrow(() -> new EntityNotFoundException("Restaurant not found", restaurantId.toString()));
             RestaurantValidator.validateUserOwnsRestaurant(targetRestaurant, requesterUserId);
         }
 
@@ -79,7 +80,7 @@ public class UpdateMenuItemUseCaseImpl implements UpdateMenuItemUseCase {
         return newValue != null ? newValue : current;
     }
 
-    private Boolean updateValue(Boolean newValue, Boolean current) {
+    protected Boolean updateValue(Boolean newValue, Boolean current) {
         return newValue != null ? newValue : current;
     }
 }

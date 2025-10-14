@@ -2,6 +2,7 @@ package com.fiap.mariacomanda.core.domain.usecases.common;
 
 import com.fiap.mariacomanda.core.domain.entity.User;
 import com.fiap.mariacomanda.core.domain.entity.UserType;
+import com.fiap.mariacomanda.core.domain.exception.ValidationException;
 
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public final class RequesterValidator {
 
     public static void validateRequesterUserId(UUID requesterUserId) {
         if (requesterUserId == null) {
-            throw new IllegalArgumentException("Requester user ID cannot be null");
+            throw new ValidationException("Requester user ID cannot be null");
         }
     }
 

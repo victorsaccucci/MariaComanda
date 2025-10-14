@@ -1,6 +1,7 @@
 package com.fiap.mariacomanda.core.domain.usecases.common;
 
 import com.fiap.mariacomanda.core.domain.entity.Restaurant;
+import com.fiap.mariacomanda.core.domain.exception.ValidationException;
 
 import java.util.UUID;
 
@@ -16,21 +17,21 @@ public final class RestaurantValidator {
 
     public static void validateRestaurantId(UUID restaurantId) {
         if (restaurantId == null) {
-            throw new IllegalArgumentException("Restaurant ID cannot be null");
+            throw new ValidationException("Restaurant ID cannot be null");
         }
     }
 
     public static void validateUserOwnsRestaurant(Restaurant restaurant, UUID ownerUserId) {
         // Substituir exceptions para especificos de validação de restaurant
         if (restaurant == null) {
-            throw new IllegalArgumentException("Restaurant cannot be null");
+            throw new ValidationException("Restaurant cannot be null");
         }
         if (ownerUserId == null) {
-            throw new IllegalArgumentException("Owner user ID cannot be null");
+            throw new ValidationException("Owner user ID cannot be null");
         }
 
         if (!restaurant.getOwnerUserId().equals(ownerUserId)) {
-            throw new IllegalStateException("Requester does not own the restaurant");
+            throw new ValidationException("Requester does not own the restaurant");
         }
     }
 }

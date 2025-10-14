@@ -36,15 +36,15 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         RequesterValidator.validateRequesterIsOwner(requester, "create users");
 
         NullObjectValidator.validateNotNull(inputDTO.name(), "User name");
-        if (inputDTO.name() != null && inputDTO.name().trim().isEmpty()) {
+        if (inputDTO.name().trim().isEmpty()) {
             throw new IllegalArgumentException("User name cannot be empty");
         }
         NullObjectValidator.validateNotNull(inputDTO.email(), "User email");
-        if (inputDTO.email() != null && inputDTO.email().trim().isEmpty()) {
+        if (inputDTO.email().trim().isEmpty()) {
             throw new IllegalArgumentException("User email cannot be empty");
         }
         NullObjectValidator.validateNotNull(inputDTO.password(), "User password");
-        if (inputDTO.password() != null && inputDTO.password().trim().isEmpty()) {
+        if (inputDTO.password().trim().isEmpty()) {
             throw new IllegalArgumentException("User password cannot be empty");
         }
         NullObjectValidator.validateNotNull(inputDTO.userTypeId(), "User type ID");
